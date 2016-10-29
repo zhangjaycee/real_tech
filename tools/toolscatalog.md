@@ -5,3 +5,7 @@
 1. [[Git常用命令|tools_git]]
 
 1. [[Sed常用命令|tools_sed]]
+
+1. [[ssh|tools_ssh]]
+
+1. [[grep|tools_grep]]
