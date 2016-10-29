@@ -1,3 +1,3 @@
 #### Catalogs
 
-1. [[Mac|maccatalog]]
+1. [[Mac|mac/maccatalog]]
