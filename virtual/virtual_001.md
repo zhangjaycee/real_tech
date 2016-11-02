@@ -57,9 +57,9 @@ virt-install --name ubuntutest --hvm --ram 1024 --vcpus 1 \
 ## 其他常用virsh命令
 
 ```shell
+virt-manager                                    #调出gui的虚拟机管理器
 virsh list --all                                #列出所有虚拟机
-virsh list                                      #显示本地活动虚拟机
-virsh list –all                                 #显示本地所有的虚拟机（活动的+不活动的）
+virsh list                                      #只列出本地活动虚拟机
 virsh define ubuntu.xml                         #通过配置文件定义一个虚拟机（这个虚拟机还不是活动的）
 virsh start ubuntu                              #启动名字为ubuntu的非活动虚拟机
 virsh create ubuntu.xml                         #创建虚拟机（创建后，虚拟机立即执行，成为活动主机）
