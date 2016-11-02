@@ -60,20 +60,20 @@ virt-install --name ubuntutest --hvm --ram 1024 --vcpus 1 \
 virt-manager                                    #调出gui的虚拟机管理器
 virsh list --all                                #列出所有虚拟机
 virsh list                                      #只列出本地活动虚拟机
-virsh define ubuntu.xml                         #通过配置文件定义一个虚拟机（这个虚拟机还不是活动的）
-virsh start ubuntu                              #启动名字为ubuntu的非活动虚拟机
-virsh create ubuntu.xml                         #创建虚拟机（创建后，虚拟机立即执行，成为活动主机）
-virsh suspend ubuntu                            #暂停虚拟机
-virsh resume ubuntu                             #启动暂停的虚拟机
-virsh shutdown ubuntu                           #正常关闭虚拟机
-virsh destroy ubuntu                            #强制关闭虚拟机
-virsh dominfo ubuntu                            #显示虚拟机的基本信息
-virsh domname 2                                 #显示id号为2的虚拟机名
-virsh domid ubuntu                              #显示虚拟机id号
-virsh domuuid ubuntu                            #显示虚拟机的uuid
-virsh domstate ubuntu                           #显示虚拟机的当前状态
-virsh dumpxml ubuntu                            #显示虚拟机的当前配置文件（可能和定义虚拟机时的配置不同，因为当虚拟机启动时，需要给虚拟机分配id号、uuid、vnc端口号等等）
-virsh setmem ubuntu 512000                      #给不活动虚拟机设置内存大小
-virsh setvcpus ubuntu 4                         #给不活动虚拟机设置cpu个数
-virsh edit ubuntu                               #编辑配置文件（一般是在刚定义完虚拟机之后）
+virsh define [xml_name].xml                     #通过配置文件定义一个虚拟机（这个虚拟机还不是活动的）
+virsh start [vm_name]                           #启动名字为ubuntu的非活动虚拟机
+virsh create [xml_name].xml                     #创建虚拟机（创建后，虚拟机立即执行，成为活动主机）
+virsh suspend [vm_name]                         #暂停虚拟机
+virsh resume [vm_name]                          #启动暂停的虚拟机
+virsh shutdown [vm_name]                        #正常关闭虚拟机
+virsh destroy [vm_name]                         #强制关闭虚拟机
+virsh dominfo [vm_name]                         #显示虚拟机的基本信息
+virsh domname [id_num]                          #显示id号为id_num的虚拟机名
+virsh domid [vm_name]                           #显示虚拟机id号
+virsh domuuid [vm_name]                         #显示虚拟机的uuid
+virsh domstate [vm_name]                        #显示虚拟机的当前状态
+virsh dumpxml [vm_name]                         #显示虚拟机的当前配置文件（可能和定义虚拟机时的配置不同，因为当虚拟机启动时，需要给虚拟机分配id号、uuid、vnc端口号等等）
+virsh setmem ubuntu [size]                      #给不活动虚拟机设置内存大小
+virsh setvcpus ubuntu [number]                  #给不活动虚拟机设置cpu个数
+virsh edit [vm_name]                            #编辑配置文件（一般是在刚定义完虚拟机之后）
 ```
