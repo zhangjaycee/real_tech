@@ -73,7 +73,7 @@ virsh domid [vm_name]                           #显示虚拟机id号
 virsh domuuid [vm_name]                         #显示虚拟机的uuid
 virsh domstate [vm_name]                        #显示虚拟机的当前状态
 virsh dumpxml [vm_name]                         #显示虚拟机的当前配置文件（可能和定义虚拟机时的配置不同，因为当虚拟机启动时，需要给虚拟机分配id号、uuid、vnc端口号等等）
-virsh setmem ubuntu [size]                      #给不活动虚拟机设置内存大小
-virsh setvcpus ubuntu [number]                  #给不活动虚拟机设置cpu个数
+virsh setmem [vm_name] [size]                      #给不活动虚拟机设置内存大小
+virsh setvcpus [vm_name] [number]                  #给不活动虚拟机设置cpu个数
 virsh edit [vm_name]                            #编辑配置文件（一般是在刚定义完虚拟机之后）
 ```
