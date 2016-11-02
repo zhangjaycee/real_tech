@@ -40,4 +40,5 @@
 >参考
 
 >https://www.suse.com/documentation/sles11/book_kvm/data/sect1_1_chapter_book_kvm.html
-http://www.cnblogs.com/jusonalien/p/4772618.html
+
+>http://www.cnblogs.com/jusonalien/p/4772618.html
