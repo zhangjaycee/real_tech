@@ -33,7 +33,16 @@ qemu-system-arch like /usr/local/bin/qemu-system-x86_64 is for running a system 
 
   意思是，gentoo里面的qemu-kvm就是运行“qemu-system-x86_64 --enable-kvm”， 是一个脚本。
 
+### 4
+
+> The KVM project used to maintain a fork of QEMU called qemu-kvm. All feature differences have been merged into QEMU upstream and the development of the fork suspended.
+
+> To use KVM pass --enable-kvm to QEMU.
+
+(http://wiki.qemu.org/Features/KVM)
+
+  官方文档，意思是KVM项目以前fork了一个QEMU的镜像并称为qemu-kvm。现在所有不同的特征都被merge到QEMU的upstream了，称为qemu-kvm的fork版本暂停开发了。
 
 ## 暂时的结论
 
-新版qemu已经整合kvm支持，不再有qemu-kvm的说法了。一般创建x86的虚拟机需要用到qemu-system-x86_64这个命令，并需要加上--enable-kvm来支持kvm加速。有些Linux发行版的qemu-kvm命令仅仅是qemu-system-x86_64的软链接或者简单包装。
+现在的qemu已经整合qemu-kvm，不再有qemu-kvm的说法了。一般创建x86的虚拟机需要用到qemu-system-x86_64这个命令，并需要加上--enable-kvm来支持kvm加速。有些Linux发行版的qemu-kvm命令仅仅是qemu-system-x86_64的软链接或者简单包装。
