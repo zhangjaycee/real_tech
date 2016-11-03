@@ -9,3 +9,5 @@
 1. [[ssh|tools_ssh]]
 
 1. [[ps|tools_ps]]
+
+1. [[find|tools_find]]
