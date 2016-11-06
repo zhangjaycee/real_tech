@@ -3,8 +3,8 @@
 
 ## pip
 
-pip install **pkg_name** [==**version**]
+pip install *pkg_name* [==*version*]
 
 ## gem
 
-gem install **pkg_name** [-v **version**]
+gem install *pkg_name* [-v *version*]
