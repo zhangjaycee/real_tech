@@ -11,3 +11,5 @@
 1. [[ps|tools_ps]]
 
 1. [[find|tools_find]]
+
+1. [[包管理器|tools_002]]
