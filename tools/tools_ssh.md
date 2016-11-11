@@ -23,3 +23,22 @@ ssh-server配置文件位于/etc/ssh/sshd_config ，可以定义SSH的服务端�
 
 * 断开连接
 >exit
+
+
+## 建立无须密码验证的ssh/scp连接
+
+1.Client上某用户执行ssh-keygen命令，生成建立安全信任关系的证书
+```shell
+ssh-keygen -b 1024 -t rsa
+```
+
+2.将公钥证书id_rsa.pub内容复制到Server某用户的~/.ssh/authorized_keys目录中
+```shell
+## 方法1
+scp -p ~/.ssh/id_rsa.pub  [username]@[server_ip]:[user_home]/.ssh/authorized_keys
+## 方法2
+client: cat ~/.ssh/id_rsa.pub #然后复制它
+server: vim ~/.ssh/authorized_keys #然后粘贴保存
+```
+
+3.完成
