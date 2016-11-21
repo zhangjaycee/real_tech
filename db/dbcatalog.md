@@ -4,4 +4,5 @@
 
 1. [[如何理解MySQL的存储机制|db_002]]
 
-1. [[如何理解MySQL的Clustered key和Secondary key|db_003]]
+1. [[关于MySQL的索引|db_003]]
+(difference between Clustered&Secondary key, InnoDB&MyISAM indexes)
