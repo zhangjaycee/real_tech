@@ -1,0 +1,3 @@
+# 关于Zlib
+
+zlib的inflate和deflate是相对应的过程，inflate是解压的一个过程，deflate是压缩的一个过程
