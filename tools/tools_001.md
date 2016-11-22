@@ -60,4 +60,8 @@ nmap <C-\>i :cs find i <C-R>=expand("<cfile>")<CR><CR>
 nmap <C-\>d :cs find d <C-R>=expand("<cword>")<CR><CR> 
 "cscope结果加入到quickfix list
 set cscopequickfix=s-,c-,d-,i-,t-,e-
+
+"显示不可见的tab字符
+set list
+set listchars=tab:▸\
 ~~~
