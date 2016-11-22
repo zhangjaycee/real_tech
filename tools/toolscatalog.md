@@ -19,3 +19,7 @@
 1. [[Cscope基本使用|tools_004]]
 
 1. [[关于tar|tools_005]]
+
+1. [[time|tools_006]]
+
+1. [[watch&cron|tools_007]]
