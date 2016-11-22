@@ -43,6 +43,8 @@
 
 >http://www.cnblogs.com/jusonalien/p/4772618.html
 
+>http://openskill.cn/article/88
+
 
 ## CPU和Cache之间的模式（类似）
 
