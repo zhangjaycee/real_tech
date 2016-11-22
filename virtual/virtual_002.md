@@ -1,3 +1,11 @@
+# 怎样理解KVM的cache mode
+
+>参考：
+
+>http://openskill.cn/article/88
+
+>http://mathslinux.org/?p=370
+
 ## Qemu-KVM的5种cachemode
 
 * cache mode unspecified
@@ -43,7 +51,6 @@
 
 >http://www.cnblogs.com/jusonalien/p/4772618.html
 
->http://openskill.cn/article/88
 
 
 ## CPU和Cache之间的模式（类似）
