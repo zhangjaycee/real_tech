@@ -1,4 +1,4 @@
-# Qemu-KVM的5种cachemode
+## Qemu-KVM的5种cachemode
 
 * cache mode unspecified
 
@@ -42,3 +42,18 @@
 >https://www.suse.com/documentation/sles11/book_kvm/data/sect1_1_chapter_book_kvm.html
 
 >http://www.cnblogs.com/jusonalien/p/4772618.html
+
+
+## CPU和Cache之间的模式（类似）
+
+> 参考：http://dannynote.blogspot.com/2007/04/cachereadwrite-throughbackallocate.html
+
+> 所谓的read/write cache的hit/miss，指的是CPU要read/write某一位址的资料，若此时cache里的资料刚好是该位址的资料，则称为cache hit，若此时cache里的资料不是该位址的资料，则称为cache miss。
+
+> 当cache hit时，若CPU要读取某一位址的资料时，会直接从cache中读取资料。
+
+> 当cache miss时，若CPU要读取某一位址的资料时，又可分为二种方式：一种是read through，这种方式会直接将资料从主记忆体端读进CPU；另一种是no read through，这种方式会先将资料从主记忆体端读进cache，然后再从cache读进CPU。
+
+> 当cache hit时，若CPU要写入资料到某一位址时，可分为二种方式：一种是write through，此种方式资料会立刻写到cache及主记忆体中；另一种是write back ，此种方式会先将资料写入cache中，然后再将同一位址的资料整批一起写入主记忆体中（非立即写入）。
+
+> 当cache miss时，若CPU要写入资料到某一位址时，可分为二种方式：一种是no write allocate，此种方式会直接将资料写到主记忆体中，不会再从记忆体中载入到cache，另一种方式是write allocate，此种方式会先将资料从主记忆体中载入到cache，然后再依cache hit的规则，将资料写出。
