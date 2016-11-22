@@ -7,5 +7,8 @@
 
 
 ## iozone
+> 参考：
+
+> http://junlee.blog.51cto.com/228061/508940
 
 ## Phoronix Test Suite
