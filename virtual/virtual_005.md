@@ -32,13 +32,16 @@ qemu-img create -f qcow2 [img_name].img 5G
 首先可以验证是否支持CPU虚拟化加速`grep -E 'vmx|svm' /proc/cpuinfo`
 然后，用`qemu-system-x86_64` 命令开始从系统安装镜像安装系统
 ```shell
+#不启用vnc
 qemu-system-x86_64 -m [memory_size] -enable-kvm [img_name].img -cdrom [system_iso_name].iso
+#启用vnc 端口号为设置的参数端口号+5900 比如这里是5901
+qemu-system-x86_64 -m [memory_size] -enable-kvm [img_name].img -cdrom [system_iso_name].iso -vnc :1
 ```
+当不启用vnc的时候，qemu会自动弹出窗口，启用vnc的时候需要用`vnc ip:port`的形式连接虚拟机。
 
 ### 4. 启动系统
 ```shell
  qemu-system-x86_64 -m [mem_size] -enable-kvm [img_name].img
-
 ```
 
 
