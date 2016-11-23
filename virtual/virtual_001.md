@@ -1,6 +1,5 @@
 # KVM(利用virsh)在Ubuntu上的安装和基本使用
 
->1. （参考） http://jingyan.baidu.com/article/b907e627cfffc946e7891cd5.html
 
 >1. [安装](#安装)
 
@@ -77,3 +76,9 @@ virsh setmem [vm_name] [size]                   #给不活动虚拟机设置内�
 virsh setvcpus [vm_name] [number]               #给不活动虚拟机设置cpu个数
 virsh edit [vm_name]                            #编辑配置文件（一般是在刚定义完虚拟机之后）
 ```
+
+>（参考） 
+
+> http://jingyan.baidu.com/article/b907e627cfffc946e7891cd5.html
+
+> http://blog.fens.me/vps-kvm/
