@@ -37,7 +37,7 @@ qemu-system-x86_64 -m [memory_size] -enable-kvm [img_name].img -cdrom [system_is
 #启用vnc 端口号为设置的参数端口号+5900 比如这里是5901
 qemu-system-x86_64 -m [memory_size] -enable-kvm [img_name].img -cdrom [system_iso_name].iso -vnc :1
 ```
-当不启用vnc的时候，qemu会自动弹出窗口，启用vnc的时候需要用`vnc ip:port`的形式连接虚拟机。
+当不启用vnc的时候，qemu会自动弹出窗口，启用vnc的时候需要用`vncviewer ip:port`的形式连接虚拟机。
 
 ### 4. 启动系统
 ```shell
