@@ -6,6 +6,10 @@
 
 >http://mathslinux.org/?p=370
 
+[[virtual_002_p1.png]]
+
+[[virtual_002_p2.png]]
+
 ## Qemu-KVM的5种cachemode
 
 * cache mode unspecified
