@@ -10,13 +10,12 @@ pip install *pkg_name*[==*version*]
 gem install *pkg_name* [-v *version*]
 
 ## yum
-```bash
+
 yum list *pkg_name* 列出所有版本
 
 yum install *pkg_version* 安装指定版本
 
-yum install gcc  [centos] 
-
+```bash
 更新：yum update
 安装：yum install xxx
 移除：yum remove xxx
@@ -43,8 +42,9 @@ eg：yum list php*
 ```
 
 ## apt
-```bash
+
 apt install *pkg_name*[=*version*]
+```bash
 配置文件/etc/apt/sources.list 
 常用的APT命令参数： 
 
