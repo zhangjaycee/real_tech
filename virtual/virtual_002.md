@@ -1,13 +1,13 @@
 # 怎样理解Qemu/KVM的存储栈
 
-> 1. [Qemu在Guest和Host间扮演的角色](#1.Qemu在Guest和Host间扮演的角色)
+> 1. [Qemu扮演的角色](#1. Qemu扮演的角色)
 
-> 1. [Qemu提供给Guest的三种模拟硬盘接口](#2.Qemu提供给Guest的三种模拟硬盘接口)
+> 1. [三种模拟硬盘接口](#2. 三种模拟硬盘接口)
 
-> 1. [怎样理解KVM/Qqmu的cache mode](#3.怎样理解KVM/Qqmu的cache mode)
+> 1. [怎样理解KVM/Qqmu的cache mode](#3. 怎样理解KVM/Qqmu的cache mode)
 
 
-## 1.Qemu在Guest和Host间扮演的角色
+## 1. Qemu扮演的角色
 
 
 
@@ -18,7 +18,7 @@ Guest上的用户应用和OS kernel像在物理机上一样运行着；而Guest�
 怎么让Guest上的系统把一个文件看成一个物理磁盘呢？Qemu就起一个中间处理人的作用，不好听地说，他骗了Guest的系统，把Guest认为的磁盘级操作都揽过去，全部转成了Host的文件级操作。
 
 
-## 2.Qemu提供给Guest的三种模拟硬盘接口
+## 2. 三种模拟硬盘接口
 
 > 参考：
 
@@ -36,7 +36,7 @@ Good guest compatibility but low performance
 
 
 
-## 3.怎样理解KVM/Qqmu的cache mode
+## 3. 怎样理解KVM/Qqmu的cache mode
 
 >参考：
 
