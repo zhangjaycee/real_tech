@@ -6,9 +6,9 @@
 
 >http://mathslinux.org/?p=370
 
-[[virtual_002_p1.png|height=256px]]
+[[virtual_002_p1.png|height=512px]]
 
-[[virtual_002_p2.png|height=256px]]
+[[virtual_002_p2.png|height=512px]]
 
 ## Qemu-KVM的5种cachemode
 
