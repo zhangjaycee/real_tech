@@ -1,4 +1,35 @@
-# 怎样理解KVM的cache mode
+# 怎样理解Qemu/KVM的存储栈
+
+## Qemu在Guest和Host间扮演的角色
+
+
+
+[[virtual_002_p3.png|height = 512px]]
+
+Guest上的用户应用和OS kernel像在物理机上一样运行着；而Guest看来的物理磁盘，其实只是Host上的一个(镜像)文件，所以Host的OS就像管理一个普通文件一样管理这个镜像文件。
+
+怎么让Guest上的系统把一个文件看成一个物理磁盘呢？Qemu就起一个中间处理人的作用，不好听地说，他骗了Guest的系统，把Guest认为的磁盘级操作都揽过去，全部转成了Host的文件级操作。
+
+
+## Qemu提供给Guest的三种模拟硬盘接口
+
+> 参考：
+
+> https://www.ibm.com/developerworks/community/blogs/5144904d-5d75-45ed-9d2b-cf1754ee936a/entry/virtio_scsi%25e8%25ae%25be%25e5%25a4%2587%25e4%25bb%258b%25e7%25bb%258d?lang=en
+
+Qemu提供给（也可以说是欺骗Guset）用的模拟硬盘接口有3种：Virtio、IDE和SCSI。
+
+> Virtio is a paravirtualized storage interface, delivers the best performance, and is extensible for the future
+One virtio-blk PCI adapter per block device
+
+> IDE emulation is used for CD-ROMs and is also available for disks
+Good guest compatibility but low performance
+
+> SCSI emulation can be used for special applications but is still under development
+
+
+
+## 怎样理解KVM/Qqmu的cache mode
 
 >参考：
 
@@ -10,7 +41,7 @@
 
 [[virtual_002_p2.png|height=512px]]
 
-## Qemu-KVM的5种cachemode
+### Qemu-KVM的5种cachemode
 
 * cache mode unspecified
 
@@ -57,7 +88,7 @@
 
 
 
-## CPU和Cache之间的模式（类似）
+### CPU和Cache之间的模式（类似）
 
 > 参考：http://dannynote.blogspot.com/2007/04/cachereadwrite-throughbackallocate.html
 
