@@ -101,3 +101,18 @@ Good guest compatibility but low performance
 > 当cache hit时，若CPU要写入资料到某一位址时，可分为二种方式：一种是write through，此种方式资料会立刻写到cache及主记忆体中；另一种是write back ，此种方式会先将资料写入cache中，然后再将同一位址的资料整批一起写入主记忆体中（非立即写入）。
 
 > 当cache miss时，若CPU要写入资料到某一位址时，可分为二种方式：一种是no write allocate，此种方式会直接将资料写到主记忆体中，不会再从记忆体中载入到cache，另一种方式是write allocate，此种方式会先将资料从主记忆体中载入到cache，然后再依cache hit的规则，将资料写出。
+
+### Qemu中cache mode的实现方式
+
+> 参考：
+
+> http://smilejay.com/2012/08/qemu-kvm-cache-off/
+
+实际上，是在Qemu打开镜像文件的时候，改变open()的参数改变的。
+
+
+| CacheMode | Open()Flag |特点|
+|--------|--------|--------|
+|Write through|O_DSYNC|QEMU默认/ 安全/ 但是IO性能差|
+|Write back||用了两层Cache/ 不安全/ IO性能最好|
+|None|O_DITECT|绕过Host Cache层/ 安全/ 性能较好|
