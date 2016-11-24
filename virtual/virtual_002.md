@@ -6,10 +6,6 @@
 
 > 1. [怎样理解KVM/Qqmu的cache mode](#3.怎样理解KVM/Qqmu的cache mode)
 
-> 1. [CPU和Cache之间的模式（类似）](#4.CPU和Cache之间的模式（类似）)
-
-> 1. [Qemu中cache mode的实现方式](#5.Qemu中cache mode的实现方式)
-
 
 ## 1.Qemu在Guest和Host间扮演的角色
 
@@ -48,11 +44,21 @@ Good guest compatibility but low performance
 
 >http://mathslinux.org/?p=370
 
+> http://www.cnblogs.com/sammyliu/p/5066895.html
+
 [[virtual_002_p1.png|height=512px]]
 
 [[virtual_002_p2.png|height=512px]]
 
-## Qemu-KVM的5种cachemode
+### 3.1.Qemu-KVM的5种cachemode
+
+>参考
+
+>https://www.suse.com/documentation/sles11/book_kvm/data/sect1_1_chapter_book_kvm.html
+
+>http://www.cnblogs.com/jusonalien/p/4772618.html
+
+
 
 * cache mode unspecified
 
@@ -91,14 +97,8 @@ Good guest compatibility but low performance
 该模式所对应的标志位是O_DSYNC和O_DIRECT,仅当数据被提交到了存储设备的时候，写操作才会被完整地通告,并且可以放心地绕过host的页缓存。就像writethrough模式,有时候不发送刷新缓存的指令时很有用的.该模式是最新添加的一种cache模式，使得缓存与直接访问的结合成为了可能。
 
 
->参考
 
->https://www.suse.com/documentation/sles11/book_kvm/data/sect1_1_chapter_book_kvm.html
-
->http://www.cnblogs.com/jusonalien/p/4772618.html
-
-
-## 4.CPU和Cache之间的模式（类似）
+### 3.2.CPU和Cache之间的模式（类似）
 
 > 参考：http://dannynote.blogspot.com/2007/04/cachereadwrite-throughbackallocate.html
 
@@ -112,7 +112,7 @@ Good guest compatibility but low performance
 
 > 当cache miss时，若CPU要写入资料到某一位址时，可分为二种方式：一种是no write allocate，此种方式会直接将资料写到主记忆体中，不会再从记忆体中载入到cache，另一种方式是write allocate，此种方式会先将资料从主记忆体中载入到cache，然后再依cache hit的规则，将资料写出。
 
-## 5.Qemu中cache mode的实现方式
+### 3.3.Qemu中cache mode的实现方式
 
 > 参考：
 
