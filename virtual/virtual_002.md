@@ -125,4 +125,4 @@ Good guest compatibility but low performance
 |--------|--------|--------|
 |Write through|O_DSYNC|QEMU默认/ 安全/ 但是IO性能差|
 |Write back||用了两层Cache/ 不安全/ IO性能最好|
-|None|O_DITECT|绕过Host Cache层/ 安全/ 性能较好|
+|None|O_DIRECT|绕过Host Cache层/ 安全/ 性能较好|
