@@ -13,3 +13,4 @@ find [dir] -type f|xargs grep [content]
 ```bash
 find [dir] -name "*.c" [-o -name "*.py"] [-o -name "*.h"] ...
 ```
+这里的-o参数还可以写成-or， 就是或的意思。
