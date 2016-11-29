@@ -1,4 +1,11 @@
 ## Vim常用配置
+### 配置方法
+一般的配置文件在 ~/.vimrc
+插件*.vim一般在~/.vim/目录下
+### 我使用的vim插件和工具
+* The NERD tree (http://www.vim.org/scripts/script.php?script_id=1658)
+* cscope
+### 我的配置文件
 ~~~
 set nu
 set expandtab
@@ -17,6 +24,8 @@ set backspace=indent,eol,start
 nnoremap <silent> <F2> :NERDTreeToggle<CR>
 nnoremap <silent> <F3> :copen<CR>
 nnoremap <silent> <F4> :cclose<CR>
+nnoremap <silent> <C-y> :cclose<CR>
+nnoremap <silent> <C-t> <C-o>
 inoremap <silent> <C-h> <Left>
 inoremap <silent> <C-j> <Down>
 inoremap <silent> <C-k> <Up>
@@ -43,13 +52,11 @@ endif
 "查找C代码符号
 nmap <C-\>s :cs find s <C-R>=expand("<cword>")<CR><CR> 
 "查找本定义
-nmap <C-\>g :cs find g <C-R>=expand("<cword>")<CR><CR> 
+nmap <C-]> :cs find g <C-R>=expand("<cword>")<CR><CR> :copen<CR> 
 "查找调用本函数的函数
-nmap <C-\>c :cs find c <C-R>=expand("<cword>")<CR><CR> 
-"查找调用本函数的函数
-nmap <C-\>t :cs find c <C-R>=expand("<cword>")<CR><CR> 
+nmap <C-\> :cs find c <C-R>=expand("<cword>")<CR><CR> :copen<CR> 
 "查找本字符串
-nmap <C-\> :cs find t <C-R>=expand("<cword>")<CR><CR> :copen<CR> 
+nmap <C-\>t :cs find t <C-R>=expand("<cword>")<CR><CR> :copen<CR> 
 "查找本egrep模式
 nmap <C-\>e :cs find e <C-R>=expand("<cword>")<CR><CR> 
 "查找本文件
@@ -59,9 +66,8 @@ nmap <C-\>i :cs find i <C-R>=expand("<cfile>")<CR><CR>
 "找本函数调用的函数
 nmap <C-\>d :cs find d <C-R>=expand("<cword>")<CR><CR> 
 "cscope结果加入到quickfix list
-set cscopequickfix=s-,c-,d-,i-,t-,e-
-
+set cscopequickfix=s-,c-,d-,g-,i-,t-,e-
 "显示不可见的tab字符
-set list
-set listchars=tab:▸\
+"set list
+"set listchars=tab:▸\
 ~~~
