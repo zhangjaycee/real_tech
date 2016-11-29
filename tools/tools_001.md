@@ -5,6 +5,7 @@
 ### 我使用的vim插件和工具
 * The NERD tree (http://www.vim.org/scripts/script.php?script_id=1658)
 * cscope
+
 ### 我的配置文件
 ~~~
 set nu
