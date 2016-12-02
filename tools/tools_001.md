@@ -1,4 +1,10 @@
-## Vim常用配置
+## Vim 
+### 实用操作
+
+查看当前文件的绝对路径 `:pwd` (normal)
+查看当前文件的绝对路径+文件名 `1<C-g>` (normal)
+自动补全 `<C-p>` (insert)
+
 ### 配置方法
 一般的配置文件在 ~/.vimrc
 插件*.vim一般在~/.vim/目录下
@@ -72,3 +78,4 @@ set cscopequickfix=s-,c-,d-,g-,i-,t-,e-
 "set list
 "set listchars=tab:▸\
 ~~~
+
