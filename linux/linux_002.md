@@ -1,4 +1,4 @@
-zram & zswap & zcache | tmem? transcendent memory?
+zram & zswap & zcache | tmem(transcendent memory)?
 
 > [zram vs zswap vs zcache](http://askubuntu.com/questions/471912/zram-vs-zswap-vs-zcache-ultimate-guide-when-to-use-which-one/472227#472227)
 
