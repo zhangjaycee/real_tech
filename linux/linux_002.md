@@ -17,3 +17,5 @@ zram & zswap & zcache | tmem(transcendent memory)?
 > * [Cleancache and Frontswap](https://lwn.net/Articles/454795/)
 
 >While Cleancache holds the page, it can do creative things with it. Pages with duplicate contents are not uncommon, especially in virtualized situations; often, significant numbers of pages contain only zeroes. The backing store behind Cleancache can detect those duplicates and store a single copy. Compression of stored pages is also possible; there is currently work afoot to implement ramzswap (CompCache) as a Cleancache backend. It might also be possible to use Cleancache as part of a solid-state cache in front of a normal rotating drive.
+
+> * [https://www.kernel.org/doc/Documentation/vm/zswap.txt](https://www.kernel.org/doc/Documentation/vm/zswap.txt)
