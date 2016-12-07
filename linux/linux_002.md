@@ -21,3 +21,5 @@
 > * [https://www.kernel.org/doc/Documentation/vm/zswap.txt](https://www.kernel.org/doc/Documentation/vm/zswap.txt)
 
 > [Linux下使用zram（压缩内存）](https://segmentfault.com/a/1190000000380500)
+
+> [In-kernel memory compression](https://lwn.net/Articles/545244/)
