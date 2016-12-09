@@ -6,7 +6,7 @@
 
 > [LSFMM: In-kernel memory compression](https://lwn.net/Articles/548109/)
 
-> [zcache: a compressed page cache](https://lwn.net/Articles/397574/)
+> [zcache: a compressed page cache](https://lwn.net/Articles/397574/)(Jonathan Corbet)
 
 > [LINUX PATCH AND ENVIRONMENT FOR XEN TRANSCENDENT MEMORY](https://oss.oracle.com/projects/tmem/dist/documentation/internals/linuxpatch)
 
@@ -23,3 +23,5 @@
 > [Linux下使用zram（压缩内存）](https://segmentfault.com/a/1190000000380500)
 
 > [In-kernel memory compression](https://lwn.net/Articles/545244/)
+
+> [zcache: a compressed file page cache](https://lwn.net/Articles/562254/)(bob liu)
