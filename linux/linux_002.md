@@ -8,6 +8,10 @@ Cleancache和Frontswap算是一个内核中内存压缩的“前端”，Zram、
 
 > [Cleancache and Frontswap](https://lwn.net/Articles/386090/)
 
+> [linux kernel DOC:cleancache](http://lxr.free-electrons.com/source/Documentation/vm/cleancache.txt)
+
+> [linux kernel DOC:frontswap](http://lxr.free-electrons.com/source/Documentation/vm/frontswap.txt)
+
 ### Zram & Zswap & Zcache
 
 * 参考
