@@ -27,6 +27,7 @@ Cleancache和Frontswap算是一个内核中内存压缩的“前端”，Zram、
 > [Linux下使用zram（压缩内存）](https://segmentfault.com/a/1190000000380500)
 
 * 现状
+
 目前zram和zswap都在在内核中，而zcache进入过内核，后来被移出，其精简版由bob liu重写，并尝试加入mm模块中。
 
 ### Transcendent Memory (tmem)
