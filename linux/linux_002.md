@@ -1,5 +1,6 @@
 ## zram & zswap & zcache | tmem(transcendent memory)?
 
+## 参考
 > [zram vs zswap vs zcache](http://askubuntu.com/questions/471912/zram-vs-zswap-vs-zcache-ultimate-guide-when-to-use-which-one/472227#472227)
 
 > [Transcendent memory in a nutshell](https://lwn.net/Articles/454795/)
@@ -25,3 +26,6 @@
 > [In-kernel memory compression](https://lwn.net/Articles/545244/)  [[翻译](http://blog.jcix.top/2016-12-09/inkernel_memory_compression/)]
 
 > [zcache: a compressed file page cache](https://lwn.net/Articles/562254/)(bob liu)
+
+## 现状
+目前zram和zswap都在在内核中，而zcache进入过内核，后来被移出，其精简版由bob liu重写，并尝试加入mm模块中。
