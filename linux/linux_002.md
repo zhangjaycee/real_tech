@@ -12,13 +12,13 @@
 
 > [WHAT IS TRANSCENDENT MEMORY](https://oss.oracle.com/projects/tmem/)
 
-> [Transcendent memory 技术](http://blog.chinaunix.net/uid-23531402-id-3199889.html)
+> [Transcendent memory in a nutshell](https://lwn.net/Articles/454795/) [翻译](http://blog.chinaunix.net/uid-23531402-id-3199889.html)
 
-> * [Cleancache and Frontswap](https://lwn.net/Articles/386090/)
+> [Cleancache and Frontswap](https://lwn.net/Articles/386090/)
 
->While Cleancache holds the page, it can do creative things with it. Pages with duplicate contents are not uncommon, especially in virtualized situations; often, significant numbers of pages contain only zeroes. The backing store behind Cleancache can detect those duplicates and store a single copy. Compression of stored pages is also possible; there is currently work afoot to implement ramzswap (CompCache) as a Cleancache backend. It might also be possible to use Cleancache as part of a solid-state cache in front of a normal rotating drive.
+>> While Cleancache holds the page, it can do creative things with it. Pages with duplicate contents are not uncommon, especially in virtualized situations; often, significant numbers of pages contain only zeroes. The backing store behind Cleancache can detect those duplicates and store a single copy. Compression of stored pages is also possible; there is currently work afoot to implement ramzswap (CompCache) as a Cleancache backend. It might also be possible to use Cleancache as part of a solid-state cache in front of a normal rotating drive.
 
-> * [https://www.kernel.org/doc/Documentation/vm/zswap.txt](https://www.kernel.org/doc/Documentation/vm/zswap.txt)
+> [https://www.kernel.org/doc/Documentation/vm/zswap.txt](https://www.kernel.org/doc/Documentation/vm/zswap.txt)
 
 > [Linux下使用zram（压缩内存）](https://segmentfault.com/a/1190000000380500)
 
