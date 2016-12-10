@@ -31,6 +31,7 @@ Cleancache和Frontswap算是一个内核中内存压缩的“前端”，Zram、
 
 ### Transcendent Memory (tmem)
 * 参考
+
 > [Transcendent memory in a nutshell](https://lwn.net/Articles/454795/) [[翻译](http://blog.chinaunix.net/uid-23531402-id-3199889.html)]
 
 > [LINUX PATCH AND ENVIRONMENT FOR XEN TRANSCENDENT MEMORY](https://oss.oracle.com/projects/tmem/dist/documentation/internals/linuxpatch)
