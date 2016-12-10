@@ -22,6 +22,6 @@
 
 > [Linux下使用zram（压缩内存）](https://segmentfault.com/a/1190000000380500)
 
-> [In-kernel memory compression](https://lwn.net/Articles/545244/)[[翻译](http://blog.jcix.top/2016-12-09/inkernel_memory_compression/)]
+> [In-kernel memory compression](https://lwn.net/Articles/545244/)  [[翻译](http://blog.jcix.top/2016-12-09/inkernel_memory_compression/)]
 
 > [zcache: a compressed file page cache](https://lwn.net/Articles/562254/)(bob liu)
