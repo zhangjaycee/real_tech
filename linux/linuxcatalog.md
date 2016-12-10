@@ -4,4 +4,4 @@
 1. [[CentOS|linux_centos]]
 1. [[Linux下如何杀掉一个进程|linux_001]]
 1. [[包管理器|tools_002]]
-1. [[zram&zswap&zcache|linux_002]]
+1. [[Memory Compression内存压缩|linux_002]]
