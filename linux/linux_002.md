@@ -5,8 +5,6 @@ Cleancache和Frontswap算是一个内核中内存压缩的“前端”，Zram、
 
 ### Cleancache & Frontswap
 
-* 参考
-
 > [Cleancache and Frontswap](https://lwn.net/Articles/386090/)
 
 > [linux kernel DOC:cleancache](http://lxr.free-electrons.com/source/Documentation/vm/cleancache.txt)
@@ -14,8 +12,6 @@ Cleancache和Frontswap算是一个内核中内存压缩的“前端”，Zram、
 > [linux kernel DOC:frontswap](http://lxr.free-electrons.com/source/Documentation/vm/frontswap.txt)
 
 ### Zram & Zswap & Zcache
-
-* 参考
 
 > [zram vs zswap vs zcache](http://askubuntu.com/questions/471912/zram-vs-zswap-vs-zcache-ultimate-guide-when-to-use-which-one/472227#472227)
 
@@ -36,7 +32,6 @@ Cleancache和Frontswap算是一个内核中内存压缩的“前端”，Zram、
 目前zram和zswap都在在内核中，而zcache进入过内核，后来被移出，其精简版由bob liu重写，并尝试加入mm模块中。
 
 ### Transcendent Memory (tmem)
-* 参考
 
 > [Transcendent memory in a nutshell](https://lwn.net/Articles/454795/) [[翻译](http://blog.chinaunix.net/uid-23531402-id-3199889.html)]
 
