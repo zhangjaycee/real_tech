@@ -5,3 +5,5 @@
 1. [[Mac中Terminal的常用命令|gui_002]]
 
 1. [[spotlight快捷搜索网页|gui_003]]
+
+1. [[我使用的Chrome插件|gui_004]]
