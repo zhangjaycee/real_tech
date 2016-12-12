@@ -1,6 +1,6 @@
 #### Catalogs
 
-1. [[Mac|maccatalog]]
+1. [[GUI Softwares|guicatalog]]
 2. [[Tools&Utilities|toolscatalog]]
 3. [[Database|dbcatalog]]
 5. [[Virtualization|Virtualcatalog]]
