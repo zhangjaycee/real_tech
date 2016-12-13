@@ -58,6 +58,8 @@ Cleancache和Frontswap算是一个内核中内存压缩的“前端”，Zram、
 
 >[doc][kernel Document:vm/ksm.txt](https://www.kernel.org/doc/Documentation/vm/ksm.txt)
 
+>[KVM的内存合并技术KSM--Kernel Samepage Merging](http://m.blog.chinaunix.net/uid-28326497-id-4008097.html)
+
 #### UKSM & PKSM
 
 >[kerneldedup.org(UKSM & XenDedup)](http://kerneldedup.org/)
