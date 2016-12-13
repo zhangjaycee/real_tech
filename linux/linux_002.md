@@ -48,11 +48,15 @@ Cleancache和Frontswap算是一个内核中内存压缩的“前端”，Zram、
 ## 2. Deduplication
 
 #### KSM
->[Kernel same-page merging](https://en.wikipedia.org/wiki/Kernel_same-page_merging)
+>[LWN][/dev/ksm: dynamic memory sharing](https://lwn.net/Articles/306704/)
+
+>[LWN][KSM tries again](https://lwn.net/Articles/330589/)
+
+>[Wikipedia][Kernel same-page merging](https://en.wikipedia.org/wiki/Kernel_same-page_merging)
 
 >[[Tmem-devel] [Xen-devel] Queries on KSM & Tmem](https://oss.oracle.com/pipermail/tmem-devel/2010-September/000174.html)
 
->[kernel Document:vm/ksm.txt](https://www.kernel.org/doc/Documentation/vm/ksm.txt)
+>[doc][kernel Document:vm/ksm.txt](https://www.kernel.org/doc/Documentation/vm/ksm.txt)
 
 #### UKSM & PKSM
 
@@ -61,3 +65,4 @@ Cleancache和Frontswap算是一个内核中内存压缩的“前端”，Zram、
 >[Google Code: PKSM](https://code.google.com/archive/p/pksm/)
 
 >[PKSM: A New Data De-Duplication Method For Linux](http://www.phoronix.com/scan.php?page=news_item&px=MTM0OTQ)
+
