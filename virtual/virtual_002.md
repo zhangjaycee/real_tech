@@ -1,10 +1,10 @@
 # 怎样理解Qemu/KVM的存储栈
 
-> 1. [Qemu扮演的角色](#1. Qemu扮演的角色)
+> 1. [Qemu扮演的角色](#1-qemu扮演的角色)
 
-> 1. [三种模拟硬盘接口](#2. 三种模拟硬盘接口)
+> 1. [三种模拟硬盘接口](#2-三种模拟硬盘接口)
 
-> 1. [怎样理解KVM/Qqmu的cache mode](#3. 怎样理解KVM/Qqmu的cache mode)
+> 1. [怎样理解KVM/Qqmu的cache mode](#3-怎样理解kvmqemu的cachemode)
 
 
 ## 1. Qemu扮演的角色
@@ -36,7 +36,7 @@ Good guest compatibility but low performance
 
 
 
-## 3. 怎样理解KVM/Qqmu的cache mode
+## 3. 怎样理解KVM/Qemu的cache mode
 
 >参考：
 
