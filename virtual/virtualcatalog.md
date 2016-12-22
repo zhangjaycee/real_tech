@@ -10,7 +10,7 @@
 
 #### [博客推荐]
 
-* ->[笑便世界 http://smilejay.com/](http://smilejay.com/) (关于KVM/Qemu)
-* ->[Stefan Hajnoczi http://blog.vmsplice.net/](http://blog.vmsplice.net/) (关于虚拟化)
+* ->[笑便世界] http://smilejay.com/ (关于KVM/Qemu)
+* ->[Stefan Hajnoczi] http://blog.vmsplice.net/ (关于虚拟化)
 
 
