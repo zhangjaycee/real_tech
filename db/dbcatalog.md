@@ -12,3 +12,7 @@
 
 1. [[如何理解MySQL的Query Cache]]
 
+
+#### [博客推荐]
+
+* ->[Jeremy Cole] https://blog.jcole.us/ (关于InnoDB)
