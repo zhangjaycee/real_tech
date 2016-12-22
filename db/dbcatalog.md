@@ -15,4 +15,4 @@
 
 #### [博客推荐]
 
-* ->[Jeremy Cole] https://blog.jcole.us/ (关于InnoDB)
+* ->[Jeremy Cole] https://blog.jcole.us (关于InnoDB)
