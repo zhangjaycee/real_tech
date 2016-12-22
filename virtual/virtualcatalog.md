@@ -5,3 +5,12 @@
 1. [[Xen的Hypervisor和Domain0的关系|virtual_003]] 
 1. [[Difference between qemu\qemu-kvm\qemu-system-x86_64\qemu-x86_64 ?|virtual_004]] 
 1. [[用QEMU创建一个虚拟机|virtual_005]]
+
+
+
+#### [博客推荐]
+
+* ->[笑便世界 http://smilejay.com/](http://smilejay.com/) (关于KVM/Qemu)
+* ->[Stefan Hajnoczi http://blog.vmsplice.net/](http://blog.vmsplice.net/) (关于虚拟化)
+
+
