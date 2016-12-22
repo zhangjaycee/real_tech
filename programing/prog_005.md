@@ -1,4 +1,4 @@
-# what's the differences between glib & libcg & libc & ucglic & eglibc 
+# what's the differences between glib & libc & glibc & uclibc & eglibc 
 
 其中，glib最为特殊，可以说和其它几种不是一类东西。
 
