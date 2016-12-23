@@ -9,3 +9,5 @@
 1. [[C语言中结构体struct初始化和赋值的几种方式|prog_004]]
 
 1. [[glib & libc & glibc & uclibc & eglibc |prog_005]]
+
+1. [[hooking & callback|prog_006]]
