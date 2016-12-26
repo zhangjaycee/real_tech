@@ -23,3 +23,5 @@
 1. [[time|]]
 
 1. [[watch&cron&hypervisor|]]
+
+1. [[GNU plot|]]
