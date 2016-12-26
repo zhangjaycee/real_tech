@@ -22,4 +22,4 @@
 
 1. [[time|tools_006]]
 
-1. [[watch&cron|tools_007]]
+1. [[watch&cron&hypervisor|tools_007]]
