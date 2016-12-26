@@ -20,6 +20,6 @@
 
 1. [[关于tar|tools_005]]
 
-1. [[time|tools_006]]
+1. [[time|]]
 
-1. [[watch&cron&hypervisor|tools_007]]
+1. [[watch&cron&hypervisor|]]
