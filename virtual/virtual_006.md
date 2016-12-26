@@ -6,3 +6,6 @@
 
 > [QEMU Internals: Overall architecture and threading model
 ](http://blog.vmsplice.net/2011/03/qemu-internals-overall-architecture-and.html) [[翻译](https://www.ibm.com/developerworks/community/blogs/5144904d-5d75-45ed-9d2b-cf1754ee936a/entry/20161222?lang=en)]
+
+> [QEMU Internals: vhost architecture
+](http://blog.vmsplice.net/2011/09/qemu-internals-vhost-architecture.html) [[翻译](http://www.cnblogs.com/scottieyuyang/p/6050798.html)]
