@@ -1,6 +1,6 @@
 ### Tools&Utilityies Section Catalog
 
-1. [[Vim常用配置|tools_001]]
+1. [[Vim|tools_001]]
 
 1. [[Git常用命令|tools_git]]
 
