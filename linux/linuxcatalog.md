@@ -7,3 +7,4 @@
 1. [[Memory Compression内存压缩|linux_002]]
 1. [[编译Linux内核|linux_003]]
 1. [[mmap调用|linux_004]]
+1. [[Linux man命令数字含义|linux_005]]
