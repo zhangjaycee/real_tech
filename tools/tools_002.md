@@ -43,12 +43,20 @@ eg：yum list php*
 
 ## apt
 
-apt install *pkg_name*[=*version*]
+* 常用
+
+apt install *pkg_name*[=*version*] 安装[指定版本的]包
+
+apt-cache search *pkg_name* 模糊搜索包，后边会列出每个包大概是做什么的
+
+apt list [-a] *pkg_name* 列出[所有]包的版本
+
+* 其他
+
 ```bash
+
 配置文件/etc/apt/sources.list 
 常用的APT命令参数： 
-
-apt-cache search package 搜索包 
 
 apt-cache show package 获取包的相关信息，如说明、大小、版本等 
 
