@@ -2,9 +2,11 @@
 
 > 参考
 
->https://my.oschina.net/kelvinxupt/blog/265108
+> https://my.oschina.net/kelvinxupt/blog/265108
 
->https://wiki.archlinux.org/index.php/QEMU
+> https://wiki.archlinux.org/index.php/QEMU
+
+> http://smilejay.com/2013/12/qemu-kvm-install-guest-in-text-mode/
 
 >[[Difference between qemu\qemu-kvm\qemu-system-x86_64\qemu-x86_64|virtual_004]]
 
