@@ -11,3 +11,17 @@
 > [Features/HelperNetworking] http://wiki.qemu.org/Features/HelperNetworking
 
 > [[关于virtio|virtual_008]]
+
+> [Network bridge] https://wiki.archlinux.org/index.php/Network_bridge
+
+1. 创建一个bridge
+
+2. 创建 /usr/local/etc/qemu/bridge.conf (例如)
+~~~
+vmridge0
+vmridge1
+~~~
+
+3. 把 /usr/local/libexec/qemu-bridge-helper加上可执行权限
+
+4. 执行命令
