@@ -22,8 +22,14 @@
 ~~~
 vmridge0
 vmridge1
+vmbr0
+br0
+br1
 ~~~
 
 3. 把 /usr/local/libexec/qemu-bridge-helper加上可执行权限
 
 4. 执行命令
+~~~
+sudo qemu-system-x86_64 -m 1000 -enable-kvm [bridge_name].img -net nic -net bridge,br=[bridge_name] -vnc :1
+~~~
