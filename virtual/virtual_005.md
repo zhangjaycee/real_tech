@@ -2,7 +2,7 @@
 
 > 参考
 
->https://my.oschina.net/kelvinxupt/blog/265108#comment-list
+>https://my.oschina.net/kelvinxupt/blog/265108
 
 >https://wiki.archlinux.org/index.php/QEMU
 
