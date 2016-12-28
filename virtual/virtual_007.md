@@ -14,6 +14,8 @@
 
 > [Network bridge] https://wiki.archlinux.org/index.php/Network_bridge
 
+> [KvmWithBridge] https://wiki.ubuntu.com/KvmWithBridge
+
 1. 创建一个bridge
 
 2. 创建 /usr/local/etc/qemu/bridge.conf (例如)
