@@ -4,8 +4,10 @@
 
 > [4.4.1 QEMU支持的网络模式] http://smilejay.com/2012/08/qemu-kvm-networking-mode/
 
-> [[关于virtio|virtual_008]]
-
 > [4.4.2 使用网桥模式] http://smilejay.com/2012/08/kvm-bridge-networking/
 
 > [qemu-kvm桥接网络报错问题] http://www.361way.com/qemu-kvm-bridge-net/4760.html
+
+> [Features/HelperNetworking] http://wiki.qemu.org/Features/HelperNetworking
+
+> [[关于virtio|virtual_008]]
