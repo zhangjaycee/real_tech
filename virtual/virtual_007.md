@@ -1,10 +1,12 @@
 # 关于Qemu/KVM 虚拟机的网络配置
 
-1. 创建一个bridge
-
+# 创建一个bridge
+1. 创建
 > [Network bridge] https://wiki.archlinux.org/index.php/Network_bridge
 
-2. 创建 /usr/local/etc/qemu/bridge.conf (例如)
+2. DHCP (?)
+
+# 创建 /usr/local/etc/qemu/bridge.conf (例如)
 ~~~
 vmridge0
 vmridge1
@@ -13,14 +15,14 @@ br0
 br1
 ~~~
 
-3. 把 /usr/local/libexec/qemu-bridge-helper加上可执行权限
+# 把 /usr/local/libexec/qemu-bridge-helper加上可执行权限
 
-4. 执行命令
+# 执行命令
 ~~~
 sudo qemu-system-x86_64 -m 1000 -enable-kvm [bridge_name].img -net nic -net bridge,br=[bridge_name] -vnc :1
 ~~~
 
-> 参考
+# 参考
 
 > [Tap networking with QEMU] https://wiki.archlinux.org/index.php/QEMU#Tap_networking_with_QEMU
 
