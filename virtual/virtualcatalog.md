@@ -12,6 +12,10 @@
 
 1. [[Qemu|virtual_006]]
 
+1. [[关于Qemu/KVM 虚拟机的网络配置|virtual_007]]
+
+1. [[关于virtio|virtual_008]]
+
 
 
 
