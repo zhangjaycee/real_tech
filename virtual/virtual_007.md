@@ -39,3 +39,5 @@ sudo qemu-system-x86_64 -m 1000 -enable-kvm [bridge_name].img -net nic -net brid
 > [Network bridge] https://wiki.archlinux.org/index.php/Network_bridge
 
 > [KvmWithBridge] https://wiki.ubuntu.com/KvmWithBridge
+
+> [qemu用tap方式启动vm的网络试验(ip route)] http://haoningabc.iteye.com/blog/2324350
