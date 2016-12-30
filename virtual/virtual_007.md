@@ -1,5 +1,12 @@
 # 关于Qemu/KVM 虚拟机的网络配置
 
+# 实现1：
+## 实现效果：
+0. 我的实验平台host有2个以太网卡(有线网卡)和1个无线网卡，实验用了一个有线网卡(enp1s0)和一个无线网卡(enp2s0)网卡host 和 guest 之间都是用的 Ubuntu Server 16.04系统。
+1. guest和host不在一个网段，如：我的host机通过wls2p0无线网卡连接在192.168.3.*网段的无线路由器下；而各guest和host机的ens1p0有线网卡桥接在一起，并都被手动分配了192.168.4.*网段。
+2.  
+
+
 # 创建一个bridge
 1. 创建
 > [Network bridge] https://wiki.archlinux.org/index.php/Network_bridge
