@@ -20,6 +20,8 @@
 
 1. [[关于tar|tools_005]]
 
+1. [[iptables|tools_006]]
+
 1. [[time|]]
 
 1. [[watch&cron&hypervisor|]]
