@@ -10,12 +10,13 @@
 
 1. [[用QEMU创建一个虚拟机|virtual_005]]
 
-1. [[Qemu|virtual_006]]
+1. [[Qemu整体架构|virtual_006]]
 
 1. [[关于Qemu/KVM 虚拟机的网络配置|virtual_007]]
 
 1. [[关于virtio|virtual_008]]
 
+1. [[怎样理解 Qemu 的IO过程|virtual_009]]
 
 
 
