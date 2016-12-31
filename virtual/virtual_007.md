@@ -22,6 +22,8 @@ iface br0 inet static
 address 192.168.4.1 # br0 的 ip 在192.168.4.0\24
 netmask 255.255.255.0 
 #bridge_ports enp1s0 # 实验发现，这里没必要将 host 的实体接口桥接，所以注释了起来
+bridge_ports none # 但是又发现，这里不设置这个参数会导致网桥创建失败，所以我们可以
+                  # 写一个不存在的接口来混过这个检查，比如我这里写了个 none
 bridge_stp on
 ~~~
 
