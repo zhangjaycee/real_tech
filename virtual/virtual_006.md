@@ -17,6 +17,8 @@
 >特别需要注意的是QEMU中全局变量的定义和使用，这些全局变量管理了虚拟机的全部资源包括CPU、内存等，理解这些全局变量的使用，对于理解QEMU的执行有很大的帮助。
 
 
+---
+
 
 > [QEMU Internals: How guest physical RAM works](http://blog.vmsplice.net/2016/01/qemu-internals-how-guest-physical-ram.html) [[翻译](https://www.ibm.com/developerworks/community/blogs/5144904d-5d75-45ed-9d2b-cf1754ee936a/entry/20160921?lang=zh)]
 
@@ -27,3 +29,7 @@
 
 > [QEMU Internals: vhost architecture
 ](http://blog.vmsplice.net/2011/09/qemu-internals-vhost-architecture.html) [[翻译](http://www.cnblogs.com/scottieyuyang/p/6050798.html)]
+
+> [GLib核心应用支持：The Main Event Loop] (http://blog.csdn.net/blueice8601/article/details/6956004)
+
+> [Linux IO模式及 select、poll、epoll详解] (https://segmentfault.com/a/1190000003063859?utm_source=Weibo&utm_medium=shareLink&utm_campaign=socialShare&from=timeline&isappinstalled=0)
