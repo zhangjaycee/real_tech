@@ -24,5 +24,6 @@
 
 * ->[笑便世界] http://smilejay.com/ (关于KVM/Qemu)
 * ->[Stefan Hajnoczi] http://blog.vmsplice.net/ (关于虚拟化)
+* ->[wanthelping的博客] http://blog.csdn.net/wanthelping/ (qemu kvm源码分析)
 
 
