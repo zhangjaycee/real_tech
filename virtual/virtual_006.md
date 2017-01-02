@@ -33,4 +33,5 @@
 > [GLib核心应用支持：The Main Event Loop] (http://blog.csdn.net/blueice8601/article/details/6956004)
 
 > [Linux IO模式及 select、poll、epoll详解] (https://segmentfault.com/a/1190000003063859?utm_source=Weibo&utm_medium=shareLink&utm_campaign=socialShare&from=timeline&isappinstalled=0)
+
 > [各部分架构图] (http://bbs.chinaunix.net/forum.php?mod=viewthread&tid=4073948&extra=&highlight=&page=9)
