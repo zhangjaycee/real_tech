@@ -1,5 +1,9 @@
 ## Vim 
 ### 实用操作
+#### 折叠
+
+> http://blog.sina.com.cn/s/blog_7acf472901017ad6.html
+
 #### 查看路径
 ~~~
 #查看当前文件的绝对路径 
@@ -94,4 +98,6 @@ set cscopequickfix=s-,c-,d-,g-,i-,t-,e-
 "set list
 "set listchars=tab:▸\
 ~~~
+
+
 
