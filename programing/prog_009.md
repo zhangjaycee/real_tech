@@ -23,7 +23,7 @@ configure的时候，参数后边加上`--enable-debug`, e.g.
 ## 调试
 
 ### 基本命令
-e.g.
+
 ~~~bash
 #打开gdb
 > gdb
