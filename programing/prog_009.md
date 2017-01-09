@@ -21,6 +21,8 @@ configure的时候，参数后边加上`--enable-debug`, e.g.
 ```
 
 ## 调试
+
+### 基本命令
 e.g.
 ~~~bash
 #打开gdb
@@ -47,5 +49,6 @@ e.g.
 (gdb) backtrace #或者直接(gdb) bt
 #断点中断后让程序继续跑
 (gdb) continue
-
+#终止程序
+(gdb) kill
 ~~~
