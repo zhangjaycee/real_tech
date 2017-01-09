@@ -29,3 +29,5 @@
 1. [[GNU plot|]]
 
 1. [[du|]]
+
+1. [bash快捷键(外链)](https://github.com/hokein/Wiki/wiki/Bash-Shell常用快捷键)
