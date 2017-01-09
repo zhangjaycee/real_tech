@@ -1,10 +1,8 @@
 # GDB调试
 
-
 ## 安装GDB
 
 `sudo apt install gdb`
-
 
 ## 编译被调试源码
 
@@ -24,7 +22,7 @@ configure的时候，参数后边加上`--enable-debug`, e.g.
 
 ### 基本命令
 
-~~~bash
+```bash
 #打开gdb
 > gdb
 #打开要调试的文件
@@ -47,34 +45,31 @@ configure的时候，参数后边加上`--enable-debug`, e.g.
 (gdb) run arg1 arg2 ...
 #程序到断点中断时，查看函数调用栈
 (gdb) backtrace #或者直接(gdb) bt
+(gdb) thread apply all bt #所有线程的bt, 更适合多线程程序
 #断点中断后让程序继续跑
 (gdb) continue
 #终止程序
 (gdb) kill
-~~~
-
-
-### 输出信息
-
->http://blog.csdn.net/chdhust/article/details/48979283
->
-```bash
-(gdb) set logging file <文件名>
-(gdb) set logging on
-(gdb) thread apply all bt
-(gdb) set logging off
-(gdb) quit
 ```
->详细说明：
 
->1、(gdb) set logging file <文件名>
-设置输出的文件名称
+### 保存断点设置到文件
 
->2、(gdb) set logging on
-输入这个命令后，此后的调试信息将输出到指定文件
+```bash
+#保存断点到某个文件
+save breakpoints <filename>
+#执行某个文件到命令，如果正好是上边保存到断点文件，就是恢复断点啦
+source <filename>
+```
 
->3、(gdb) thread apply all bt
-打印说有线程栈信息
+### 保存调试信息到文件
 
->4、(gdb) set logging off
-输入这个命令，关闭到指定文件的输出
+```bash
+#设置输出的文件
+(gdb) set logging file <filename> 
+#开启log写入文件
+(gdb) set logging on
+#这时调试, 所有信息会保存在文件内, e.g.:
+(gdb) bt
+#暂停log写入文件
+(gdb) set logging off
+```
