@@ -61,7 +61,7 @@ save breakpoints <filename>
 source <filename>
 ```
 
-### 保存调试信息到文件
+### 保存调试输出到文件
 
 ```bash
 #设置输出的文件
