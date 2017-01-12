@@ -7,3 +7,5 @@
 > [coroutines in qemu] http://blog.vmsplice.net/2014/01/coroutines-in-qemu-basics.html
 
 > [Qemu中的协程] http://royluo.org/2016/06/24/qemu-coroutine/
+
+> [Coroutine(协程) 介绍] http://mathslinux.org/?p=234
