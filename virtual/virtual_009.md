@@ -12,8 +12,12 @@ extern BlockDriver bdrv_qcow2;
 ```
 目测`bdrv_file`才是raw镜像文件的块设备驱动，在`block/raw-posix.c`和`block/raw-win32.c`中都有定义；而`bdrv_raw`只在`block/raw_bsd.c`中定义，关于`raw_bsd.c`这个文件名可能造成一些误解([详情](https://lists.gnu.org/archive/html/qemu-devel/2016-12/msg00286.html))；`bdrc_qcow2`的定义在`block/qcow2.c`中。
 
-
-
+定义这些驱动的文件名貌似会在2.9版本中都被修改([详情](https://lists.gnu.org/archive/html/qemu-devel/2016-12/msg00284.html))，这样也防止造成更多混乱，修改如下：
+```
+ block/{raw-posix.c => file-posix.c}
+ block/{raw-win32.c => file-win32.c}        
+ block/{raw_bsd.c => raw-format.c}
+```
 
 
 >  摘自：[qemu-kvm0.12.1.2原生态读写] http://blog.chinaunix.net/uid-26000137-id-4425615.html
