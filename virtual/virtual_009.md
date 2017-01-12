@@ -1,4 +1,17 @@
 # 怎样理解Qemu的I/O流程
+qemu版本： 2.8.0
+### 块设备驱动BlockDriver
+
+在`include/block/block_int.h`中声明了三种块设备驱动
+```cpp
+/* Essential block drivers which must always be statically linked into qemu, and
+ * which therefore can be accessed without using bdrv_find_format() */
+extern BlockDriver bdrv_file;
+extern BlockDriver bdrv_raw;
+extern BlockDriver bdrv_qcow2;
+```
+目测`bdrv_file`才是raw镜像文件的块设备驱动，在`block/raw-posix.c`和`block/raw-win32.c`中都有定义。而`bdrv_raw`只在`block/raw_bsd.c`中定义，关于raw_bsd.c这个文件名可能造成一些误解([详情](https://lists.gnu.org/archive/html/qemu-devel/2016-12/msg00286.html))。
+
 
 >  摘自：[qemu-kvm0.12.1.2原生态读写] http://blog.chinaunix.net/uid-26000137-id-4425615.html
 
