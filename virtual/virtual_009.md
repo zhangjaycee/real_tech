@@ -21,7 +21,77 @@ extern BlockDriver bdrv_qcow2;
  block/{raw_bsd.c => raw-format.c}
 ```
 这样修改防止造成混乱：因为驱动分两种驱动：protocol block driver和format block driver,现在还不太理解，有的信息是：
+
+1. 
 > main difference should be that bdrv_file_open() is invoked for protocol block drivers, whereas bdrv_open() is invoked for format block drivers（[参考 qemu-devel 的一个讨论](https://lists.gnu.org/archive/html/qemu-devel/2014-10/msg01938.html)）
+
+2. raw-posix.c和raw-win32.c 中的`bdrv_file`中定义了`.format_name:"file"`和`.protocol_name:"file"`, 属于protocol block driver；而raw_bsd.c和qcow.c、qcow2.c等文件中的`bdrv_raw`、`bdrv_qcow2`等这些数据结构只定义了`.format_name:"raw"` / `.format_name:"qcow2"` 这些，属于format block driver。`bdrv_file`和`bdrv_raw`数据结构的定义如下：
+```cpp
+// block/raw-posix.c
+
+BlockDriver bdrv_file = {
+    .format_name = "file",
+    .protocol_name = "file",
+    .instance_size = sizeof(BDRVRawState),
+    .bdrv_needs_filename = true,
+    .bdrv_probe = NULL, /* no probe for protocols */
+    .bdrv_parse_filename = raw_parse_filename,
+    .bdrv_file_open = raw_open,
+    .bdrv_reopen_prepare = raw_reopen_prepare,
+    .bdrv_reopen_commit = raw_reopen_commit,
+    .bdrv_reopen_abort = raw_reopen_abort,
+    .bdrv_close = raw_close,
+    .bdrv_create = raw_create,
+    .bdrv_has_zero_init = bdrv_has_zero_init_1,
+    .bdrv_co_get_block_status = raw_co_get_block_status,
+    .bdrv_co_pwrite_zeroes = raw_co_pwrite_zeroes,
+
+    .bdrv_co_preadv         = raw_co_preadv,
+    .bdrv_co_pwritev        = raw_co_pwritev,
+    .bdrv_aio_flush = raw_aio_flush,
+    .bdrv_aio_pdiscard = raw_aio_pdiscard,
+    .bdrv_refresh_limits = raw_refresh_limits,
+    .bdrv_io_plug = raw_aio_plug,
+    .bdrv_io_unplug = raw_aio_unplug,
+
+    .bdrv_truncate = raw_truncate,
+    .bdrv_getlength = raw_getlength,
+    .bdrv_get_info = raw_get_info,
+    .bdrv_get_allocated_file_size
+                        = raw_get_allocated_file_size,
+
+    .create_opts = &raw_create_opts,
+};
+
+// block/raw_bsd.c
+
+BlockDriver bdrv_raw = {
+    .format_name          = "raw",
+    .bdrv_probe           = &raw_probe,
+    .bdrv_reopen_prepare  = &raw_reopen_prepare,
+    .bdrv_open            = &raw_open,
+    .bdrv_close           = &raw_close,
+    .bdrv_create          = &raw_create,
+    .bdrv_co_preadv       = &raw_co_preadv,
+    .bdrv_co_pwritev      = &raw_co_pwritev,
+    .bdrv_co_pwrite_zeroes = &raw_co_pwrite_zeroes,
+    .bdrv_co_pdiscard     = &raw_co_pdiscard,
+    .bdrv_co_get_block_status = &raw_co_get_block_status,
+    .bdrv_truncate        = &raw_truncate,
+    .bdrv_getlength       = &raw_getlength,
+    .has_variable_length  = true,
+    .bdrv_get_info        = &raw_get_info,
+    .bdrv_refresh_limits  = &raw_refresh_limits,
+    .bdrv_probe_blocksizes = &raw_probe_blocksizes,
+    .bdrv_probe_geometry  = &raw_probe_geometry,
+    .bdrv_media_changed   = &raw_media_changed,
+    .bdrv_eject           = &raw_eject,
+    .bdrv_lock_medium     = &raw_lock_medium,
+    .bdrv_aio_ioctl       = &raw_aio_ioctl,
+    .create_opts          = &raw_create_opts,
+    .bdrv_has_zero_init   = &raw_has_zero_init
+};
+```
 
 ### io流走向
 #### 摘抄
