@@ -1,6 +1,6 @@
 # 怎样理解Qemu的I/O流程
 ### 版本
-qemu版本： 2.8.0
+qemu版本： 2.7.0
 
 ### 块设备驱动BlockDriver
 
