@@ -111,7 +111,7 @@ BlockDriver bdrv_raw = {
 ~~~
 
 ---------------------------------------------------------------------------------------
-1. start_thread --> kvm_handle_io --> ... --> blk_aio_prwv --> [submit blk_aio_read_entry() to coroutine]
+1.1.(ide) start_thread --> kvm_handle_io --> ... --> blk_aio_prwv --> [submit blk_aio_read_entry() to coroutine]
 ---------------------------------------------------------------------------------------
 
 #0  blk_aio_prwv (blk=0x555556a6fc60, offset=0x0, bytes=0x200, qiov=0x7ffff0059e70, co_entry=0x555555b58df1 <blk_aio_read_entry>, flags=0, cb=0x555555997813 <ide_buffered_readv_cb>, opaque=0x7ffff0059e50) at block/block-backend.c:995
@@ -133,6 +133,27 @@ BlockDriver bdrv_raw = {
 #16 qemu_kvm_cpu_thread_fn (arg=0x555556a802a0) at /home/jaycee/qemu-io_test/qemu-2.8.0/cpus.c:998
 #17 start_thread (arg=0x7ffff5f2a700) at pthread_create.c:333
 #18 clone () at ../sysdeps/unix/sysv/linux/x86_64/clone.S:109
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+1.2.(virtio) main --> main_loop --> ... --> glib_pollfds_poll --> ... --> virtio_queue_host_notifier_aio_read  --> ... --> blk_aio_prwv --> [submit blk_aio_read_entry() to coroutine]
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+#0  blk_aio_prwv (blk=0x555556a6ff30, offset=0x0, bytes=0x200, qiov=0x555557dabe40, co_entry=0x555555b58df1 <blk_aio_read_entry>, flags=0, cb=0x5555557ce850 <virtio_blk_rw_complete>, opaque=0x555557dabde0) at block/block-backend.c:995
+#1  0x0000555555b59168 in blk_aio_preadv (blk=0x555556a6ff30, offset=0x0, qiov=0x555557dabe40, flags=0, cb=0x5555557ce850 <virtio_blk_rw_complete>, opaque=0x555557dabde0) at block/block-backend.c:1100
+#2  0x00005555557cf18d in submit_requests (blk=0x555556a6ff30, mrb=0x7fffffffdef0, start=0x0, num_reqs=0x1, niov=0xffffffff) at /home/jaycee/qemu-io_test/qemu-2.8.0/hw/block/virtio-blk.c:361
+#3  0x00005555557cf262 in virtio_blk_submit_multireq (blk=0x555556a6ff30, mrb=0x7fffffffdef0) at /home/jaycee/qemu-io_test/qemu-2.8.0/hw/block/virtio-blk.c:391
+#4  0x00005555557cfca2 in virtio_blk_handle_vq (s=0x555556a54530, vq=0x555557ce6800) at /home/jaycee/qemu-io_test/qemu-2.8.0/hw/block/virtio-blk.c:600
+#5  0x00005555557d16a6 in virtio_blk_data_plane_handle_output (vdev=0x555556a54530, vq=0x555557ce6800) at /home/jaycee/qemu-io_test/qemu-2.8.0/hw/block/dataplane/virtio-blk.c:158
+#6  0x00005555558149c4 in virtio_queue_notify_aio_vq (vq=0x555557ce6800) at /home/jaycee/qemu-io_test/qemu-2.8.0/hw/virtio/virtio.c:1243
+#7  0x0000555555816bf1 in virtio_queue_host_notifier_aio_read (n=0x555557ce6860) at /home/jaycee/qemu-io_test/qemu-2.8.0/hw/virtio/virtio.c:2046
+#8  0x0000555555b0ff81 in aio_dispatch (ctx=0x555556a48530) at aio-posix.c:325
+#9  0x0000555555b02390 in aio_ctx_dispatch (source=0x555556a48530, callback=0x0, user_data=0x0) at async.c:254
+#10 0x00007ffff76f31a7 in g_main_context_dispatch () from /lib/x86_64-linux-gnu/libglib-2.0.so.0
+#11 0x0000555555b0dfdd in glib_pollfds_poll () at main-loop.c:215
+#12 0x0000555555b0e0c4 in os_host_main_loop_wait (timeout=0x2ef996c8) at main-loop.c:260
+#13 0x0000555555b0e171 in main_loop_wait (nonblocking=0x0) at main-loop.c:508
+#14 0x00005555558db07e in main_loop () at vl.c:1966
+#15 0x00005555558e255c in main (argc=0xb, argv=0x7fffffffe618, envp=0x7fffffffe678) at vl.c:4684
+
 
 
 ---------------------------------------------------------------------------------------
