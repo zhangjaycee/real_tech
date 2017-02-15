@@ -12,7 +12,7 @@
 
 > [Virtio：针对 Linux 的 I/O 虚拟化框架](https://www.ibm.com/developerworks/cn/linux/l-virtio/)
 
-
+> [[Linux KVM]半虚拟化驱动（Paravirtualization Driver）](https://godleon.github.io/blog/2016/08/20/KVM-Paravirtualization-Drivers)
 
 对于qemu/kvm虚拟机来说，用不用virtio，决定了我们的虚拟化是半虚拟化还是全虚拟化。
 
