@@ -207,3 +207,7 @@ BlockDriver bdrv_raw = {
 ---
 
 > [[Qemu-devel] qemu io path] https://lists.gnu.org/archive/html/qemu-devel/2016-01/msg04699.html
+
+> [KVM虚拟机IO处理过程(一) ----Guest VM I/O 处理过程](http://blog.csdn.net/dashulu/article/details/16820281)
+
+> [KVM虚拟机IO处理过程(二) ----QEMU/KVM I/O 处理过程](http://blog.csdn.net/dashulu/article/details/17090293)
