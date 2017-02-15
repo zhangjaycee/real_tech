@@ -6,9 +6,13 @@
 
 > [Virtio基本原理(KVM半虚拟化驱动)](https://my.oschina.net/davehe/blog/130124)
 
+> [(KVM连载)5.1.1 VIRTIO概述和基本原理（KVM半虚拟化驱动）](http://smilejay.com/2012/11/virtio-overview/)
+
 > [Virtio 基本概念和设备操作](http://www.ibm.com/developerworks/cn/linux/1402_caobb_virtio/)
 
 > [Virtio：针对 Linux 的 I/O 虚拟化框架](https://www.ibm.com/developerworks/cn/linux/l-virtio/)
+
+
 
 对于qemu/kvm虚拟机来说，用不用virtio，决定了我们的虚拟化是半虚拟化还是全虚拟化。
 
