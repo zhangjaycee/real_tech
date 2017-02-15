@@ -20,6 +20,8 @@
 
 1. [[从源码编译Qemu的流程及简述|virtual_010]]
 
+1. [[Qemu实际应用的各种小技巧|virtual_011]]
+
 #### [博客推荐]
 
 * ->[笑便世界] http://smilejay.com/ (关于KVM/Qemu)
