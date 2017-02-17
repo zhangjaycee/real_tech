@@ -10,6 +10,8 @@
 
 1. [[关于InnoDB bufferpool的flush method|db_005]]
 
+1. [[Mysql如何使用裸设备？|db_006]]
+
 1. [[如何理解MySQL的Query Cache]]
 
 
