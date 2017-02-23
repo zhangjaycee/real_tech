@@ -35,4 +35,12 @@ mount -t ext4 /dev/vdb /mnt/
 当然，该方法虽然简单，但它也有缺点：宿主机和虚拟机文件传输不能实时传输。如果需要传输新文件，需要重启虚拟机。
 
 
+## 2. QEMU Monitor
+
+> https://en.wikibooks.org/wiki/QEMU/Monitor
+
+在虚拟机运行过程中，QEMU提供一个Monitor控制台，用于管理运行中的Guest的外设等操作。
+
+
+
 
