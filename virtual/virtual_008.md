@@ -30,7 +30,7 @@
 virtio提高了io效率，（？也为host和guest间更复杂的合作机制实现提供了便利）
 
 
-### 代码
+### 源码以及结构
 
 * linux 内核与virtio、virtio-blk相关的文件与目录结构：
 
@@ -71,4 +71,17 @@ drivers/vhost/
 	├── vhost.h
 	└── vringh.c
 
+```
+
+
+* qemu中与virtio、virtio-blk相关的文件与目录结构：
+
+```
+./hw/block/dataplane/virtio-blk.c
+./hw/block/dataplane/virtio-blk.h
+./hw/block/virtio-blk.c
+./hw/virtio/virtio.c
+./include/hw/virtio
+./include/hw/virtio/virtio-blk.h
+./include/hw/virtio/virtio.h
 ```
