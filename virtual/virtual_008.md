@@ -20,8 +20,53 @@
 
 > [virtio-blk浅析](http://www.2cto.com/os/201408/329744.html)
 
+
+### 概述
+
 对于qemu/kvm虚拟机来说，用不用virtio，决定了我们的虚拟化是半虚拟化还是全虚拟化。
 
 决定虚拟机是半虚拟还是全虚拟的性质转变的标准只有一个：Guest机知不知道自己是一个虚拟机。具体来说，不使用virtio，虚拟机会像在真实物理环境下运行一样地运行——它不认为它是虚拟机；而使用virtio，就是让两部分virtio程序的互相通信，这两部分程序分别是前端驱动(frontend, Guest中)和后端设备(backend, Host中)，这样因为Guest中有了virtio的frontend部分，所以它的运行和物理机环境下有了区别，Guest按照一个使用virtio的虚拟机的方式运行——它知道了它是一个虚拟机。
 
 virtio提高了io效率，（？也为host和guest间更复杂的合作机制实现提供了便利）
+
+
+### 代码
+
+* linux 内核与virtio、virtio-blk相关的文件与目录结构：
+
+```
+include/linux
+	├── virtio.h
+	├── virtio_byteorder.h
+	├── virtio_caif.h
+	├── virtio_config.h
+	├── virtio_console.h
+	├── virtio_mmio.h
+	└── virtio_ring.h
+
+drivers/block/virtio_blk.c
+drivers/virtio/
+	├── Kconfig
+	├── Makefile
+	├── config.c
+	├── virtio.c
+	├── virtio_balloon.c
+	├── virtio_input.c
+	├── virtio_mmio.c
+	├── virtio_pci_common.c
+	├── virtio_pci_common.h
+	├── virtio_pci_legacy.c
+	├── virtio_pci_modern.c
+	└── virtio_ring.c
+drivers/vhost/
+	├── Kconfig
+	├── Makefile
+	├── net.c
+	├── scsi.c
+	├── test.c
+	├── test.h
+	├── vhost.c
+	├── vhost.h
+	└── vringh.c
+
+```
