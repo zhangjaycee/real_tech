@@ -77,11 +77,11 @@ drivers/vhost/
 * qemu中与virtio、virtio-blk相关的文件与目录结构：
 
 ```
-./hw/block/dataplane/virtio-blk.c
-./hw/block/dataplane/virtio-blk.h
-./hw/block/virtio-blk.c
-./hw/virtio/virtio.c
-./include/hw/virtio
-./include/hw/virtio/virtio-blk.h
-./include/hw/virtio/virtio.h
+hw/block/dataplane/virtio-blk.c
+hw/block/dataplane/virtio-blk.h
+hw/block/virtio-blk.c
+hw/virtio/virtio.c
+include/hw/virtio
+include/hw/virtio/virtio-blk.h
+include/hw/virtio/virtio.h
 ```
