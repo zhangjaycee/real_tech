@@ -35,6 +35,11 @@ virtio提高了io效率，（？也为host和guest间更复杂的合作机制实
 * linux 内核与virtio、virtio-blk相关的文件与目录结构：
 
 ```
+
+include/uapi/linux
+	├── virtio_blk.h
+	└── virtio_ring.h
+
 include/linux
 	├── virtio.h
 	├── virtio_byteorder.h
