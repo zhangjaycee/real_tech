@@ -1,5 +1,6 @@
 # 内核源码的目录结构
 
+## 1. 整体结构
 > http://www.cnblogs.com/youngerchina/p/5624501.html
 
 以下为摘抄：
@@ -101,3 +102,9 @@ block层的实现。最初block层的代码一部分位于drivers目录，一部
 
 实现了用于打包和压缩的的cpio等。
 ```
+
+## 2.include/uapi目录是干什么的
+
+> [The UAPI header file split](https://lwn.net/Articles/507794/) ([翻译](http://blog.jcix.top/2017-02-24/the_uapi_header_file_split/))
+
+简单来说，把暴漏给用户的api接口都移到了uapi目录中的相应文件中。
