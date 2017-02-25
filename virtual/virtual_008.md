@@ -89,6 +89,8 @@ hw/virtio/virtio.c
 include/hw/virtio
 include/hw/virtio/virtio-blk.h
 include/hw/virtio/virtio.h
+include/standard-headers/linux/virtio_blk.h
+include/standard-headers/linux/virtio_ring.h
 ```
 
 * include/linux/virtio.h
