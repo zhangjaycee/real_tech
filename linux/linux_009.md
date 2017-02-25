@@ -108,3 +108,8 @@ block层的实现。最初block层的代码一部分位于drivers目录，一部
 > [The UAPI header file split](https://lwn.net/Articles/507794/) ([翻译](http://blog.jcix.top/2017-02-24/the_uapi_header_file_split/))
 
 简单来说，把暴漏给用户的api接口都移到了uapi目录中的相应文件中。
+
+## 3.samples/ 和 tools/ 文件夹是干什么的
+
+> http://unix.stackexchange.com/questions/78714/what-are-some-of-these-directories-in-the-linux-kernel-src
+
