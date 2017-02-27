@@ -8,7 +8,7 @@
 
 > [(KVM连载)5.1.1 VIRTIO概述和基本原理（KVM半虚拟化驱动）](http://smilejay.com/2012/11/virtio-overview/)
 
-> [Virtio 基本概念和设备操作](http://www.ibm.com/developerworks/cn/linux/1402_caobb_virtio/)
+> [Virtio 基本概念和设备操作 ⭐️ ] (http://www.ibm.com/developerworks/cn/linux/1402_caobb_virtio/)
 
 > [Virtio：针对 Linux 的 I/O 虚拟化框架](https://www.ibm.com/developerworks/cn/linux/l-virtio/)
 
@@ -18,7 +18,7 @@
 
 > [Centos6下Virtio-SCSI(multi-queues)/Virtio-SCSI/Virtio-blk性能对比](http://blog.csdn.net/bobpen/article/details/41515119)
 
-> [virtio-blk浅析](http://www.2cto.com/os/201408/329744.html)
+> [virtio-blk浅析 ⭐️ ](http://www.2cto.com/os/201408/329744.html)
 
 
 ### 概述
