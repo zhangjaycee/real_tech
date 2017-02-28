@@ -20,6 +20,11 @@
 
 > [virtio-blk浅析 ⭐️ ](http://www.2cto.com/os/201408/329744.html)
 
+> [QEMU-KVM I/O性能优化之Virtio-blk-data-plane](http://blog.sina.com.cn/s/blog_9c835df30102vpgd.html)
+
+> [virtio-blk后端处理-请求接收、解析、提交
+](http://blog.csdn.net/LPSTC123/article/details/45171515)⭐️
+
 
 ### 概述
 
