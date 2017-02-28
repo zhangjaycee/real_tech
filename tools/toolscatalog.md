@@ -28,8 +28,8 @@
 
 1. [[GNU plot|]]
 
-1. [[du|]]
+1. [[du|tools_007]]
 
 1. [bash快捷键(外链)](https://github.com/hokein/Wiki/wiki/Bash-Shell常用快捷键)
 
-1. [[纯文本的流程图是怎么画出来的|tools_007]]
+1. [[纯文本的流程图是怎么画出来的|tools_008]]
