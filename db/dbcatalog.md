@@ -12,6 +12,8 @@
 
 1. [[有关Mysql的配置|db_006]]
 
+1. [[MySQL性能测试|db_007]]
+
 1. [[如何理解MySQL的Query Cache]]
 
 
