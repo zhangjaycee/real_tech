@@ -41,6 +41,52 @@ mount -t ext4 /dev/vdb /mnt/
 
 在虚拟机运行过程中，QEMU提供一个Monitor控制台，用于管理运行中的Guest的外设等操作。
 
+在命令行启动虚拟机时，可以在命令后加上`-monitor stdio`,这样就可以在终端进行控制了。
+
+* 虚拟机管理的常用命令：
+```bash
+#挂起虚拟机：
+(qemu)stop
+#恢复刚挂起的虚拟机：
+(qemu)cont
+#马上关闭qemu：
+(qemu)q 或
+(qemu)quit
+#模拟按物理按键reset重启虚拟机：
+(qemu)system_reset
+#模拟按物理按键power关闭虚拟机：
+(qemu)system_powerdown
+```
+
+* 虚拟机状态信息查询的相关命令：
+```bash
+(qemu)info [option]
+
+#options:
+
+#block – block devices such as hard drives, floppy drives, cdrom
+#blockstats – read and write statistics on block devices
+#capture – active capturing (audio grabs)
+#history – console command history
+#irq – statistics on interrupts (if compiled into QEMU)
+#jit – statistics on QEMU's Just In Time compiler
+#kqemu – whether the kqemu kernel module is being utilised
+#mem – list the active virtual memory mappings
+#mice – mouse on the guest that is receiving events
+#network – network devices and VLANs
+#pci – PCI devices being emulated
+#pcmcia – PCMCIA card devices
+#pic – state of i8259 (PIC)
+#profile – info on the internal profiler, if compiled into QEMU
+#registers – the CPU registers
+#snapshots – list the VM snapshots
+#tlb – list the TLB (Translation Lookaside Buffer), i.e. mappings #between physical memory and virtual memory
+#usb – USB devices on the virtual USB hub
+#usbhost – USB devices on the host OS
+#uuid – Unique id of the VM
+#version – QEMU version number
+#vnc – VNC information
+```
 
 
 
