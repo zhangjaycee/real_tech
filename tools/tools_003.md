@@ -10,7 +10,13 @@ sysbench 分为三个阶段 prepare run cleanup，在run之后会打印出测试
 
 * 测试OLTP需要注意：
 
-对于默认情况下安装的mysql，如果需要用sysbench测得oltp数据，需要指明用户名、密码（否则无法登陆）和用于测试的表（sysbench默认的sbtest表在mysql并未默认创建）。
+对于默认情况下安装的mysql，如果需要用sysbench测得oltp数据，需要指明用户名、密码（否则无法登陆）和用于测试的数据库（sysbench默认的sbtest数据库在mysql并未默认创建）。
+
+如果用默认的sbtest作为测试数据库，应该写：
+```bash
+mysql -u root -p
+(mysql) create database sbtest;
+```
 
 
 ## iometer
