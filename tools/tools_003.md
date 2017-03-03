@@ -10,7 +10,10 @@ sysbench 分为三个阶段 prepare run cleanup，在run之后会打印出测试
 
 * 测试OLTP需要注意：
 
-对于默认情况下安装的mysql，如果需要用sysbench测得oltp数据，需要指明用户名、密码（否则无法登陆）和用于测试的数据库（sysbench默认的sbtest数据库在mysql并未默认创建）。
+1. 对于默认情况下安装的mysql，如果需要用sysbench测得oltp数据，需要指明用户名、密码（否则无法登陆）和用于测试的数据库（sysbench默认的sbtest数据库在mysql并未默认创建）。
+
+2. prepare时`sysbench --max-requests=2000 --test=oltp --mysql-user=root --mysql-password=1234 --oltp-table-size=10000000 prepare`就可以成功创建10000000个records，但是`sysbench --max-requests=2000 --test=oltp --mysql-user=root --oltp-table-size=10000000 --mysql-password=1234  prepare`一个record也不会创建，只是创建了table，可能是因为--oltp-table-size选项不可以夹在mysql账号和密码之间。。。
+
 
 如果用默认的sbtest作为测试数据库，应该写：
 ```bash
