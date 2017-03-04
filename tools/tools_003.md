@@ -14,6 +14,8 @@ sysbench 分为三个阶段 prepare run cleanup，在run之后会打印出测试
 
 2. prepare时`sysbench --max-requests=2000 --test=oltp --mysql-user=root --mysql-password=1234 --oltp-table-size=10000000 prepare`就可以成功创建10000000个records，但是`sysbench --max-requests=2000 --test=oltp --mysql-user=root --oltp-table-size=10000000 --mysql-password=1234  prepare`一个record也不会创建，只是创建了table，可能是因为--oltp-table-size选项不可以夹在mysql账号和密码之间。。。
 
+3. 0.4版本是ubuntu apt会安装的版本，但是从0.5开始，sysbench才支持多表测试，需要从github下载源码编译安装。
+
 
 如果用默认的sbtest作为测试数据库，应该写：
 ```bash
