@@ -25,6 +25,8 @@
 > [virtio-blk后端处理-请求接收、解析、提交
 ](http://blog.csdn.net/LPSTC123/article/details/45171515)⭐️
 
+> [Virtio 原理与Guest OS driver](http://blog.csdn.net/wanthelping/article/details/47069429)⭐️
+
 
 ### 概述
 
