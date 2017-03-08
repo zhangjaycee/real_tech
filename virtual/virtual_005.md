@@ -47,3 +47,10 @@ qemu-system-x86_64 -m [memory_size] -enable-kvm [img_name].img -cdrom [system_is
 ```
 
 
+### 5. 远程服务器安装和使用需要注意
+
+* 可以使用`-curses`来在当前终端显示虚拟机终端文字界面。要使用这个特性，需要在（Ubuntu为例）编译QEMU前安装`libcurses5-dev`和`libcursesw5-dev`两个包。
+
+* 可以使用`-daemonize`来使QEMU后台运行，这样关闭启动终端也不会中断虚拟机运行了。
+
+
