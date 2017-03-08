@@ -50,6 +50,28 @@ qemu-system-x86_64 -m [memory_size] -enable-kvm [img_name].img -cdrom [system_is
 ### 5. 远程服务器安装和使用需要注意
 
 * 可以使用`-curses`来在当前终端显示虚拟机终端文字界面。要使用这个特性，需要在（Ubuntu为例）编译QEMU前安装`libcurses5-dev`和`libcursesw5-dev`两个包。
+对于Ubuntu作为guest系统，需要注意，默认不支持curses，需要更改两个grub参数。
+
+>http://blog.zorinaq.com/ubuntu-1004-as-a-guest-under-qemukvm-using-the-curses-driver/
+
+>Jonathan wrote: I didnt need to blacklist any modules, grub and sort this all for us:
+
+>In
+
+>/etc/default/grub
+
+>Add nomodeset to this line to prevent most things changing resolution:
+
+>GRUB_CMDLINE_LINUX_DEFAULT="nomodeset"
+
+>Uncomment this line to keep grub in text mode:
+
+>GRUB_TERMINAL=console
+
+>run 'update-grub' to appy your changes.
+
+>reboot and enjoy
+>07 Feb 2015 09:13 UTC
 
 * 可以使用`-daemonize`来使QEMU后台运行，这样关闭启动终端也不会中断虚拟机运行了。
 
