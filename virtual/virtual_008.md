@@ -85,6 +85,8 @@ drivers/vhost/
 > [virtio-blk后端处理-请求接收、解析、提交
 ](http://blog.csdn.net/LPSTC123/article/details/45171515)
 
+> [Qemu-kvm的ioeventfd创建与触发的大致流程](http://blog.csdn.net/LPSTC123/article/details/45111949)
+
 后端设备已经在QEMU实现，所以要分析的代码在QEMU中。
 
 * qemu中与virtio、virtio-blk相关的文件与目录结构：
