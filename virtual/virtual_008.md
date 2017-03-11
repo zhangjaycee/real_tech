@@ -82,8 +82,6 @@ drivers/vhost/
 ### 后端设备分析（QEMU）
 
 
-> [[Linux KVM]半虚拟化驱动（Paravirtualization Driver）](https://godleon.github.io/blog/2016/08/20/KVM-Paravirtualization-Drivers)
-
 > [virtio-blk后端处理-请求接收、解析、提交
 ](http://blog.csdn.net/LPSTC123/article/details/45171515)
 
