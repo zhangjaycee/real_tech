@@ -140,4 +140,6 @@ ping baidu.com -c 3 成功
 
 > [KvmWithBridge] https://wiki.ubuntu.com/KvmWithBridge
 
+> [CentOS网络配置] http://blog.chinaunix.net/uid-26987379-id-3477008.html
+
 
