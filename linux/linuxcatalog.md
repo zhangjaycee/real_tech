@@ -13,3 +13,4 @@
 1. [[Linux驱动模块|linux_008]]
 1. [[内核源码的目录结构|linux_009]]
 1. [[分散/聚集 I/O(scatter-gather I/O)|linux_010]]
+1. [[Linux下如何创建分区、格式化分区、挂载分区|linux_011]]
