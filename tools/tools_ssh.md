@@ -42,3 +42,8 @@ server: vim ~/.ssh/authorized_keys #然后粘贴保存
 ```
 
 3.完成
+
+### 注意
+对于非root用户，文件的权限可能导致出现问题：
+
+> [linux 非root用户 普通用户ssh 登录 解决](http://www.blogjava.net/hello-yun/archive/2012/05/16/378329.html)
