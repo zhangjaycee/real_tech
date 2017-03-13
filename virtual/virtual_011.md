@@ -88,5 +88,34 @@ mount -t ext4 /dev/vdb /mnt/
 #vnc – VNC information
 ```
 
+## 3. Host直接通过localhost(127.0.0.1)来访问Guest的ssh/scp服务？
+
+只要通过端口映射，将host的22端口映射为localhost的其他端口：
+```
+(bash)$ qemu-system-x86_64 ...... [-net nic -net user,hostfwd=tcp::2333-:22] ......
+```
 
 
+## 4. 后台运行QEMU
+
+两种方法，一种不好用的话可以尝试另一种。
+```
+(bash)$ qemu-system-x86_64 ...... [-daemonlize] ......
+#或者更通用的方法
+(bash)$ nohup qemu-system-x86_64 ...... &
+```
+
+
+## 5. 文字界面访问Guest
+可以使用-curses来在当前终端显示虚拟机终端文字界面。要使用这个特性，需要在（Ubuntu为例）编译QEMU前安装libcurses5-dev和libcursesw5-dev两个包。 对于Ubuntu作为guest系统，需要注意，默认不支持curses，需要更改两个grub参数。
+```
+#In /etc/default/grub :
+#Add nomodeset to this line to prevent most things changing resolution:
+#GRUB_CMDLINE_LINUX_DEFAULT="nomodeset"
+#Uncomment this line to keep grub in text mode:
+#GRUB_TERMINAL=console
+
+(bash)$ update-grub
+(bash)$ nohup qemu-system-x86_64 ... [-curses] ... 
+```
+使用过程中，`Esc`+`2`调出QEMU monitor `Esc`+`1`返回curses文字界面。
