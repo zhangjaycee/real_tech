@@ -52,7 +52,7 @@ qemu-system-x86_64 -m [memory_size] -enable-kvm [img_name].img -cdrom [system_is
 * 可以使用`-curses`来在当前终端显示虚拟机终端文字界面。要使用这个特性，需要在（Ubuntu为例）编译QEMU前安装`libcurses5-dev`和`libcursesw5-dev`两个包。
 对于Ubuntu作为guest系统，需要注意，默认不支持curses，需要更改两个grub参数。
 
->http://blog.zorinaq.com/ubuntu-1004-as-a-guest-under-qemukvm-using-the-curses-driver/
+> http://blog.zorinaq.com/ubuntu-1004-as-a-guest-under-qemukvm-using-the-curses-driver/
 
 >Jonathan wrote: I didnt need to blacklist any modules, grub and sort this all for us:
 
