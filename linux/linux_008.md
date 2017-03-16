@@ -5,3 +5,5 @@
 >[[原创] 写一个块设备驱动 ] (http://bbs.chinaunix.net/thread-2017377-1-1.html)
 
 >[linux initcall机制](http://blog.sina.com.cn/s/blog_8bc8cbd10102w436.html)
+
+>[Linux Device和Driver注册过程，以及Probe的时机](http://blog.csdn.net/thl789/article/details/6723350)
