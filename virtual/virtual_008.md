@@ -135,3 +135,5 @@ include/standard-headers/linux/virtio_ring.h
 > [QEMU-KVM I/O性能优化之Virtio-blk-data-plane](http://blog.sina.com.cn/s/blog_9c835df30102vpgd.html)
 
 > [read 系统调用剖析](https://www.ibm.com/developerworks/cn/linux/l-cn-read/)
+
+> [virtio驱动如何同设备交互](http://blog.csdn.net/qiushanjushi/article/details/38404341)
