@@ -35,6 +35,8 @@ virtio提高了io效率，（？也为host和guest间更复杂的合作机制实
 
 > [virtio前端驱动详解](http://www.cnblogs.com/ck1020/p/6044134.html)
 
+> [Linux Multi-Queue Block IO Queueing Mechanism (blk-mq)](https://www.thomas-krenn.com/en/wiki/Linux_Multi-Queue_Block_IO_Queueing_Mechanism_(blk-mq))
+
 前端驱动已经并到Linux内核主线了，所以要去内核找相关代码分析。
 
 * linux 内核与virtio、virtio-blk相关的文件与目录结构：
