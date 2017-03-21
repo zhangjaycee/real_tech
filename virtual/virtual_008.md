@@ -85,6 +85,89 @@ drivers/vhost/
 
 ```
 
+* 部分相关的重要数据结构
+
+```
+drivers/virtio/virtio_ring.c                                        drivers/block/virtio_blk.c                                          include/linux/virtio.h                                       include/linux/virtio_config.h                                    include/linux/device.h
+
+ +---------------------------------------------------------------+    +--------------------------------------------------------------+    +-------------------------------------------+                 +-----------------------------------------------------------+      +----------------------------------------------------------------------+
+ |                                                               |    |   struct virtio_blk {                                        |    |  struct virtqueue {                       |                 |                                                           |      |  struct device {                                                     |
+ |  struct vring_virtqueue {                                     |    |    struct virtio_device *vdev;                               |    |   struct list_head list;                  |                 |                                                           |      |   struct device  *parent;                                            |
+ |   struct virtqueue vq;                                        |    |                                                              |    |   void (*callback)(struct virtqueue *vq); |                 | struct virtio_config_ops {                                |      |                                                                      |
+ |                                                               |    |    /* The disk structure for the kernel. */                  |    |   const char *name;                       |                 |  void (*get)(struct virtio_device *vdev, unsigned offset, |      |   struct device_private *p;                                          |
+ |   /* Actual memory layout for this queue */                   |    |    struct gendisk *disk;                                     |    |   struct virtio_device *vdev;             |                 |       void *buf, unsigned len);                           |      |                                                                      |
+ |   struct vring vring;                                         |    |                                                              |    |   unsigned int index;                     |                 |  void (*set)(struct virtio_device *vdev, unsigned offset, |      |   struct kobject kobj;                                               |
+ |                                                               |    |    /* Block layer tags. */                                   |    |   unsigned int num_free;                  |                 |       const void *buf, unsigned len);                     |      |   const char  *init_name; /* initial name of the device */           |
+ |   /* Can we use weak barriers? */                             |    |    struct blk_mq_tag_set tag_set;                            |    |   void *priv;                             |                 |  u32 (*generation)(struct virtio_device *vdev);           |      |   const struct device_type *type;                                    |
+ |   bool weak_barriers;                                         |    |                                                              |    |  };                                       |                 |  u8 (*get_status)(struct virtio_device *vdev);            |      |                                                                      |
+ |                                                               |    |    /* Process context for config space updates */            |    |                                           |                 |  void (*set_status)(struct virtio_device *vdev, u8 status)|      |   struct mutex  mutex; /* mutex to synchronize calls to              |
+ |   /* Other side has made a mess, don't try any more. */       |    |    struct work_struct config_work;                           |    +-------------------------------------------+                 |  void (*reset)(struct virtio_device *vdev);               |      |        * its driver.                                                 |
+ |   bool broken;                                                |    |                                                              |                                                                  |  int (*find_vqs)(struct virtio_device *, unsigned nvqs,   |      |        */                                                            |
+ |                                                               |    |    /* What host tells us, plus 2 for header & tailer. */     |    +---------------------------------------------------+         |    struct virtqueue *vqs[],                               |      |                                                                      |
+ |   /* Host supports indirect buffers */                        |    |    unsigned int sg_elems;                                    |    |                                                   |         |    vq_callback_t *callbacks[],                            |      |   struct bus_type *bus;  /* type of bus device is on */              |
+ |   bool indirect;                                              |    |                                                              |    |  struct virtio_device {                           |         |    const char *names[]);                                  |      |   struct device_driver *driver; /* which driver has allocated this   |
+ |                                                               |    |    /* Ida index + used to track minor number allocations. */ |    |   int index;                                      |         |  void (*del_vqs)(struct virtio_device *);                 |      |          device */                                                   |
+ |   /* Host publishes avail event idx */                        |    |    int index;                                                |    |   bool failed;                                    |         |  u64 (*get_features)(struct virtio_device *vdev);         |      |   void  *platform_data; /* Platform specific data, device            |
+ |   bool event;                                                 |    |                                                              |    |   bool config_enabled;                            |         |  int (*finalize_features)(struct virtio_device *vdev);    |      |          core doesn't touch it */                                    |
+ |                                                               |    |    /* num of vqs */                                          |    |   bool config_change_pending;                     |         |  const char *(*bus_name)(struct virtio_device *vdev);     |      |   void  *driver_data; /* Driver data, set and get with               |
+ |   /* Head of free buffer list. */                             |    |    int num_vqs;                                              |    |   spinlock_t config_lock;                         |         |  int (*set_vq_affinity)(struct virtqueue *vq, int cpu);   |      |          dev_set/get_drvdata */                                      |
+ |   unsigned int free_head;                                     |    |    struct virtio_blk_vq *vqs;                                |    |   struct device dev;                              |         | };                                                        |      |   struct dev_pm_info power;                                          |
+ |   /* Number we've added since last sync. */                   |    |   };                                                         |    |   struct virtio_device_id id;                     |         |                                                           |      |   struct dev_pm_domain *pm_domain;                                   |
+ |   unsigned int num_added;                                     |    |                                                              |    |   const struct virtio_config_ops *config;         |         |                                                           |      |                                                                      |
+ |                                                               |    +--------------------------------------------------------------+    |   const struct vringh_config_ops *vringh_config;  |         +-----------------------------------------------------------+      |   ...                                                                |
+ |   /* Last used index we've seen. */                           |                                                                        |   struct list_head vqs;                           |                                                                            |                                                                      |
+ |   u16 last_used_idx;                                          |  include/uapi/linux/virtio_ring.h    +---------------------+           |   u64 features;                                   |                                                                            |   /* arch specific additions */                                      |
+ |                                                               |     +----------------------------+   |struct vring_avail { |           |   void *priv;                                     |                                                                            |   struct dev_archdata archdata;                                      |
+ |   /* Last written value to avail+>flags */                    |     | struct vring {             |   | __virtio16 flags;   |           |  };                                               |                                                                            |                                                                      |
+ |   u16 avail_flags_shadow;                                     |     |  unsigned int num;         |   | __virtio16 idx;     |           |                                                   |                                                                            |   struct device_node *of_node; /* associated device tree node */     |
+ |                                                               |     |                            |   | __virtio16 ring[];  |           +---------------------------------------------------+                                                                            |   struct fwnode_handle *fwnode; /* firmware device node */           |
+ |   /* Last written value to avail+>idx in guest byte order */  |     |  struct vring_desc *desc;  |   |};                   |                                                                                                                                            |                                                                      |
+ |   u16 avail_idx_shadow;                                       |     |                            |   +---------------------+---------+ +-----------------------------------------------------+                                                                          |   dev_t   devt; /* dev_t, creates the sysfs "dev" */                 |
+ |                                                               |     |  struct vring_avail *avail;|   |struct vring_used {            | | struct virtio_driver {                              |                                                                          |   u32   id; /* device instance */                                    |
+ |   /* How to notify other side. FIXME: commonalize hcalls! */  |     |                            |   | __virtio16 flags;             | |  struct device_driver driver;                       |                                                                          |                                                                      |
+ |   bool (*notify)(struct virtqueue *vq);                       |     |  struct vring_used *used;  |   | __virtio16 idx;               | |  const struct virtio_device_id *id_table;           |                                                                          |   spinlock_t  devres_lock;                                           |
+ |                                                               |     | };                         |   | struct vring_used_elem ring[];| |  const unsigned int *feature_table;                 |                                                                          |   struct list_head devres_head;                                      |
+ |  #ifdef DEBUG                                                 |     |                            |   |};                             | |  unsigned int feature_table_size;                   |                                                                          |                                                                      |
+ |   /* They're supposed to lock for us. */                      |     +----------------------------+   +-------------------------------+ |  const unsigned int *feature_table_legacy;          |                                                                          |   struct klist_node knode_class;                                     |
+ |   unsigned int in_use;                                        |     +------------------------------------------------+                 |  unsigned int feature_table_size_legacy;            |                                                                          |   struct class  *class;                                              |
+ |                                                               |     |struct vring_desc {                             |                 |  int (*probe)(struct virtio_device *dev);           |                                                                          |   const struct attribute_group **groups; /* optional groups */       |
+ |   /* Figure out if their kicks are too delayed. */            |     | /* Address (guest-physical). */                |                 |  void (*scan)(struct virtio_device *dev);           |                                                                          |                                                                      |
+ |   bool last_add_time_valid;                                   |     | __virtio64 addr;                               |                 |  void (*remove)(struct virtio_device *dev);         |                                                                          |   void (*release)(struct device *dev);                               |
+ |   ktime_t last_add_time;                                      |     | /* Length. */                                  |                 |  void (*config_changed)(struct virtio_device *dev); |                                                                          |   struct iommu_group *iommu_group;                                   |
+ |  #endif                                                       |     | __virtio32 len;                                |                 | #ifdef CONFIG_PM                                    |                                                                          |                                                                      |
+ |                                                               |     | /* The flags as indicated above. */            |                 |  int (*freeze)(struct virtio_device *dev);          |                                                                          |   bool   offline_disabled:1;                                         |
+ |   /* Tokens for callbacks. */                                 |     | __virtio16 flags;                              |                 |  int (*restore)(struct virtio_device *dev);         |                                                                          |   bool   offline:1;                                                  |
+ |   void *data[];                                               |     | /* We chain unused descriptors via this, too */|                 | #endif                                              |                                                                          |  };                                                                  |
+ |  };                                                           |     | __virtio16 next;                               |                 | };                                                  |                                                                          |                                                                      |
+ |                                                               |     |};                                              |                 +-----------------------------------------------------+                                                                          +----------------------------------------------------------------------+
+ +---------------------------------------------------------------+     +------------------------------------------------+                                                                                                                                                  +-------------------------------------------------------------------+
+                                                                                                                                                                                                                                                                           | struct device_driver {                                            |
+                                                                                                                                                                                                                                                                           |  const char  *name;                                               |
+                                                                                                                                                                                                                                                                           |  struct bus_type  *bus;                                           |
+                                                                                                                                                                                                                                                                           |                                                                   |
+                                                                                                                                                                                                                                                                           |  struct module  *owner;                                           |
+                                                                                                                                                                                                                                                                           |  const char  *mod_name; /* used for built+in modules */           |
+                                                                                                                                                                                                                                                                           |                                                                   |
+                                                                                                                                                                                                                                                                           |  bool suppress_bind_attrs; /* disables bind/unbind via sysfs */   |
+                                                                                                                                                                                                                                                                           |  enum probe_type probe_type;                                      |
+                                                                                                                                                                                                                                                                           |                                                                   |
+                                                                                                                                                                                                                                                                           |  const struct of_device_id *of_match_table;                       |
+                                                                                                                                                                                                                                                                           |  const struct acpi_device_id *acpi_match_table;                   |
+                                                                                                                                                                                                                                                                           |                                                                   |
+                                                                                                                                                                                                                                                                           |  int (*probe) (struct device *dev);                               |
+                                                                                                                                                                                                                                                                           |  int (*remove) (struct device *dev);                              |
+                                                                                                                                                                                                                                                                           |  void (*shutdown) (struct device *dev);                           |
+                                                                                                                                                                                                                                                                           |  int (*suspend) (struct device *dev, pm_message_t state);         |
+                                                                                                                                                                                                                                                                           |  int (*resume) (struct device *dev);                              |
+                                                                                                                                                                                                                                                                           |  const struct attribute_group **groups;                           |
+                                                                                                                                                                                                                                                                           |                                                                   |
+                                                                                                                                                                                                                                                                           |  const struct dev_pm_ops *pm;                                     |
+                                                                                                                                                                                                                                                                           |                                                                   |
+                                                                                                                                                                                                                                                                           |  struct driver_private *p;                                        |
+                                                                                                                                                                                                                                                                           | };                                                                |
+                                                                                                                                                                                                                                                                           |                                                                   |
+                                                                                                                                                                                                                                                                           +-------------------------------------------------------------------+
+```
 ### 后端设备分析（QEMU）
 
 
@@ -114,7 +197,158 @@ include/hw/virtio/virtio.h
 include/standard-headers/linux/virtio_blk.h
 include/standard-headers/linux/virtio_ring.h
 ```
+* 部分相关的重要数据结构
+```
+                                                         +------------------------------------------------------------------------------+
+                                                         |                                                                              |
+    hw/virtio/virtio.c                                   v                                                                              |
+                                                                                                                                        |
+     +----------------------------------------------------------+     +------------------------------+                                  |
+     |   struct VirtQueue                                       |     |typedef struct VRing          |                                  |
+     |   {                                                      |     |{                             |                                  |
+     |       VRing vring;   <---------------------------------------> |    unsigned int num;         |                                  |
+     |                                                          |     |    unsigned int num_default; |                                  |
+     |       /* Next head to pop */                             |     |    unsigned int align;       |                                  |
+     |       uint16_t last_avail_idx;                           |     |    hwaddr desc;              |                                  |
+     |                                                          |     |    hwaddr avail;             |                                  |
+     |       /* Last avail_idx read from VQ. */                 |     |    hwaddr used;              |                                  |
+     |       uint16_t shadow_avail_idx;                         |     |} VRing;                      |                                  |
+     |                                                          |     +------------------------------+                                  |
+     |       uint16_t used_idx;                                 |                                                                       |
+     |                                                          |     +------------------------------+ +------------------------------+ |
+     |       /* Last used index value we have signalled on */   |     |  typedef struct VRingAvail   | |   typedef struct VRingDesc   | |
++--> |       uint16_t signalled_used;                           |     |  {                           | |   {                          | |
+|    |                                                          |     |      uint16_t flags;         | |       uint64_t addr;         | |
+|    |       /* Last used index value we have signalled on */   |     |      uint16_t idx;           | |       uint32_t len;          | |
+|    |       bool signalled_used_valid;                         |     |      uint16_t ring[0];       | |       uint16_t flags;        | |
+|    |                                                          |     |  } VRingAvail;               | |       uint16_t next;         | |
+|    |       /* Notification enabled? */                        |     +------------------------------+ |   } VRingDesc;               | |
+|    |       bool notification;                                 |     +------------------------------+ +------------------------------+ |
+|    |                                                          |     | typedef struct VRingUsed     |                                  |
+|    |       uint16_t queue_index;                              |     | {                            |                                  |
+|    |                                                          |     |     uint16_t flags;          |                                  |
+|    |       int inuse;                                         |     |     uint16_t idx;            |                                  |
+|    |                                                          |     |     VRingUsedElem ring[0];   |                                  |
+|    |       uint16_t vector;                                   |     | } VRingUsed;                 |                                  |
+|    |       VirtIOHandleOutput handle_output;                  |     +------------------------------+                                  |
+|    |       VirtIOHandleOutput handle_aio_output;              |     +------------------------------+                                  |
+|    |       VirtIODevice *vdev;                                |     | typedef struct VRingUsedElem |                                  |
+|    |       EventNotifier guest_notifier;                      |     | {                            |                                  |
+|    |       EventNotifier host_notifier;                       |     |     uint32_t id;             |                                  |
+|    |       QLIST_ENTRY(VirtQueue) node;                       |     |     uint32_t len;            |                                  |
+|    |   };                                                     |     | } VRingUsedElem;             |                                  |
+|    +----------------------------------------------------------+     +------------------------------+                                  |
+|                                                                                                                                       |
+|   include/hw/virtio/virtio-blk.h                          (kernel)/include/uapi/linux/virtio_blk.h                                    |
+|                                                           include/standard-headers/linux/virtio_blk.h                                 |
+|    +------------------------------------+                   +--------------------------------------+                                  |
+|    |typedef struct VirtIOBlockReq {     | <---------------> |  struct virtio_blk_outhdr {          |                                  |
+|    |    VirtQueueElement elem;          |                   |   /* VIRTIO_BLK_T* */                |                                  |
++----+    int64_t sector_num;             +----+              |   __virtio32 type;                   |                                  |
+     |    VirtIOBlock *dev;               |    |              |   /* io priority. */                 |                                  |
+     |    VirtQueue *vq;                  |    |              |   __virtio32 ioprio;                 |                                  |
++--> |    struct virtio_blk_inhdr *in;    | <--+              |   /* Sector (ie. 512 byte offset) */ |                                  |
+|    |    struct virtio_blk_outhdr out;   |                   |   __virtio64 sector;                 |                                  |
+|    |    QEMUIOVector qiov;              | <-------+         |  };                                  |                                  |
+|    |    size_t in_len;                  |         |         +--------------------------------------+                                  |
+|    |    struct VirtIOBlockReq *next;    |         |                                                                                   |
+|    |    struct VirtIOBlockReq *mr_next; |         |                                                                                   |
+|    |    BlockAcctCookie acct;           +---+     |        include/hw/virtio/virtio.h                                                 |
+|    |} VirtIOBlockReq;                   |   |     |                                                                                   |
+|    +-----------------------------------++   |     |                                                                                   |
+|    +----------------------------+      |    |     |         +--------------------------------+                                        |
+|    | struct virtio_blk_inhdr    |      |    |     |         |typedef struct VirtQueueElement |                                        |
+|    | {                          |      |    |     |         |{                               |                                        |
+|    |     unsigned char status;  | <----+    |     +-------> |    unsigned int index;         |                                        |
+|    | };                         |           |               |    unsigned int out_num;       |                                        |
+|    +----------------------------+           v               |    unsigned int in_num;        |                                        |
+|    +----------------------------------------+---+           |    hwaddr *in_addr;            |                                        |
+|    | typedef struct VirtIOBlock {               |           |    hwaddr *out_addr;           |                                        |
+|    |     VirtIODevice parent_obj;               |           |    struct iovec *in_sg;        |                                        |
+|    |     BlockBackend *blk;                     |           |    struct iovec *out_sg;       |                                        |
+|    |     void *rq;                              |           |} VirtQueueElement;             |                                        |
+|    |     QEMUBH *bh;                            |           +--------------------------------+                                        |
+|    |     VirtIOBlkConf conf;                    |           +-----------------------------------------------------------+             |
+|    |     unsigned short sector_mask;            |           |struct VirtIODevice                                        |             |
+|    |     bool original_wce;                     |           |{                                                          |             |
+|    |     VMChangeStateEntry *change;            |           |    DeviceState parent_obj;                                |             |
+|    |     bool dataplane_disabled;               +---------> |    const char *name;                                      |             |
+|    |     bool dataplane_started;                |           |    uint8_t status;                                        |             |
+|    |     struct VirtIOBlockDataPlane *dataplane;|           |    uint8_t isr;                                           |             |
+|    | } VirtIOBlock;                             |           |    uint16_t queue_sel;                                    |             |
+|    |                                            | <-+       |    uint64_t guest_features;                               |             |
+|    +--------------------------------------------+   |       |    uint64_t host_features;                                | <-----------+
+|    +------------------------------+                 |       |    size_t config_len;                                     |
+|    | struct VirtIOBlkConf         |                 |       |    void *config;                                          |
+|    | {                            |                 |       |    uint16_t config_vector;                                |
+|    |     BlockConf conf;          |                 |       |    uint32_t generation;                                   |
+|    |     IOThread *iothread;      |                 |       |    int nvectors;                                          |
+|    |     char *serial;            | <---------------+       |    VirtQueue *vq;                                         |
+|    |     uint32_t scsi;           |                         |    uint16_t device_id;                                    |
+|    |     uint32_t config_wce;     |                         |    bool vm_running;                                       |
+|    |     uint32_t request_merging;|                         |    bool broken; /* device in invalid state, needs reset * |
+|    |     uint16_t num_queues;     |                         |    VMChangeStateEntry *vmstate;                           |
+|    | };                           |                         |    char *bus_name;                                        |
+|    +------------------------------+                         |    uint8_t device_endian;                                 |
+|    +----------------------------------------------------+   |    bool use_guest_notifier_mask;                          |
+|    |typedef struct MultiReqBuffer {                     |   |    QLIST_HEAD(, VirtQueue) *vector_queues;                |
+|    |    VirtIOBlockReq *reqs[VIRTIO_BLK_MAX_MERGE_REQS];|   |};                                                         |
++----+    unsigned int num_reqs;                          |   +-----------------------------------------------------------+
+     |    bool is_write;                                  |
+     |} MultiReqBuffer;                                   |
+     +----------------------------------------------------+
 
+    include/hw/virtio/virtio.h
+
+     +----------------------------------------------------------------------+
+     |typedef struct VirtioDeviceClass {                                    |
+     |    /*v private >*/                                                   |
+     |    DeviceClass parent;                                               |
+     |    /*v public >*/                                                    |
+     |                                                                      |
+     |    /* This is what a VirtioDevice must implement */                  |
+     |    DeviceRealize realize;                                            |
+     |    DeviceUnrealize unrealize;                                        |
+     |    uint64_t (*get_features)(VirtIODevice *vdev,                      |
+     |                             uint64_t requested_features,             |
+     |                             Error **errp);                           |
+     |    uint64_t (*bad_features)(VirtIODevice *vdev);                     |
+     |    void (*set_features)(VirtIODevice *vdev, uint64_t val);           |
+     |    int (*validate_features)(VirtIODevice *vdev);                     |
+     |    void (*get_config)(VirtIODevice *vdev, uint8_t *config);          |
+     |    void (*set_config)(VirtIODevice *vdev, const uint8_t *config);    |
+     |    void (*reset)(VirtIODevice *vdev);                                |
+     |    void (*set_status)(VirtIODevice *vdev, uint8_t val);              |
+     |    /* For transitional devices, this is a bitmap of features         |
+     |     * that are only exposed on the legacy interface but not          |
+     |     * the modern one.                                                |
+     |     */                                                               |
+     |    uint64_t legacy_features;                                         |
+     |    /* Test and clear event pending status.                           |
+     |     * Should be called after unmask to avoid losing events.          |
+     |     * If backend does not support masking,                           |
+     |     * must check in frontend instead.                                |
+     |     */                                                               |
+     |    bool (*guest_notifier_pending)(VirtIODevice *vdev, int n);        |
+     |    /* Mask/unmask events from this vq. Any events reported           |
+     |     * while masked will become pending.                              |
+     |     * If backend does not support masking,                           |
+     |     * must mask in frontend instead.                                 |
+     |     */                                                               |
+     |    void (*guest_notifier_mask)(VirtIODevice *vdev, int n, bool mask);|
+     |    int (*start_ioeventfd)(VirtIODevice *vdev);                       |
+     |    void (*stop_ioeventfd)(VirtIODevice *vdev);                       |
+     |    /* Saving and loading of a device; trying to deprecate save/load  |
+     |     * use vmsd for new devices.                                      |
+     |     */                                                               |
+     |    void (*save)(VirtIODevice *vdev, QEMUFile *f);                    |
+     |    int (*load)(VirtIODevice *vdev, QEMUFile *f, int version_id);     |
+     |    const VMStateDescription *vmsd;                                   |
+     |} VirtioDeviceClass;                                                  |
+     +----------------------------------------------------------------------+
+
+
+```
 
 ### 相关资料
 
