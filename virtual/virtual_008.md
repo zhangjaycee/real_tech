@@ -31,7 +31,9 @@ virtio提高了io效率，（？也为host和guest间更复杂的合作机制实
 
 > [Linux Multi-Queue Block IO Queueing Mechanism (blk-mq)](https://www.thomas-krenn.com/en/wiki/Linux_Multi-Queue_Block_IO_Queueing_Mechanism_(blk-mq))
 
-> [ KVM+QEMU世界中的pci总线与virtio总线 ](http://blog.chinaunix.net/uid-23769728-id-4467752.html)
+> [KVM+QEMU世界中的pci总线与virtio总线](http://blog.chinaunix.net/uid-23769728-id-4467752.html)
+
+> [virtio前端驱动详解](http://www.cnblogs.com/ck1020/p/6044134.html)
 
 前端驱动已经并到Linux内核主线了，所以要去内核找相关代码分析。
 
@@ -88,6 +90,12 @@ drivers/vhost/
 ](http://blog.csdn.net/LPSTC123/article/details/45171515)
 
 > [Qemu-kvm的ioeventfd创建与触发的大致流程](http://blog.csdn.net/LPSTC123/article/details/45111949)
+
+> [virtio后端驱动详解](http://www.cnblogs.com/ck1020/p/5939777.html)
+
+> [virtIO前后端notify机制详解](http://www.cnblogs.com/ck1020/p/6066007.html)
+
+
 
 后端设备已经在QEMU实现，所以要分析的代码在QEMU中。
 
