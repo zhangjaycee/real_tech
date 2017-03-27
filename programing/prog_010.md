@@ -1,0 +1,1 @@
+> [gcc 编译器对 inline 函数的支持] http://blog.csdn.net/liyuanbhu/article/details/42470577
