@@ -17,3 +17,5 @@
 1. [[coroutine机制|prog_008]]
 
 1. [[GDB调试|prog_009]]
+
+1. [[C语言中的inline|prog_010]]
