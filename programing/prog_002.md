@@ -76,7 +76,11 @@ BLOCK
 :m,n s/^#//
 ~~~
 
-## 关于使用变量的格式
+
+## 关于变量
+
+
+### 1.使用变量的格式
 
 * 对变量赋值时，注意直接用变量名就好，且等号两边不加空格。
 
@@ -96,4 +100,18 @@ echo ${var1}123
 hello 123
 
 hello123
+```
+
+## 2.awk如何给shell变量赋值
+利用 \`shell命令\` 即可这个语法即可
+
+e.g.
+```bash
+#!/bin/bash
+VAR1=`echo hello world!|awk '{printf "%s\n", $1}'`
+echo $VAR1
+```
+结果会输出
+```
+$ hello
 ```
