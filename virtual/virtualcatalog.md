@@ -22,6 +22,9 @@
 
 1. [[Qemu实际应用的各种小技巧|virtual_011]]
 
+1. [[虚拟机的静态迁移|virtual_012]]
+
+
 #### [博客推荐]
 
 * ->[笑便世界] http://smilejay.com/ (关于KVM/Qemu)
