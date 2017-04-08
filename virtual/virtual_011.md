@@ -119,3 +119,7 @@ mount -t ext4 /dev/vdb /mnt/
 (bash)$ nohup qemu-system-x86_64 ... [-curses] ... 
 ```
 使用过程中，`Esc`+`2`调出QEMU monitor `Esc`+`1`返回curses文字界面。
+
+## 6. 为Guest添加或删除磁盘分区
+
+> [Ubuntu wiki: QemuDiskHotplug] https://wiki.ubuntu.com/QemuDiskHotplug
