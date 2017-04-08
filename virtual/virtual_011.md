@@ -123,3 +123,7 @@ mount -t ext4 /dev/vdb /mnt/
 ## 6. 为Guest添加或删除磁盘分区
 
 > [Ubuntu wiki: QemuDiskHotplug] https://wiki.ubuntu.com/QemuDiskHotplug
+
+## 7. 给予virsh管理的硬件资源增加方法
+
+> [How to Add Memory, vCPU, Hard Disk to Linux KVM Virtual Machine] http://www.thegeekstuff.com/2015/02/add-memory-cpu-disk-to-kvm-vm/
