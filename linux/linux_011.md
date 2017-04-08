@@ -30,5 +30,19 @@ mount [分区][挂载点]
 (bash)$ mount /dev/sdc1 /home/new_part
 ```
 
+### 卸载分区
+umount [分区]
+```
+#e.g.
+(bash)$ umount /dev/sdc1
+```
+
+### 删除分区
+
+找好要删除的分区在哪个磁盘后，用fdisk操作，比如/dev/sdc1 在 /dev/sdc 上：
+```bash
+(bash)$ fdisk /dev/sdc
+```
+然后会进入fdisk的交互终端，按照提示继续即可，输入`m`是命令帮助
 
 > http://blog.csdn.net/nahancy/article/details/52201121
