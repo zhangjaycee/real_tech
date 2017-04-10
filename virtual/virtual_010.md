@@ -19,7 +19,7 @@ cd qemu-2.8.0
 ## 3. 配置
 ~~~bash
 # 配置
-./configure [--enable_debug --prefix=/PATH/TO/INSTALL --target_list=x86_64-softmmu]
+./configure [--enable-debug --prefix=/PATH/TO/INSTALL --target-list=x86_64-softmmu]
 ~~~
 configure文件中有很多可选的配置，可以通过`./configure --help`查看详细配置帮助。
 
