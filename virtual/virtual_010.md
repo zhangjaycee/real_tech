@@ -27,11 +27,11 @@ configure文件中有很多可选的配置，可以通过`./configure --help`查
 
 这里简单解释下上边中括号中的可选配置的含义：
 
-`--enable_debug`: 打开后可以用gdb debug了
+`--enable-debug`: 打开后可以用gdb debug了
 
 `--prefix=[path]`: 指定二进制程序的安装目录
 
-`--target_list=[target]`: 编译指定的模拟器，可选的列表在`./configure --help`中有写，注意这里"xxx-soft"和"xxx-linux-user"分别指系统模拟器和应用程序模拟器, 分别生成的二进制文件名字为"qemu-system-xxx"和"qemu-xxx"
+`--target-list=[target]`: 编译指定的模拟器，可选的列表在`./configure --help`中有写，注意这里"xxx-soft"和"xxx-linux-user"分别指系统模拟器和应用程序模拟器, 分别生成的二进制文件名字为"qemu-system-xxx"和"qemu-xxx"
 
 ## 4. 编译
 ~~~bash
