@@ -55,6 +55,7 @@ $ sysctl -p
 # eth0 换成你的网口
 $ iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
 ```
+注意这个命令每次重启要运行一次，要持久化iptables命令，可以参考文章后面的最后一个链接。
 
 ## 7. 重启pptpd服务
 
@@ -66,3 +67,6 @@ $ service pptpd restart
 > https://www.zivers.com/post/1498.html
 >
 > http://blog.csdn.net/junmuzi/article/details/62227073
+>
+> https://www.zivers.com/post/1186.html
+
