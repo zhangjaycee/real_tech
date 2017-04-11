@@ -12,8 +12,7 @@ $ apt install pptpd
 ~~~bash
 $ vim /etc/pptpd.conf
 
-option /etc/ppp/pptpd-option                    #指定PPP选项文件的位置
-debug                                           #启用调试模式
+option /etc/ppp/pptpd-options                   #指定PPP选项文件的位置
 localip 192.168.0.1                             #VPN服务器的虚拟ip
 remoteip 192.168.0.200-238,192.168.0.245        #分配给VPN客户端的虚拟ip
 ~~~
@@ -25,7 +24,7 @@ $vim  /etc/ppp/chap-secrets
 
 #格式：用户名   服务类型   密码   分配的ip地址
 #第一个*代表服务可以是PPTPD也可以是L2TPD，第二个*代表随机分配ip
-test    *    12345678    *
+testpptp    *    12345678    *
 ```
 
 * 重启pptpd服务
