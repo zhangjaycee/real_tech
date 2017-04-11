@@ -26,11 +26,14 @@ $vim  /etc/ppp/chap-secrets
 #第一个*代表服务可以是PPTPD也可以是L2TPD，第二个*代表随机分配ip
 testpptp    *    12345678    *
 ```
-
-* 重启pptpd服务
+* 配置dns
 
 ```bash
-$ service pptpd restart
+$ vim /etc/ppp/pptpd-options
+
+# 找到ms-dns，取消注释，改成你喜欢的DNS
+ms-dns 114.114.114.114
+ms-dns 8.8.8.8
 ```
 
 * 打开ipv4转发
@@ -49,7 +52,14 @@ $ sysctl -p
 * 配置NAT转发
 
 ```bash
+# eth0 换成你的网口
 $ iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
+```
+
+* 重启pptpd服务
+
+```bash
+$ service pptpd restart
 ```
 
 
