@@ -28,8 +28,8 @@
 #### 搜索时的非贪婪匹配
 直接用`*`进行匹配（查找或者替换）时，是贪婪模式的，要使用非贪婪匹配，用`\{-}`代替`*`。
 ### 配置方法
-一般的配置文件在 ~/.vimrc
-插件*.vim一般在~/.vim/目录下
+一般的配置文件在` ~/.vimrc`
+插件`*.vim`一般都放在`~/.vim/`目录下
 ### 我使用的vim插件和工具
 * The NERD tree (http://www.vim.org/scripts/script.php?script_id=1658)
 * cscope
