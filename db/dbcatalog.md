@@ -6,7 +6,7 @@
 
 1. [[关于MySQL的索引|db_003]]
 (difference between Clustered&Secondary key, InnoDB&MyISAM indexes)
-1. [[关于InnoDB的Compression|db_004]]
+1. [[InnoDB的Transparent Page Compression|db_004]]
 
 1. [[关于InnoDB bufferpool的flush method|db_005]]
 
