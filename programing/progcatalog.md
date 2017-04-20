@@ -19,3 +19,5 @@
 1. [[GDB调试|prog_009]]
 
 1. [[C语言中的inline|prog_010]]
+
+1. [[用C、python和shell语言在终端打印格式化和彩色文本|prog_011]]
