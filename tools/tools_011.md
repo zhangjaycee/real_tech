@@ -28,7 +28,6 @@ bind -r ^k resizep -U 10
 bind -r ^j resizep -D 10
 bind -r ^h resizep -L 10
 bind -r ^l resizep -R 10
-
 ```
 
 ## 2. 使用
@@ -81,6 +80,17 @@ tmux attach -t NAME_OF_YOUR_SESSION
 
 `PREFIX` Ctrl+h[,j,k,l]
 
+* 把一个Pane分出到一个新的窗口
+
+`PREFIX` !
+
+* 把一个Pane并到某个窗口
+
+`PREFIX` :join-pane -t [optional session name]:<destination pane index>
+
+e.g. 激活一个Pane的情况下把这个Pane移动到窗口0中：
+
+`PREFIX` :join-pane -t :0
 
 
 
