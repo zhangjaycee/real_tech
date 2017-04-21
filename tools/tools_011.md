@@ -95,7 +95,7 @@ e.g. 激活一个Pane的情况下把这个Pane移动到窗口0中：
 
 
 ### 窗口(Window)
-> http://blog.chinaunix.net/uid-26285146-id-3252286.html
+
 ```
 PREFIX c 创建一个新的窗口
 PREFIX n 切换到下一个窗口
@@ -116,9 +116,10 @@ PREFIX pageup/pagedo
 ```
 
 
-## 我当前的配置
+## 3. 我当前的配置文件
 
 ```
+#~/.tmux.conf
 #前缀从Ctrl+b 换为Ctrl + a
 set -g prefix C-a
 unbind C-b
@@ -157,4 +158,10 @@ bind -r ^l resizep -R 10
   set -g status-right '#[fg=green][#[fg=cyan]%Y-%m-%d#[fg=green]]'
 
 ```
+
+
+## 4. 参考和扩展
+> http://blog.jobbole.com/87584/
+>
+> http://blog.chinaunix.net/uid-26285146-id-3252286.html
 
