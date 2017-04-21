@@ -93,6 +93,16 @@ e.g. 激活一个Pane的情况下把这个Pane移动到窗口0中：
 `PREFIX` :join-pane -t :0
 
 
+### 复制粘贴
+
+1. `PREFIX` [ 进入复制模式
+
+1. 空格键开始选择内容，由于配置了`setw -g mode-keys vi`，选取方式类似Vim的visual模式
+
+1. 按回车复制选中模式并退出复制模式
+
+1. `PREFIX` ] 粘贴
+
 
 ### 窗口(Window)
 
