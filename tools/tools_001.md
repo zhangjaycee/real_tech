@@ -1,5 +1,5 @@
-## Vim 
-### 实用操作
+# Vim 
+## 实用操作
 #### 折叠
 
 > http://blog.sina.com.cn/s/blog_7acf472901017ad6.html
@@ -101,5 +101,19 @@ set cscopequickfix=s-,c-,d-,g-,i-,t-,e-
 "set listchars=tab:▸\
 ~~~
 
+## 在终端中启用vi模式
 
+> https://sanctum.geek.nz/arabesque/vi-mode-in-bash/
+
+在~/.inputrc中加入：
+```
+set editing-mode vi
+```
+
+或者在~/.bashrc中加入：
+```
+set -o vi
+```
+
+区别在于前者应用于所有终端输入，如bash、mysql交互，后者只用于bash
 
