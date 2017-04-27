@@ -3,11 +3,17 @@
 
 ## 块层
 
+
+
 ## 文件系统层
 
 ZFS、NTFS、BtrFS、[e2compr](http://e2compr.sourceforge.net/)、[FuseCompress](https://code.google.com/archive/p/fusecompress/)等
 
 其中fusecompress是对整个文件进行的压缩/解压缩，所以只对归档存储比较适合，对于数据库等频繁读写大文件的场合显然不适用。
+
+* 一些参考
+
+> [在启用压缩的 ZFS 上运行 PostgreSQL]https://www.oschina.net/translate/running-postgresql-on-compression-enabled-zfs
 
 ## 应用层
 
