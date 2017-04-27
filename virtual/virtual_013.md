@@ -21,3 +21,13 @@
 >
 
 qcow2 支持基于zlib的压缩功能，但是只是一次性行为，再次被写时将是不压缩的版本。（怎么感觉像骗人一样。。。）
+
+其主要应用于用qemu-img工具缩减镜像体积：
+
+```bash
+# 摘自http://www.tuxfixer.com/how-to-shrink-openstack-qcow2-image-with-qemu-img/
+# Shrink qcow2 image without compression (larger file, short compression time):
+qemu-img convert -O qcow2 centos7.qcow2 centos7_small.qcow2
+# Shrink qcow2 image with compression (smaller file, long compression time):
+qemu-img convert -O qcow2 -c centos7.qcow2 centos7_small.qcow2
+```
