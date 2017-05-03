@@ -1,4 +1,4 @@
-# 关于系统IO测量的工具
+# 关于系统性能监控和测试的工具
 
 ## sysbench
 
@@ -22,3 +22,6 @@
 > http://junlee.blog.51cto.com/228061/508940
 
 ## Phoronix Test Suite
+
+## vmstat
+> http://www.cnblogs.com/ggjucheng/archive/2012/01/05/2312625.html
