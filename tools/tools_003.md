@@ -10,6 +10,15 @@
 
 * sysbench 分为三个阶段 prepare run cleanup，在run之后会打印出测试结果。Ubuntu 16.04下，apt会安装0.4版本的sysbench，其他版本需要手动编译。
 
+#### 编译方法：
+```
+#sysbench-0.5为例
+unzip sysbench-0.5.zip
+./autogen.sh
+./configure --prefix=/PATH/TO/INSTALL
+make 
+make install
+```
 
 
 
