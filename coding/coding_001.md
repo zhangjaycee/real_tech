@@ -5,3 +5,6 @@
 > http://zlib.net/zlib_how.html
 
 zlib的inflate和deflate是相对应的过程，inflate是解压的一个过程，deflate是压缩的一个过程
+
+
+linux下使用zlib时，需要安装zlib-devel，编译时加`-lz`来链接。
