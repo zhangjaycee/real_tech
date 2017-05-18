@@ -15,7 +15,7 @@
 #sysbench-0.5为例
 unzip sysbench-0.5.zip
 ./autogen.sh
-./configure --prefix=/PATH/TO/INSTALL
+./configure --prefix=/PATH/TO/INSTALL --with-mysql-includes=/PATH/TO/MYSQL/include --with-mysql-libs=/PATH/TO/MYSQL/lib
 make 
 make install
 ```
