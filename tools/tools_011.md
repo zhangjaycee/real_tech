@@ -175,6 +175,8 @@ bind -r ^l resizep -R 10
 
 
 ## 4. 参考和扩展
+> https://wiki.freebsdchina.org/software/t/tmux
+>
 > http://blog.jobbole.com/87584/
 >
 > http://blog.chinaunix.net/uid-26285146-id-3252286.html
