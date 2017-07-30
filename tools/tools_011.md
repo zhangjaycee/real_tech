@@ -72,6 +72,10 @@ tmux attach -t NAME_OF_YOUR_SESSION
 
 `PREFIX` "
 
+* 关闭窗格
+
+`PREFIX` x
+
 * Pane间切换
 
 `PREFIX` h[,j,k,l]
