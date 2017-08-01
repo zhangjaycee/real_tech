@@ -27,3 +27,10 @@ find [dir] -name "*.c" [-o -name "*.py"] [-o -name "*.h"] ...
 ```bash
 find [dir] -name "*foobar*"
 ```
+
+### 按文件特征查找
+```
+find / -amin -100 　　   #查找在系统中最后100分钟访问的文件(access time)
+find / -size +100k　　#查找出大于100k的文件(c:字节，w:双字，k:KB，M:MB，G:GB)
+find / -size -100k 　　#查找出小于100k的文件
+```
