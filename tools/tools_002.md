@@ -5,6 +5,15 @@
 
 pip install *pkg_name*[==*version*]
 
+加 -i参数可以临时换源，防止官方源国内太慢
+```
+#常用国内源
+#豆瓣
+http://pypi.douban.com/simple/
+#清华
+https://pypi.tuna.tsinghua.edu.cn/simple
+```
+
 ## gem
 
 gem install *pkg_name* [-v *version*]
