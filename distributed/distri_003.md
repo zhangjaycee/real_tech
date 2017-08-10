@@ -20,3 +20,6 @@
 
 ### 参考
 [An overview of cache(pdf)]  http://download.intel.com/design/intarch/papers/cache6.pdf
+
+[An Introduction to Look-Aside Caching] https://content.pivotal.io/blog/an-introduction-to-look-aside-vs-inline-caching-patterns
+
