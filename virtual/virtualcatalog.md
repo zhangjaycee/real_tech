@@ -28,6 +28,8 @@
 
 1. [[OpenStack|virtual_014]]
 
+1. [[KVM内存虚拟化|virtual_015]]
+
 #### [博客推荐]
 
 * ->[笑便世界] http://smilejay.com/ (关于KVM/Qemu)
