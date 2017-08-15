@@ -43,7 +43,13 @@ qemu-system-x86_64 -m [memory_size] -enable-kvm [img_name].img -cdrom [system_is
 
 ### 4. 启动系统
 ```shell
+#最简单的命令
  qemu-system-x86_64 -m [mem_size] -enable-kvm [img_name].img
+#比较复杂的命令
+qemu-system-x86_64 -smp [vCPU_number] -m [memory_size] \
+-drive file=[image_filepath],if=virtio,cache=none,format=qcow2 \
+-drive file=/SSD/mysql-data.img,if=virtio,cache=writethrough,format=raw \
+-net nic -net user,hostfwd=tcp::2333-:22 -daemonize
 ```
 
 
