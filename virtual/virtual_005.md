@@ -43,13 +43,19 @@ qemu-system-x86_64 -m [memory_size] -enable-kvm [img_name].img -cdrom [system_is
 
 ### 4. 启动系统
 ```shell
-#最简单的命令
+#最简单的命令：
  qemu-system-x86_64 -m [mem_size] -enable-kvm [img_name].img
-#比较复杂的命令
+
+
+#比较复杂的命令：
 qemu-system-x86_64 -smp [vCPU_number] -m [memory_size] -enable-kvm\
--drive file=[image_filepath],if=virtio,cache=none,format=qcow2 \
--drive file=[/SSD/mysql-data.img],if=virtio,cache=writethrough,format=raw \
+-drive file=~/ubuntu_img.qcow2,if=virtio,cache=none,format=qcow2 \
+-drive file=~/mysql-data.raw,if=virtio,cache=writethrough,format=raw \
 -net nic -net user,hostfwd=tcp::2333-:22 -daemonize
+#这条命令可以改变vcpu数、内存数，开启了kvm，关联了两个镜像文件，采用virtio-blk，
+#cachemode分别是none和writethrough，格式分别为qcow2和raw，
+#将网络端口22映射到2333，这样登陆的时候就可以用以下命令登陆了：
+ssh root@localhost -p 2333
 ```
 
 
