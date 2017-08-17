@@ -371,3 +371,5 @@ include/standard-headers/linux/virtio_ring.h
 > [read 系统调用剖析](https://www.ibm.com/developerworks/cn/linux/l-cn-read/)
 
 > [virtio驱动如何同设备交互](http://blog.csdn.net/qiushanjushi/article/details/38404341)
+
+> [Virtio-Blk浅析] http://royluo.org/2014/08/29/virtio-blk/
