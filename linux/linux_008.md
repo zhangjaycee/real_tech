@@ -1,4 +1,4 @@
-# Linux驱动模块
+# Linux设备驱动
 
 >[linux驱动模块编译（初学者）] (http://blog.csdn.net/tangchao198507/article/details/6122489)
 
@@ -9,3 +9,11 @@
 >[Linux Device和Driver注册过程，以及Probe的时机](http://blog.csdn.net/thl789/article/details/6723350)
 
 >[Linux驱动中，probe函数何时被调用](http://www.cnblogs.com/hoys/archive/2011/04/01/2002299.html)
+
+### Linux设备模型
+
+* 总线、设备、驱动
+
+* kobject / kset 
+
+* 类
