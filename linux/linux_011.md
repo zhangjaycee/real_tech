@@ -45,4 +45,7 @@ umount [分区]
 ```
 然后会进入fdisk的交互终端，按照提示继续即可，输入`m`是命令帮助
 
+### 开机自动挂载
+编辑`/etc/fstab`
+
 > http://blog.csdn.net/nahancy/article/details/52201121
