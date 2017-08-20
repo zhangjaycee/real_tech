@@ -6,7 +6,7 @@
 
 1. [[Memory Compression内存压缩|linux_002]]
 
-1. [[编译Linux内核|linux_003]]
+1. [[Linux内核升级/更换/编译|linux_003]]
 
 1. [[mmap调用|linux_004]]
 
