@@ -1,11 +1,6 @@
-# 虚拟机镜像格式和性能
+# 虚拟机镜像格式和性能raw/qcow2
 
-## 1. QEMU的raw格式
-
-## 2. QEMU的qcow2格式
-
-* 压缩功能
-
+### qcow2格式的压缩功能
 >https://qemu.weilnetz.de/doc/qemu-doc.html
 >
 > Only the formats qcow and qcow2 support compression. The compression is read-only. It means that if a compressed sector is rewritten, then it is rewritten as uncompressed data.
@@ -31,3 +26,12 @@ qemu-img convert -O qcow2 centos7.qcow2 centos7_small.qcow2
 # Shrink qcow2 image with compression (smaller file, long compression time):
 qemu-img convert -O qcow2 -c centos7.qcow2 centos7_small.qcow2
 ```
+
+
+## qemu镜像扩容方法
+
+对于qcow2格式，可以直接用qemu-img命令扩容，例：
+```
+qemu-img resize data.qcow2 +10G
+```
+> [KVM guest磁盘扩容] http://www.topjishu.com/10131.html
