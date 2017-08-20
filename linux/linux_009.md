@@ -1,4 +1,18 @@
-# 内核源码的目录结构
+# 阅读源码
+
+## 追踪git仓库某个文件的历史
+
+git blame [filename]
+
+git log -p [filename]
+
+gitk [filename]
+
+> https://stackoverflow.com/questions/278192/view-the-change-history-of-a-file-using-git-versioning
+> 
+> http://blog.csdn.net/caspiansea/article/details/25172615
+
+## 目录结构
 
 ## 1. 整体结构
 > http://www.cnblogs.com/youngerchina/p/5624501.html
