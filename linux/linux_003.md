@@ -1,4 +1,4 @@
-## 编译Linux内核
+## Linux内核升级/更换/编译
 
 > [Linux-4.4-x86_64 内核配置选项简介 - 金步国](http://www.jinbuguo.com/kernel/longterm-linux-kernel-options.html)
 
@@ -9,3 +9,8 @@
 >* Enable frontswap to cache swap pages if tmem is present (CONFIG_FRONTSWAP)
 
 >Frontswap是和Cleancache非常类似的东西,在传统的swap前加一道内存缓冲(同样位于"transcendent memory"中).目的也是减少swap时的磁盘读写.CONFIG_ZSWAP依赖于它,建议开启.
+
+
+## 升级centos的内核
+
+> [How to Install or Upgrade to Latest Kernel Version in CentOS 7]https://www.tecmint.com/install-upgrade-kernel-version-in-centos-7/
