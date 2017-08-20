@@ -11,6 +11,8 @@ gitk [filename]
 > https://stackoverflow.com/questions/278192/view-the-change-history-of-a-file-using-git-versioning
 > 
 > http://blog.csdn.net/caspiansea/article/details/25172615
+>
+> https://stackoverflow.com/questions/17582685/install-gitk-on-mac
 
 ## 目录结构
 
