@@ -22,7 +22,7 @@
 
 1. [[Linux驱动相关|linux_008]]
 
-1. [[内核源码的目录结构|linux_009]]
+1. [[阅读内核源码|linux_009]]
 
 1. [[分散/聚集 I/O(scatter-gather I/O)|linux_010]]
 
