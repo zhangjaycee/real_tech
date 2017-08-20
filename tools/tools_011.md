@@ -12,8 +12,8 @@ brew install tmux
 配置文件路径为`~/.tmux.conf`:
 
 ```
-#前缀从Ctrl+b 换为Ctrl + a
-set -g prefix C-a
+#前缀从Ctrl+b 换为Ctrl + s
+set -g prefix C-s
 unbind C-b
 
 #copy-mode 将快捷键设置为vi 模式
@@ -28,10 +28,30 @@ bind -r ^k resizep -U 10
 bind -r ^j resizep -D 10
 bind -r ^h resizep -L 10
 bind -r ^l resizep -R 10
+
+# 状态栏
+  # 颜色
+  set -g status-bg black
+  set -g status-fg white
+
+  # 对齐方式
+  set-option -g status-justify centre
+
+  # 左下角
+  set-option -g status-left '#[bg=black,fg=green][#[fg=cyan]#S#[fg=green]]'
+  set-option -g status-left-length 20
+
+  # 窗口列表
+  setw -g automatic-rename on
+  set-window-option -g window-status-format '#[dim]#I:#[default]#W#[fg=grey,dim]'
+  set-window-option -g window-status-current-format '#[fg=cyan,bold]#I#[fg=blue]:#[fg=cyan]#W#[fg=dim]'
+
+  # 右下角
+  set -g status-right '#[fg=green][#[fg=cyan]%Y-%m-%d#[fg=green]]'
 ```
 
 ## 2. 使用
-这里`PREFIX` 默认为Ctrl+b， 我配置成了Ctrl+a
+这里`PREFIX` 默认为Ctrl+b， 我配置成了Ctrl+s
 
 ### 会话
 
