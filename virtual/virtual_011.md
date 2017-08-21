@@ -118,7 +118,7 @@ GRUB_TERMINAL=console
 (bash)$ update-grub
 (bash)$ nohup qemu-system-x86_64 ... [-curses] ... 
 ```
-CentOS 7 minimal 我也遇到了这个问题，同样的解决方法，只是刷新grub配置的方式不同：
+CentOS 7 minimal 我也遇到了这个问题，类似的解决方法，刷新grub配置的方式不同，并且启动qemu时需要加上`-vga virtio`
 ```
 # /etc/default/grub
 # 添加下面这行，防止大多数改变分辨率的行为
@@ -127,7 +127,7 @@ GRUB_CMDLINE_LINUX_DEFAULT="nomodeset"
 GRUB_TERMINAL=console
 
 (bash)$ grub2-mkconfig -o /boot/grub2/grub.cfg
-(bash)$ nohup qemu-system-x86_64 ... [-curses] ... 
+(bash)$ nohup qemu-system-x86_64 ... [-curses -vga virtio] ... 
 ```
 使用过程中，`Esc`+`2`调出QEMU monitor `Esc`+`1`返回curses文字界面。
 
