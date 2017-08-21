@@ -32,7 +32,15 @@ cat /etc/redhat-release
 #### 2. 修改drivers/block/virtio_blk.c
 比如我在init函数里面加了一行printk
 ```cpp
-printk(KERN_ALERT "hello!!~!~!!~~~,im JAYCEE !!...~~!~!~~!\n");
+static int __init init(void)
+{
+    ...
+        printk(KERN_ALERT "hello!!~!~!!~~~,im JAYCEE !!...~~!~!~~!\n");
+        virtblk_wq = alloc_workqueue("virtio-blk", 0, 0);
+    ...
+        error = register_virtio_driver(&virtio_blk);
+    ...
+}
 ```
 #### 3. 编译virtio_blk.ko模块
 ```bash
@@ -47,9 +55,16 @@ make modules_install SUBDIRS=drivers/block
 ```bash
 dracut -f 
 ```
+#### 6. 完成，看结果
+```bash
+reboot
+dmesg|grep JAYCEE
+```
 
 > [Creating a New Initial RAM Disk] https://wiki.centos.org/TipsAndTricks/CreateNewInitrd
 > 
 > [内核与ramdisk的关系] http://blog.sina.com.cn/s/blog_6a37498301013f9b.html
 > 
 > [centos 7.1 获取内核源码] http://blog.csdn.net/u010654572/article/details/51745817
+>
+> [mkinitcpio (简体中文)] https://wiki.archlinux.org/index.php/Mkinitcpio_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)
