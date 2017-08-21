@@ -1,4 +1,4 @@
-## Linux内核升级/更换/编译
+## Linux内核&内核模块的升级/更换/编译
 
 > [Linux-4.4-x86_64 内核配置选项简介 - 金步国](http://www.jinbuguo.com/kernel/longterm-linux-kernel-options.html)
 
@@ -14,3 +14,42 @@
 ## 升级centos的内核
 
 > [How to Install or Upgrade to Latest Kernel Version in CentOS 7]https://www.tecmint.com/install-upgrade-kernel-version-in-centos-7/
+
+## 编译内核模块
+
+（以centos7的virtio_blk模块为例）
+
+#### 1. 由于要修改的是内核模块，所以要下载完整版的内核源码
+* 先要查看下内核版本和CentOS系统版本，然后去http://vault.centos.org/ 可以下载到系统对应的内核具体在[系统版本]/[updates]/Source/SPackages 文件夹中。
+
+```bash
+uname -r
+cat /etc/redhat-release
+```
+
+* 然后安装源代码用`rpm -i xxx.src.rpm`
+
+#### 2. 修改drivers/block/virtio_blk.c
+比如我在init函数里面加了一行printk
+```cpp
+printk(KERN_ALERT "hello!!~!~!!~~~,im JAYCEE !!...~~!~!~~!\n");
+```
+#### 3. 编译virtio_blk.ko模块
+```bash
+cd /path/to/kernel_src
+make modules SUBDIRS=drivers/block
+```
+#### 4. 安装virtio_blk.ko
+```bash
+make modules_install SUBDIRS=drivers/block
+```
+#### 5. 重建/boot文件夹中的ramdisk镜像文件
+```bash
+dracut -f 
+```
+
+> [Creating a New Initial RAM Disk] https://wiki.centos.org/TipsAndTricks/CreateNewInitrd
+> 
+> [内核与ramdisk的关系] http://blog.sina.com.cn/s/blog_6a37498301013f9b.html
+> 
+> [centos 7.1 获取内核源码] http://blog.csdn.net/u010654572/article/details/51745817
