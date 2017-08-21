@@ -40,7 +40,7 @@ make modules SUBDIRS=drivers/block
 ```bash
 make modules_install SUBDIRS=drivers/block
 ```
-#### 5. 重建/boot文件夹中的ramdisk镜像文件
+#### 5. 重建/boot文件夹中的ramdisk镜像文件(initial ramdisk)
 ```bash
 dracut -f 
 ```
@@ -56,7 +56,7 @@ dmesg|grep JAYCEE
 > 
 > [centos 7.1 获取内核源码] http://blog.csdn.net/u010654572/article/details/51745817
 >
-> [mkinitcpio (简体中文)] https://wiki.archlinux.org/index.php/Mkinitcpio_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)
+> [initial ramdisk] https://en.wikipedia.org/wiki/Initial_ramdisk
 
 
 ## 内核编译配置
