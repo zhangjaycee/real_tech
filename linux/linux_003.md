@@ -20,8 +20,10 @@ cat /etc/redhat-release
 ```bash
 rpm -i xxx.src.rpm
 cd ~/rpmbuild/SPECS
+rpmbuild -bp --target=$(uname -m) kernel.spec 2>&1|grep -E '需要'|awk '{print $1}'|xargs yum install -y
 rpmbuild -bp --target=$(uname -m) kernel.spec
 ```
+rpmbuild之后，源码在`rpmbuild/BUILD`文件夹中
 
 #### 2. 修改drivers/block/virtio_blk.c
 比如我在init函数里面加了一行printk
@@ -39,8 +41,7 @@ static int __init init(void)
 #### 3. 编译virtio_blk.ko模块
 ```bash
 cd /path/to/kernel_src
-make oldconfig && make prepare
-make scripts
+make oldconfig && make prepare && make scripts
 make modules SUBDIRS=drivers/block
 ```
 #### 4. 安装virtio_blk.ko
