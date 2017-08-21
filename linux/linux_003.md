@@ -18,10 +18,14 @@ cat /etc/redhat-release
 
 * 然后安装源代码
 ```bash
+# 方法1：rpm-build
 rpm -i xxx.src.rpm
-cd ~/rpmbuild/SPECS
+cd rpmbuild/SPECS
 rpmbuild -bp --target=$(uname -m) kernel.spec 2>&1|grep -E '需要'|awk '{print $1}'|xargs yum install -y
 rpmbuild -bp --target=$(uname -m) kernel.spec
+# 方法2 (较简单)
+cd rpmbuild/SOURSES
+tar -xvf linux-xxx.tar.gz
 ```
 rpmbuild之后，源码在`rpmbuild/BUILD`文件夹中
 
@@ -40,13 +44,20 @@ static int __init init(void)
 ```
 #### 3. 编译virtio_blk.ko模块
 ```bash
+# 进入内核源码文件夹
 cd /path/to/kernel_src
-make oldconfig && make prepare && make scripts
+# 将当前运行内核的配置和模块符号表复制过来
+cp /boot/config-$(uname -r) .config 
+cp /usr/src/[path_to_kernel_headers]/Module.symvers . 
+make prepare && make scripts
 make modules SUBDIRS=drivers/block
 ```
 #### 4. 安装virtio_blk.ko
 ```bash
+# 方法1 (通过modules_install这个target):
 make modules_install SUBDIRS=drivers/block
+# 方法2 (直接复制过去替换原来文件):
+cp drivers/block/virtio_blk.ko /lib/modules/$(uname -r)/kernel/drivers/block/virtio_blk.ko
 ```
 #### 5. 重建/boot文件夹中的ramdisk镜像文件(initial ramdisk)
 ```bash
