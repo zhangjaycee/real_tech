@@ -109,16 +109,28 @@ mount -t ext4 /dev/vdb /mnt/
 ## 5. 文字界面访问Guest
 可以使用-curses来在当前终端显示虚拟机终端文字界面。要使用这个特性，需要在（Ubuntu为例）编译QEMU前安装libcurses5-dev和libcursesw5-dev两个包。 对于Ubuntu作为guest系统，需要注意，默认不支持curses，需要更改两个grub参数。
 ```
-#In /etc/default/grub :
-#Add nomodeset to this line to prevent most things changing resolution:
-#GRUB_CMDLINE_LINUX_DEFAULT="nomodeset"
-#Uncomment this line to keep grub in text mode:
-#GRUB_TERMINAL=console
+# /etc/default/grub
+# 添加下面这行，防止大多数改变分辨率的行为
+GRUB_CMDLINE_LINUX_DEFAULT="nomodeset"
+# 添加下面这行，让GRUB工作在text模式
+GRUB_TERMINAL=console
 
 (bash)$ update-grub
 (bash)$ nohup qemu-system-x86_64 ... [-curses] ... 
 ```
+CentOS 7 minimal 我也遇到了这个问题，同样的解决方法，只是刷新grub配置的方式不同：
+```
+# /etc/default/grub
+# 添加下面这行，防止大多数改变分辨率的行为
+GRUB_CMDLINE_LINUX_DEFAULT="nomodeset"
+# 添加下面这行，让GRUB工作在text模式
+GRUB_TERMINAL=console
+
+(bash)$ grub2-mkconfig -o /boot/grub2/grub.cfg
+(bash)$ nohup qemu-system-x86_64 ... [-curses] ... 
+```
 使用过程中，`Esc`+`2`调出QEMU monitor `Esc`+`1`返回curses文字界面。
+
 
 ## 6. 为Guest添加或删除磁盘分区
 
