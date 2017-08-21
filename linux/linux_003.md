@@ -16,7 +16,12 @@ uname -r
 cat /etc/redhat-release
 ```
 
-* 然后安装源代码用`rpm -i xxx.src.rpm`
+* 然后安装源代码
+```bash
+rpm -i xxx.src.rpm
+cd ~/rpmbuild/SPECS
+rpmbuild -bp --target=$(uname -m) kernel.spec
+```
 
 #### 2. 修改drivers/block/virtio_blk.c
 比如我在init函数里面加了一行printk
@@ -34,6 +39,8 @@ static int __init init(void)
 #### 3. 编译virtio_blk.ko模块
 ```bash
 cd /path/to/kernel_src
+make oldconfig && make prepare
+make scripts
 make modules SUBDIRS=drivers/block
 ```
 #### 4. 安装virtio_blk.ko
