@@ -30,6 +30,8 @@
 
 1. [[KVM内存虚拟化|virtual_015]]
 
+1. [[QEMU追踪(tracing)|virtual_016]]
+
 #### [博客推荐]
 
 * ->[笑便世界] http://smilejay.com/ (关于KVM/Qemu)
