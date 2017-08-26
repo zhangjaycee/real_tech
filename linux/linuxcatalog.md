@@ -33,3 +33,5 @@
 1. [[multiqueue block blk_mq|linux_015]]
 
 1. [[Bcache|linux_016]]
+
+1. [[Linux内核调试、追踪工具(kprobe/perf/ftrace)|linux_017]]
