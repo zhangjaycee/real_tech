@@ -11,3 +11,9 @@ https://www.ibm.com/developerworks/cn/linux/l-cn-perf2/index.html
 ## ftrace
 
 [ftrace 简介] https://www.ibm.com/developerworks/cn/linux/l-cn-ftrace/
+
+
+## crash
+
+内核分析工具
+http://people.redhat.com/anderson/
