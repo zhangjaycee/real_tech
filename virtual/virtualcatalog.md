@@ -6,19 +6,19 @@
 
 1. [[Xen的Hypervisor和Domain0的关系|virtual_003]] 
 
-1. [[Difference between qemu\qemu-kvm\qemu-system-x86_64\qemu-x86_64 ?|virtual_004]] 
+1. [[👍 Difference between qemu\qemu-kvm\qemu-system-x86_64\qemu-x86_64 ?|virtual_004]] 
 
-1. [[用QEMU创建一个虚拟机|virtual_005]]
+1. [[👍 用QEMU创建一个虚拟机|virtual_005]]
 
 1. [[Qemu整体架构|virtual_006]]
 
 1. [[关于Qemu/KVM 虚拟机的网络配置|virtual_007]]
 
-1. [[关于virtio|virtual_008]]
+1. [[👍 关于virtio|virtual_008]]
 
 1. [[Qemu进行读/写的流程|virtual_009]]
 
-1. [[从源码编译Qemu的流程及简述|virtual_010]]
+1. [[👍 从源码编译Qemu的流程及简述|virtual_010]]
 
 1. [[Qemu实际应用的各种小技巧|virtual_011]]
 
@@ -32,7 +32,7 @@
 
 1. [[QEMU追踪(tracing)|virtual_016]]
 
-1. [[SR-IOV|virtual_017]]
+1. [[👍 SR-IOV|virtual_017]]
 
 #### [博客推荐]
 
