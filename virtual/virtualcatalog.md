@@ -32,6 +32,8 @@
 
 1. [[QEMU追踪(tracing)|virtual_016]]
 
+1. [[SR-IOV|virtual_017]]
+
 #### [博客推荐]
 
 * ->[笑便世界] http://smilejay.com/ (关于KVM/Qemu)
