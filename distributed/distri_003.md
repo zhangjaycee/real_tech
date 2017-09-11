@@ -25,7 +25,10 @@
   * 若cache中没有命中要写的数据块，直接绕过cache将数据写到下一层存储设备。(not-write-allocate，非写匹配)
 
 ### 参考
-[An overview of cache(pdf)]  http://download.intel.com/design/intarch/papers/cache6.pdf
+[1] An overview of cache(pdf),  http://download.intel.com/design/intarch/papers/cache6.pdf
 
-[An Introduction to Look-Aside Caching] https://content.pivotal.io/blog/an-introduction-to-look-aside-vs-inline-caching-patterns
+[2] An Introduction to Look-Aside Caching, https://content.pivotal.io/blog/an-introduction-to-look-aside-vs-inline-caching-patterns
+
+[3] 《深入理解计算机系统(第二版)》中文版 P420
+
 
