@@ -20,4 +20,12 @@ FTL是flash translation layer的缩写，即闪存翻译层。
 
 FTL主要负责将暴露给上层的逻辑块地址，翻译为实际的物理块地址。这样做的一个主要原因就是FTL中的平均磨损逻辑(wear leveling)试图将擦除操作平均分配给所有块，来尽可能长的延长SSD使用寿命。
 
+## Read Disturb
+
+对于一个page读的次数多了，可能对同一个block的其他page造成影响，使其数据0/1发生变化，所以应该记录读的次数，对读的次数多的block进行擦除和重新写入操作。[2]
+
+## 参考
+[1] CSAPP
+
+[2] NAND Flash存储器与SSD简介, http://blog.sina.com.cn/s/blog_679f935601011nt1.html
 
