@@ -35,3 +35,5 @@
 1. [[Bcache|linux_016]]
 
 1. [[Linux内核调试、内核追踪工具(kprobe/perf/ftrace)|linux_017]]
+
+1. [[blktrace: linux io的追踪工具|linux_018|]]
