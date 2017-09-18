@@ -48,6 +48,8 @@ block_set_io_throttle virtio2 0 0 0 100 0 0
 
 待续。。。
 
+---
+
 
 [1] Documentation/QMP, https://wiki.qemu.org/Documentation/QMP
 
