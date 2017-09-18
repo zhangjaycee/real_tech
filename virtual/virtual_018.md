@@ -1,6 +1,6 @@
 # 利用QEMU Monitor限制内存、I/O和vCPU数
 
-## 如果接入QEMU
+## 接入QEMU Monitor
 
 * 启动QEMU虚拟机时，加入`-curses`启动参数，然后在虚拟机开始启动后按`ESC+2`进入QEMU Monitor
 
