@@ -36,6 +36,8 @@
 block_set_io_throttle device bps bps_rd bps_wr iops iops_rd iops_wr
 ```
 
+但是QEMU 2.8 这个功能存在BUG不能用，升级到2.9以上后又好了。
+
 例子：
 ```bash
 # 查询磁盘设备
