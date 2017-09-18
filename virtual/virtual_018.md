@@ -57,8 +57,8 @@ block_set_io_throttle virtio2 0 0 0 100 0 0
 
 [3] Features/CPUHotplug, https://wiki.qemu.org/Features/CPUHotplug
 
-[3] qemu-docs, memory-hotplug, https://github.com/qemu/qemu/blob/master/docs/memory-hotplug.txt
+[4] qemu-docs, memory-hotplug, https://github.com/qemu/qemu/blob/master/docs/memory-hotplug.txt
 
-[4] I/O bursts with QEMU 2.6, https://blogs.igalia.com/berto/2016/05/24/io-bursts-with-qemu-2-6/
+[5] I/O bursts with QEMU 2.6, https://blogs.igalia.com/berto/2016/05/24/io-bursts-with-qemu-2-6/
 
-[5] QEMU DOC, https://qemu.weilnetz.de/doc/qemu-doc.html
+[6] QEMU DOC, https://qemu.weilnetz.de/doc/qemu-doc.html
