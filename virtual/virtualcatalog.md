@@ -34,6 +34,8 @@
 
 1. [[👍 SR-IOV|virtual_017]]
 
+1. [[利用QEMU Monitor增减内存、限制IO|virtual_018]]
+
 #### [博客推荐]
 
 * ->[笑便世界] http://smilejay.com/ (关于KVM/Qemu)
