@@ -11,7 +11,7 @@
 下表摘自[2]
 
 |Type|	Volatile?|	Writeable?|	Erase Size|	Max Erase Cycles|	Cost (per Byte)|	Speed|
-|------------------------------------------------------------------------------------|
+|-|-|-|-|-|-|-|
 |SRAM	|Yes	|Yes	|Byte	|Unlimited|	Expensive|	Fast|
 |DRAM	|Yes	|Yes	|Byte	|Unlimited|	Moderate|	Moderate|
 |Masked ROM	|No	|No|	n/a|	n/a|	Inexpensive|	Fast|
