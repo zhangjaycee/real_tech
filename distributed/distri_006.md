@@ -3,7 +3,7 @@
 
 ## 设备
 
-[[distri_006_p1.png|height = 512px]]
+[[distri_006_p1.png]]
 
 最新的3D XPoint存储器比DRAM慢10倍，便宜2倍；比NAND FLASH快1000倍，贵5倍左右，性能比其他PCIe和NVMe的SSD快10倍左右。并且它是一种NVM。
 
