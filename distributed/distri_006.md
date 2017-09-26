@@ -1,7 +1,7 @@
 # 存储设备/接口/传输协议
 
 
-## 设备
+## 1. 设备
 
 [[distri_006_p1.png]]
 
@@ -22,17 +22,43 @@
 |NVRAM	|No	|Yes	|Byte	|Unlimited	|Expensive (SRAM + battery)|	Fast|
 
 
-## 接口
+## 2. 接口
 
-ATA --> SATA
+#### 2.1 分类和发展
+```
+(P)ATA(Parallel AT Attachment)/IDE(Integrated Drive Electronics) --> SATA(Serial ATA) --> mSATA(mini-SATA) --> SATAe(SATA Express)
 
-SCSI --> SAS
+SCSI(Small Computer System Interface) --> SAS(Serial Attached SCSI)
 
+PCIe
 
+NGFF(Next Generation Form Factor, M.2)
+```
 
+* mSATA / PCIe / NGFF 一般都是用于NVM(如SSD)，不用于HDD。
 
-## 协议
-NVMe, AHCI和IDE等都是传输协议，它们在传输接口(PCIe, SATA等)之上工作。
+* mSATA慢于SATA，但是接口和体积大大减小。
+
+* NGFF是最新的，同时比mSATA更小，也是最快的。
+
+* SATAe接口兼容SATA和PCIe
+
+#### 2.2 速度：
+
+NGFF > PCIe > SAS > SATA > SCSI > ATA/IDE
+
+## 3. 协议
+
+IDE, AHCI和NVMe等都是传输协议，它们在传输接口(PCIe, SATA, ATA等)之上工作。
+
+* IDE(Integrated Drive Electronics)是IDE接口的一种“协议”，它表示磁盘控制器集成到了硬件驱动器中，无需host进行移动磁道臂等低层次的控制。
+
+* AHCI(Advanced Host Controller Interface)一般用作SATA盘的协议，不过也有些情况SATA盘用IDE协议(老版本的Windows中默认的IDE/legacy模式就是这样)来模拟。
+
+* SAS的协议向下兼容SATA盘。
+
+* NVMe支持PCIe接口或者NGFF接口的盘。
+
 
 ### 参考
 [1] Breakthroughs in Memory Technology, http://www.intelsalestraining.com/memorytimeline/
@@ -43,3 +69,5 @@ NVMe, AHCI和IDE等都是传输协议，它们在传输接口(PCIe, SATA等)之�
 [3] What’s the difference between SATA, PCIe and NVMe?, http://www.userbenchmark.com/Faq/What-s-the-difference-between-SATA-PCIe-and-NVMe/105
 
 [4] https://www.intel.com/nvm
+
+[5] Hard disk drive interface, Wikipedia, https://en.wikipedia.org/wiki/Hard_disk_drive_interface
