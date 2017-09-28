@@ -1,4 +1,12 @@
-# 利用QEMU Monitor限制内存、I/O和vCPU数
+# 虚拟机的资源隔离 / 利用QEMU Monitor限制内存、I/O和vCPU数
+
+## 资源隔离的思路
+
+虚拟机或者容器的资源隔离：CPU可以用cgroups([DOC](https://www.kernel.org/doc/Documentation/cgroup-v1/cgroups.txt))进行限制，内存(缓存)可以单独开辟，网络可以用Traffic Control([HOWTO](http://linux-ip.net/articles/Traffic-Control-HOWTO/))。
+
+FAST 17上FlashBlox: Achieving Both Performance Isolation and Uniform Lifetime for Virtualized SSDs 这篇paper提出用open-channel SSD将SSD也进行资源隔离，将每个chip/channel/die分给特定的VM/container。
+
+对于IO的限制，QEMU也提供了throttling的方法，如下会写到。
 
 ## 接入QEMU Monitor
 
