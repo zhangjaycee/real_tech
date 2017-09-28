@@ -34,7 +34,7 @@
 
 1. [[👍 SR-IOV|virtual_017]]
 
-1. [[利用QEMU Monitor增减内存、限制IO|virtual_018]]
+1. [[👍 虚拟机的资源隔离 / 利用QEMU Monitor增减内存、限制IO|virtual_018]]
 
 #### [博客推荐]
 
