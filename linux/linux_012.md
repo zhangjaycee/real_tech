@@ -21,4 +21,10 @@ echo 0 > /sys/devices/system/cpu/cpu1/online
 
 #### cgroups
 
+06年被提出，已经在内核中，可以限制CPU、内存和IO
+
+[1] Cgroups控制cpu，内存，io示例, http://www.cnblogs.com/yanghuahui/p/3751826.html
+
+[2] Docker背后的内核知识——cgroups资源限制, http://www.infoq.com/cn/articles/docker-kernel-knowledge-cgroups-resource-isolation
+
 #### taskset
