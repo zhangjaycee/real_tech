@@ -15,3 +15,9 @@
 - knee of the curve
 
 曲线的拐点
+
+- give a flavor of sth
+
+举例子来说明说明什么东西。
+
+e.g. Let’s describe TPC-C to give a flavor of these benchmarks.
