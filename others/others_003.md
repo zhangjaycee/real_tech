@@ -11,3 +11,7 @@
 - simply put
 
 简言之
+
+- knee of the curve
+
+曲线的拐点
