@@ -37,6 +37,10 @@ FAST 17上FlashBlox: Achieving Both Performance Isolation and Uniform Lifetime f
 
 ?貌似还需要在虚拟机内插拔内存，待续。。
 
+* 一个自动动态通过balloon改变guest内存的补丁，貌似并没有被并入主线：
+
+https://www.linux-kvm.org/page/Projects/auto-ballooning
+
 ## 限制I/O
 
 是利用QEMU Monitor的`block_set_io_throttle`命令。基本格式：
