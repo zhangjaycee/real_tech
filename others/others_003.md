@@ -21,3 +21,7 @@
 举例子来说明说明什么东西。
 
 e.g. Let’s describe TPC-C to give a flavor of these benchmarks.
+
+- back-of-the-envelope calculation
+
+简单粗略的计算
