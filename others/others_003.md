@@ -25,3 +25,7 @@ e.g. Let’s describe TPC-C to give a flavor of these benchmarks.
 - back-of-the-envelope calculation
 
 简单粗略的计算
+
+- appeal to intuition
+
+诉诸直觉，e.g. Although we won't derive this formula, we can appeal to intuition.
