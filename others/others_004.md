@@ -2,7 +2,7 @@
 
 ---
 
-**幂律分布(Power-Law Distribution)**: 也就是常说的“二八定理”
+**幂律分布(Power-Law Distribution) / 帕累托分布(Pareto distribution)**: 也就是常说的“二八定理”
 
 ---
 
