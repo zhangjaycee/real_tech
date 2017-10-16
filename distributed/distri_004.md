@@ -34,9 +34,10 @@ FTL主要负责将暴露给上层的逻辑块地址，翻译为实际的物理�
 ## 参考
 [1] Understanding Flash: Blocks, Pages and Program / Erases, https://flashdba.com/2014/06/20/understanding-flash-blocks-pages-and-program-erases/
 
-[2] CSAPP
+[2] SSD 101, https://www.cactus-tech.com/landing/ssd-101-ebook
 
 [3] NAND Flash存储器与SSD简介, http://blog.sina.com.cn/s/blog_679f935601011nt1.html
 
 [4] Log-structured file systems: There's one in every SSD, https://lwn.net/Articles/353411/
 
+[5] CSAPP
