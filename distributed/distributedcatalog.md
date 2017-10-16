@@ -10,3 +10,5 @@
 1. [[存储设备/接口/传输协议|distri_006]]
 1. [[RAID|distri_007]]
 1. [[S.M.A.R.T|distri_008]]
+
+1. [[Open-Channel SSD|distri_009]]
