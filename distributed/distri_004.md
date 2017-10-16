@@ -29,3 +29,5 @@ FTL主要负责将暴露给上层的逻辑块地址，翻译为实际的物理�
 
 [2] NAND Flash存储器与SSD简介, http://blog.sina.com.cn/s/blog_679f935601011nt1.html
 
+[3] Log-structured file systems: There's one in every SSD, https://lwn.net/Articles/353411/
+
