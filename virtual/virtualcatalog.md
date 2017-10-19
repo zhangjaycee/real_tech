@@ -36,7 +36,7 @@
 
 1. [[👍 虚拟机的资源隔离 / 利用QEMU Monitor增减内存、限制IO|virtual_018]]
 
-1. [[SLA / SLO||virtual_019]]
+1. [[SLA / SLO|virtual_019]]
 
 #### [博客推荐]
 
