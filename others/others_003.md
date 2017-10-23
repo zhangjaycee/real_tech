@@ -29,3 +29,7 @@ e.g. Let’s describe TPC-C to give a flavor of these benchmarks.
 - appeal to intuition
 
 诉诸直觉，e.g. Although we won't derive this formula, we can appeal to intuition.
+
+- error-prone
+
+-prone 意思是易于。。。  这里的意思是有错误倾向的
