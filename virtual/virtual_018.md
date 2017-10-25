@@ -76,3 +76,5 @@ block_set_io_throttle virtio2 0 0 0 100 0 0
 [5] I/O bursts with QEMU 2.6, https://blogs.igalia.com/berto/2016/05/24/io-bursts-with-qemu-2-6/
 
 [6] QEMU DOC, https://qemu.weilnetz.de/doc/qemu-doc.html
+
+[7] docker runtime resources constraint,  https://docs.docker.com/engine/reference/run/#block-io-bandwidth-blkio-constraint
