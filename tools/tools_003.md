@@ -21,6 +21,22 @@ make install
 ```
 
 
+## fio
+
+## stress
+
+这个是产生压力的，不是测试的。安装方法：
+
+ubuntu:
+```
+apt install stree
+```
+centos:
+```
+yum install epel-release
+yum install stress
+```
+
 
 ## iometer
 
