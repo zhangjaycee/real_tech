@@ -1,5 +1,21 @@
 # Linux Block Layer中的I/O队列和调度器
 
+Linux Block layer 中有几个重要的概念：请求、请求队列、调度器(调度程序，调度算法)等。
+
+## 块IO请求(bio request)
+
+`submit_bio`函数负责传递bio实例，然后调用`generic_make_request`函数创建新的request，`__generic_make_request`函数是块层的通用实现，具体分三步工作:[2]
+1. `bdev_get_queue`找到涉及的块设备对应的request queue。
+2. `blk_partition_map`重新映射该请求。
+3. `q->make_request_fn`用来根据bio产生request并发送给device driver，一般会调用内核标准的`__make_request`函数(最新内核中没有这个名字，叫`blk_queue_bio`?)。
+
+然后`__make_request`函数又分为几步：
+1. 由bio新创建的请求后，首先检查IO scheduler的queue(elv_queue)是不是空的
+
+
+[1] UTLK
+
+[2] PLKA
 
 ## I/O Scheduler
 
