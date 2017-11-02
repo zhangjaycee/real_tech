@@ -39,3 +39,5 @@
 1. [[blktrace: linux io的追踪工具|linux_018|]]
 
 1. [[linux 内核中的通用数据结构/设计模式|linux_019]]
+
+1. [[Linux及内核的同步机制|linux_020]]
