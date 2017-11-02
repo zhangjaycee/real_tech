@@ -24,5 +24,8 @@
 
 ---
 
+#### 参考
+
 [1] APUE
+
 [2] 《Linux内核设计与实现》读书笔记（十）- 内核同步方法, http://www.cnblogs.com/wang_yb/archive/2013/05/01/3052865.html
