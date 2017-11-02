@@ -117,3 +117,10 @@ set -o vi
 
 区别在于前者应用于所有终端输入，如bash、mysql交互，后者只用于bash
 
+### 使用VIM编写Makefile时如何避免tab被扩展成4个空格
+转自：http://blog.csdn.net/happen23/article/details/50680282
+
+> 一般写代码的时候，都将tab键转换成4个空格（通过set expandtab命令）
+不过，写Makefile的时候，tab有特殊含义——表明这行是规则，不是目标——不能转换成空格
+但是执行set noexpandtab命令又麻烦，怎么办呢？
+可以先敲ctrl-v组合键，再敲tab键，这样就不会被转换成空格了
