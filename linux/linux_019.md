@@ -19,3 +19,35 @@ container_of(已知的某字段的地址, 字段所属的数据结构类型名, 
 > **Embedded Anchor**: A good way to include generic objects in a data structure is to embed an anchor in them and build the data structure around the anchors. The object can be found from the anchor using container_of().
 
 [1] Linux kernel design patterns - part 2, https://lwn.net/Articles/336255/
+
+### Link List
+
+内核中实现了链表结构。
+
+
+## for each宏定义
+
+这种遍历链表的宏定义很常见，会用指定的语句代替for(;;)，可以简化C代码。
+
+内核中`include/linux/list.h`文件中有很多种for each的实现，例如：
+
+```cpp
+/**
+ * list_for_each    -   iterate over a list
+ * @pos:    the &struct list_head to use as a loop cursor.
+ * @head:   the head for your list.
+ */
+#define list_for_each(pos, head) \
+    for (pos = (head)->next; pos != (head); pos = pos->next)
+```
+输入一个循环链表的头指针（表头为空节点），遍历一圈。
+
+再比如QEMU中实现的队列，在`QEMU_SRC/include/qemu/queue.h`文件中：
+
+```cpp
+#define QLIST_FOREACH(var, head, field)                                 \
+        for ((var) = ((head)->lh_first);                                \
+                (var);                                                  \
+                (var) = ((var)->field.le_next))
+```
+
