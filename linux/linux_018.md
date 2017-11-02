@@ -28,5 +28,6 @@ Java好像有个测试工具叫btrace，用于追踪IO的工具blktrace有个简
 
 
 ## 参考
-
-http://blog.csdn.net/hs794502825/article/details/8545133
+> https://www.mimuw.edu.pl/~lichota/09-10/Optymalizacja-open-source/Materialy/10%20-%20Dysk/gelato_ICE06apr_blktrace_brunelle_hp.pdf
+>
+> http://blog.csdn.net/hs794502825/article/details/8545133
