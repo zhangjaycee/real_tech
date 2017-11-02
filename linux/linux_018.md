@@ -1,4 +1,26 @@
-# blktrace
+# blktrace (btrace命令)
+
+## btrace
+
+Java好像有个测试工具叫btrace，用于追踪IO的工具blktrace有个简化版命令也是btrace，这两个不是一个东西。
+
+由于blktrace产生的trace数据需要一个叫blkparse的工具进行格式化解析，不是很方便，btrace属于blktrace自带的一个简单的对自身封装，就是相当于一些blktrace和blkparse的常用组合。
+
+> (Man Page) 
+>
+> #### DESCRIPTION
+> The btrace script provides a quick and easy way to do live tracing of block devices. It calls blktrace on the specified devices and pipes the output through blkparse for formatting. See blktrace (8) for more in-depth information about how blktrace works.
+> #### EXAMPLE
+> Simply running
+>
+>    % btrace /dev/sda
+>
+> will show a trace of the device /dev/sda.
+
+
+## blktrace
+
+貌似有内核支持？
 
 统计各个逻辑CPU下某个盘的I/O次数和时间
 
