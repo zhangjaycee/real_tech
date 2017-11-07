@@ -1,11 +1,5 @@
 # 怎样理解Qemu/KVM的存储栈
 
-> 1. [Qemu扮演的角色](#1-qemu扮演的角色)
-
-> 1. [三种模拟硬盘接口](#2-三种模拟硬盘接口)
-
-> 1. [怎样理解KVM/Qqmu的cache mode](#3-怎样理解kvmqemu的cache-mode)
-
 
 ## 1. Qemu扮演的角色
 
@@ -18,46 +12,42 @@ Guest上的用户应用和OS kernel像在物理机上一样运行着；而Guest�
 怎么让Guest上的系统把一个文件看成一个物理磁盘呢？Qemu就起一个中间处理人的作用，不好听地说，他骗了Guest的系统，把Guest认为的磁盘级操作都揽过去，全部转成了Host的文件级操作。
 
 
-## 2. 三种模拟硬盘接口
+## 2. 分层
 
-> 参考：
+```
+                        +---------------+    e.g. virtio-blk / nvme / ide
+Frontend Devices  +-->  | Guest Devices |
+                        +-------+-------+    srcs in: QEMU_SRC/hw/block/*
+                                |                     QEMU_SRC/hw/ide/*
+                                |
+                                |
+                   +-   +-------+-------+    e.g. qcow2 / raw
+                   |    | Format Driver |
+                   |    +---------------+    srcs in: QEMU_SRC/block/*
+                   |
+Backend Drivers  +-+            |
+                   |   +--------+--------+   e.g. file-posix / file-win32 / nbd
+                   |   | Protocol Driver |
+                   +-  +-----------------+   srcs in: QEMU_SRC/block/*
 
-> https://www.ibm.com/developerworks/community/blogs/5144904d-5d75-45ed-9d2b-cf1754ee936a/entry/virtio_scsi%25e8%25ae%25be%25e5%25a4%2587%25e4%25bb%258b%25e7%25bb%258d?lang=en
+```
+存储IO栈的层次本来就很多，QEMU这一层本来就是虚拟化中存储栈的一小层，但是光它自己最少又可以分成三层：我把它们称为设备模拟层(Guest device)、格式驱动层(Format driver)和协议驱动层(Protocol driver)。大概的层次关系见上图。通俗来讲：
 
-Qemu提供给（也可以说是欺骗Guset）用的模拟硬盘接口有3种：Virtio、IDE和SCSI。
+1. 设备模拟层主要决定你的镜像文件在GuestOS看起来是什么设备，比如QEMU可以把这个文件模拟成一个IDE硬盘、一个virtio-blk设备或者一个NVMe设备等；
 
-> Virtio is a paravirtualized storage interface, delivers the best performance, and is extensible for the future
-One virtio-blk PCI adapter per block device
+2. 格式驱动层对应了你的镜像文件格式，这个一般最开始就是由`qemu-img`工具创建好的，比如你用了qcow2格式或者raw格式等；
 
-> IDE emulation is used for CD-ROMs and is also available for disks
-Good guest compatibility but low performance
-
-> SCSI emulation can be used for special applications but is still under development
+3. 协议驱动层就是对应你用了什么作为你的存储后端，一般都是用本地的一个文件，其实还可以是远程的块设备nbd等，当这里用文件作为存储后端时，由于要和Host的操作系统不同(Linux或者Win)，文件操作也是不同的，所以这也要分为两个协议驱动。
 
 
 
-## 3. 怎样理解KVM/Qemu的cache mode
 
->参考：
+## 3. QEMU镜像文件的cache mode
 
->http://openskill.cn/article/88
-
->http://mathslinux.org/?p=370
-
-> http://www.cnblogs.com/sammyliu/p/5066895.html
-
-[[virtual_002_p1.png|height=512px]]
 
 [[virtual_002_p2.png|height=512px]]
 
 ### 3.1.Qemu-KVM的5种cachemode
-
->参考
-
->https://www.suse.com/documentation/sles11/book_kvm/data/sect1_1_chapter_book_kvm.html
-
->http://www.cnblogs.com/jusonalien/p/4772618.html
-
 
 
 * cache mode unspecified
@@ -96,11 +86,9 @@ Good guest compatibility but low performance
 
 该模式所对应的标志位是O_DSYNC和O_DIRECT,仅当数据被提交到了存储设备的时候，写操作才会被完整地通告,并且可以放心地绕过host的页缓存。就像writethrough模式,有时候不发送刷新缓存的指令时很有用的.该模式是最新添加的一种cache模式，使得缓存与直接访问的结合成为了可能。
 
+### 3.2.有关Cache
 
-
-### 3.2.CPU和Cache之间的模式（类似）
-
-> 参考：http://dannynote.blogspot.com/2007/04/cachereadwrite-throughbackallocate.html
+（CPU和块设备缓存思想是类似的）
 
 > 所谓的read/write cache的hit/miss，指的是CPU要read/write某一位址的资料，若此时cache里的资料刚好是该位址的资料，则称为cache hit，若此时cache里的资料不是该位址的资料，则称为cache miss。
 
@@ -112,17 +100,26 @@ Good guest compatibility but low performance
 
 > 当cache miss时，若CPU要写入资料到某一位址时，可分为二种方式：一种是no write allocate，此种方式会直接将资料写到主记忆体中，不会再从记忆体中载入到cache，另一种方式是write allocate，此种方式会先将资料从主记忆体中载入到cache，然后再依cache hit的规则，将资料写出。
 
-### 3.3.Qemu中cache mode的实现方式
+### 3.3. Qemu中cache mode的实现方式
 
-> 参考：
-
-> http://smilejay.com/2012/08/qemu-kvm-cache-off/
-
-实际上，是在Qemu打开镜像文件的时候，改变open()的参数改变的。
-
+实际上，是在Qemu打开镜像文件的时候，改变open()的参数改变的。详见代码或者参考[1]。以下是三种常见cache mode的标志位。
 
 | CacheMode | Open()Flag |特点|
 |--------|--------|--------|
 |Write through|O_DSYNC|QEMU默认/ 安全/ 但是IO性能差|
 |Write back||用了两层Cache/ 不安全/ IO性能最好|
 |None|O_DIRECT|绕过Host Cache层/ 安全/ 性能较好|
+
+---
+
+### 参考：
+[1] KVM性能测试报告, http://openskill.cn/article/88
+
+[2] 理解 QEMU/KVM 和 Ceph（1）：QEMU-KVM 和 Ceph RBD 的 缓存机制总结, http://www.cnblogs.com/sammyliu/p/5066895.html
+
+[3] SUSE Doc, Description of Cache Modes, https://www.suse.com/documentation/sles11/book_kvm/data/sect1_1_chapter_book_kvm.html
+
+[4] qemu-kvm磁盘读写的缓冲(cache)的五种模式, http://www.cnblogs.com/jusonalien/p/4772618.html
+
+[5] 有關Cache的read/write through/back/allocate的意義, http://dannynote.blogspot.com/2007/04/cachereadwrite-throughbackallocate.html
+
