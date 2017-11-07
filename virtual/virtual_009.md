@@ -20,6 +20,8 @@ extern BlockDriver bdrv_qcow2;
  block/{raw-win32.c => file-win32.c}        
  block/{raw_bsd.c => raw-format.c}
 ```
+**(17年11月7日更新：从2.9.0开始已经把名字这样改了)**
+
 这样修改防止造成混乱：因为驱动分两种驱动：protocol block driver和format block driver,现在还不太理解，有的信息是：
 
 1. 
