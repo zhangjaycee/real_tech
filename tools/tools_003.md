@@ -50,3 +50,8 @@ yum install stress
 
 ## vmstat
 > http://www.cnblogs.com/ggjucheng/archive/2012/01/05/2312625.html
+
+---
+
+### 参考：
+[1] Stefan Hajnoczi, Common disk benchmarking mistakes, http://blog.vmsplice.net/2017/11/common-disk-benchmarking-mistakes.html
