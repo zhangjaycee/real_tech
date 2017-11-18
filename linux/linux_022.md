@@ -18,4 +18,8 @@
 
 ---
 ### 参考：
-[1] centos7下做内存盘的方法, http://www.zphj1987.com/2016/01/14/centos7下做内存盘的方法/
+[1] The Difference Between a tmpfs and ramfs RAM Disk, https://www.jamescoyle.net/knowledge/951-the-difference-between-a-tmpfs-and-ramfs-ram-disk
+
+[2] Create a RAM disk in Linux, https://www.jamescoyle.net/how-to/943-create-a-ram-disk-in-linux
+
+[3] centos7下做内存盘的方法, http://www.zphj1987.com/2016/01/14/centos7下做内存盘的方法/
