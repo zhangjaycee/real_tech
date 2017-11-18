@@ -43,3 +43,5 @@
 1. [[Linux及内核的同步机制|linux_020]]
 
 1. [[dm(Device Mapper)|linux_021]]
+
+1. [[DRAM内存作存储(ramdisk/ramfs/tmpfs/memcached/radis)|linux_022]]
