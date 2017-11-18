@@ -8,13 +8,38 @@
 
 ### tmpfs
 
+以一个2GB的tmpfs为例
 
+```
+mount -t tmpfs -o size=2G tmpfs /TMPFS
+```
 
 ### ramdisk
 
+#### 在centos上使用一个ram disk
 
-
-
+Step 1. 加载内核模块`brd`来创建一个ramdisk
+```
+# 创建连1个2GB的内存盘，最大分区数为4。
+modprobe brd rd_nr=1 rd_size=2048000 max_part=4
+```
+Step 2. 用fdisk进行分区（可选），然后在相应分区上格式化新的文件系统，并挂载
+```
+# 分区，在fdisk中按提示操作即可
+fdisk /dev/ram0
+# 格式化文件系统，以ext4为例
+mkfs.ext4 /dev/ram0p1
+# mkdir /RAMDISK
+mount /dev/ram0p1 /RAMDISK
+```
+Step 3. 然后就可以正常用了。。。
+Step 4. 销毁ramdisk
+```
+# 接触挂载
+umount /dev/ram0p1
+# 卸载内核模块
+modprobe -r brd
+```
 
 ---
 ### 参考：
