@@ -34,7 +34,7 @@
 
 1. [[Bcache|linux_016]]
 
-1. [[Linux内核调试、内核追踪工具(kprobe / perf / ftrace / strace / pstack)|linux_017]]
+1. [[Linux中的性能调试、函数追踪工具(perf / ftrace / strace / pstack ...)|linux_017]]
 
 1. [[磁盘IO监控工具(blktrace(btrace) / iostat)|linux_018|]]
 
