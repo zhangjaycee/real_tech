@@ -1,16 +1,58 @@
-# Linux内核调试、追踪工具(kprobe/perf/ftrace)
+# Linux中的性能调试、函数追踪工具(perf / ftrace / strace / pstack ...)
 
-## kprobe
-[使用 Kprobes 调试内核] https://www.ibm.com/developerworks/cn/linux/l-kprobes.html
-
-## perf
-[Perf -- Linux下的系统性能调优工具，第 1 部分] https://www.ibm.com/developerworks/cn/linux/l-cn-perf1/index.html
-
-[Perf -- Linux下的系统性能调优工具，第 2 部分] 
-https://www.ibm.com/developerworks/cn/linux/l-cn-perf2/index.html
+我们可以将pstack看做应用级、strace看做系统调用级、ftrace看做内核级，详细如下：
 
 
-## ftrace
+## pstack -- 打印当前应用程序的调用栈
+例如对于程序`hello.c`：
+```cpp
+//hello.c
+int myhello(int time)
+{
+    sleep(time);
+    printf("hello,\n");
+    sleep(time);
+    printf("world!\n");
+    return 0;
+}
+int main()
+{
+    myhello(5);
+    return 0;
+}
+```
+运行程序后，进程号是108633，运行pstack的结果：
+```bash
+zjc@/SSD$ pstack 108633
+#0  0x00007f0c7f7b8650 in __nanosleep_nocancel () from /lib64/libc.so.6
+#1  0x00007f0c7f7b8504 in sleep () from /lib64/libc.so.6
+#2  0x00000000004005b3 in myhello ()
+#3  0x00000000004005d2 in main ()
+```
+可以看到程序正在libc.so.6的__nanosleep_nocancel ()处运行。
+
+## strace -- 应用程序的系统调用追踪
+
+例如还是对于程序`hello.c`，运行程序后，运行strace的结果：
+```bash
+$ strace -p 107917
+Process 107917 attached
+restart_syscall(<... resuming interrupted call ...>) = 0
+fstat(1, {st_mode=S_IFCHR|0620, st_rdev=makedev(136, 5), ...}) = 0
+mmap(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7fdb2b2c2000
+write(1, "hello,\n", 7)                 = 7
+rt_sigprocmask(SIG_BLOCK, [CHLD], [], 8) = 0
+rt_sigaction(SIGCHLD, NULL, {SIG_DFL, [], 0}, 8) = 0
+rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+nanosleep({15, 0}, 0x7fff9946fbf0)      = 0
+write(1, "world!\n", 7)                 = 7
+exit_group(0)                           = ?
++++ exited with 0 +++
+```
+展示了所有系统调用。
+
+
+## ftrace -- 内核级函数的追踪
 (CentOS 7 下的简单用法)
 
 - 1, 创建一个文件夹，比如我创建到了`/debug`，然后挂载debugfs到这个文件夹
@@ -36,8 +78,17 @@ $> vim /sys/kernel/debug/tracing/trace
 [1] ftrace 简介, https://www.ibm.com/developerworks/cn/linux/l-cn-ftrace/
 [2] Red Hat Guide - Ftrace, https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/6/html/developer_guide/ftrace
 
+## perf
+[Perf -- Linux下的系统性能调优工具，第 1 部分] https://www.ibm.com/developerworks/cn/linux/l-cn-perf1/index.html
+
+[Perf -- Linux下的系统性能调优工具，第 2 部分] 
+https://www.ibm.com/developerworks/cn/linux/l-cn-perf2/index.html
+
 
 ## crash
 
 内核分析工具
 http://people.redhat.com/anderson/
+
+## kprobe
+[使用 Kprobes 调试内核] https://www.ibm.com/developerworks/cn/linux/l-kprobes.html
