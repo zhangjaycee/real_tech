@@ -12,3 +12,5 @@
 ## ZFS
 
 ZFS的L2ARC机制可以利用不同硬件存储不同热度的数据，相当于用块设备给慢设备作缓存。
+
+[1] Add SSD as cache to ZFS on Linux, http://serverascode.com/2014/07/03/add-ssd-cache-zfs.html
