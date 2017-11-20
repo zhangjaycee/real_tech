@@ -34,9 +34,9 @@
 
 1. [[Bcache|linux_016]]
 
-1. [[Linux内核调试、内核追踪工具(kprobe/perf/ftrace)|linux_017]]
+1. [[Linux内核调试、内核追踪工具(kprobe / perf / ftrace / strace / pstack)|linux_017]]
 
-1. [[blktrace: linux io的追踪工具|linux_018|]]
+1. [[磁盘IO监控工具(blktrace(btrace) / iostat)|linux_018|]]
 
 1. [[👍linux 内核中的通用数据结构/设计模式|linux_019]]
 
