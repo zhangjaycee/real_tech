@@ -23,6 +23,12 @@ LWN中一篇介绍文件系统的文章[3]中说这种结构并没有被广泛�
 
 论文[4]中还提到了Log-Structured的重叠现象，说的是应用层、FS层和SSD硬件层如果都采用了这种结构，会导致互相的不利影响，导致性能下降、容量损失和寿命损失。
 
+## log-structured 和 copy-on-write的区别
+
+---
+
+[1] What is the difference between log structured filesystems and copy on write filesystems?, https://www.quora.com/What-is-the-difference-between-log-structured-filesystems-and-copy-on-write-filesystems
+
 ## 数据库中的undo log和redo log
 
 ---
