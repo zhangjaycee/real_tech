@@ -3,7 +3,10 @@
 我们可以将pstack看做应用级、strace看做系统调用级、ftrace看做内核级，详细如下：
 
 
-## pstack -- 打印当前应用程序的调用栈
+## pstack(gstack) -- 打印当前应用程序的调用栈
+
+其实pstack就是gstack工具的一个软连接。。。 gstack是应用GDB工具`thread apply all bt`这个backtrace功能的一个脚本。。。
+
 例如对于程序`hello.c`：
 ```cpp
 //hello.c
@@ -50,6 +53,10 @@ exit_group(0)                           = ?
 +++ exited with 0 +++
 ```
 展示了所有系统调用。
+
+---
+
+[1] Linux操作系统的pstack工具, http://nanxiao.me/linux-pstack/
 
 
 ## ftrace -- 内核级函数的追踪
