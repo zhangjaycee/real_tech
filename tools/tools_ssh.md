@@ -25,6 +25,23 @@ ssh-server配置文件位于/etc/ssh/sshd_config ，可以定义SSH的服务端�
 >exit
 
 
+## SCP
+* 上传
+```
+# 命令：
+scp -pr -P [port_number] [path_to_upload] [user_name]@[server_address]:[dir]
+# 例子：
+scp -pr -P 22 ~/Desktop/mycode.tar.gz root@192.168.1.10:~/srcs/
+```
+
+* 下载
+```
+# 命令：
+scp -pr -P [port_number] [user_name]@[server_address]:[dir] [path_to_download] 
+# 例子：
+scp -pr -P 22 root@192.168.1.10:~/srcs/server_code.tar.gz ~/Desktop/
+```
+
 ## 建立无须密码验证的ssh/scp连接
 
 1.Client上某用户执行ssh-keygen命令，生成建立安全信任关系的证书
