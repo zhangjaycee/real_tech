@@ -22,13 +22,23 @@ configure的时候，参数后边加上`--enable-debug`, e.g.
 
 ### 基本命令
 
-```bash
+* 打开程序
+
+```gdb
 #打开gdb
-> gdb
+(bash) gdb
 #打开要调试的文件
 (gdb) file hello_bin
 #列出源代码
 (gdb) list
+#attach已经运行的进程
+(gdb) attach [PID]
+(bash) gdb -p [PID]
+```
+
+* 设置断点
+
+```gdb
 #添加断点到hello.c的第10行
 (gdb) break hello.c:10
 #查看当前所设置的断点
@@ -41,6 +51,9 @@ configure的时候，参数后边加上`--enable-debug`, e.g.
 (gdb) disable
 (gdb) enable 5
 (gdb) enable
+```
+* 执行和backtrace
+```
 #执行程序，格式是r[un] + 参数列表
 (gdb) run arg1 arg2 ...
 #程序到断点中断时，查看函数调用栈
@@ -54,7 +67,7 @@ configure的时候，参数后边加上`--enable-debug`, e.g.
 
 ### 保存断点设置到文件
 
-```bash
+```gdb
 #保存断点到某个文件
 save breakpoints <filename>
 #执行某个文件到命令，如果正好是上边保存到断点文件，就是恢复断点啦
@@ -63,7 +76,7 @@ source <filename>
 
 ### 保存调试输出到文件
 
-```bash
+```gdb
 #设置输出的文件
 (gdb) set logging file <filename> 
 #开启log写入文件
@@ -73,3 +86,17 @@ source <filename>
 #暂停log写入文件
 (gdb) set logging off
 ```
+
+### 调试带fork的程序
+
+```gdb
+# parent是默认的，即程序fork后继续debug父进程，子进程不debug，若设置成child则相反。
+(gdb) set follow-fork-mode [parent|child] #设置
+(gdb) show follow-fork-mode #查看当前
+# off是默认的，如果设置成on，则fork后父进程子进程一块调试。
+(gdb) set detach-on-fork [off|on] #设置
+(gdb) show detach-on-fork #查看当前
+```
+---
+
+[1] Debugging Forks, http://sourceware.org/gdb/onlinedocs/gdb/Forks.html
