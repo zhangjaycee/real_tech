@@ -8,6 +8,10 @@
 
 ( UTLK p642有Linux page cache的预读策略，这就是利用了空间局部性。应用page cache缓存文件页本身就是利用了时间局部性。)
 
+paper[1] 中强调了自己用了局部性原理来进行缓存数据换出算法标准的优化：比如“（页面使用频数/请求大小）是同时利用了时间局部性和访问模式，使用频数是时间局部性，请求大小是访问模式”，这里用频数代替LRU能防止弱局部性程序的cache污染问题。
+
+--- 
+[1] F. Chen, D. Koufaty, and X. Zhang, “Hystor: making the best use of solid state drives in high performance storage systems,” Ics ’11, pp. 22–32, 2011.
 
 ## Cache读写模式
 
