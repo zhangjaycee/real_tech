@@ -11,34 +11,39 @@
 
 * postmark[2][3]
 
-广泛应用的文件系统benchmark，会进行文件和目录操作(transaction)。
+  - 广泛应用的文件系统benchmark，会进行文件和目录操作(transaction)。
 
 * filebench varmail[1][4]
 
-filebench的varmail会模拟一个邮件服务器，而且会频繁的调用sync操作。
+  - filebench的varmail会模拟一个邮件服务器，而且会频繁的调用sync操作。
 
 * File Name Search (find命令)[1]
 
-find命令查找文件名时，有只读取文件系统的metadata的特点。
+  - find命令查找文件名时，有只读取文件系统的metadata的特点。
 
-* bonnie
-
+* bonnie++
+  
+  - 也是一种文件系统的benchmark
 
 * SPECsfs2008[2]
+
+  - 模拟NFSv3/CIFS文件服务器的文件系统benchmark。 
+
 ### I/O和计算混合负载
 
 * 数据库TPC-C[1][2][4]
-模拟一个数据库操作员执行sql命令操纵数据库。所以应该是读写都有。
 
-* 数据库TPC-H[2]
-很少有写操作，而且写操作基本都是由修改文件access时间组成的。
+  - 模拟一个数据库操作员执行sql命令操纵数据库。所以应该是读写都有。
+
+* 数据库TPC-H[2][3]
+
+  - 很少有写操作，而且写操作基本都是由修改文件access时间组成的。
+  - 基本是顺序读操作，并且不是IO密集型负载（计算密集型？），所以SSD并不能比HDD强很多。
 
 * dedup负载[1]
 
-deduplication是计算(chunking、计算fingerprint、压缩)和IO(需要进行磁盘上的查找，尤其是对于exact deduplication)密集型的[5]。
+  - deduplication是计算(chunking、计算fingerprint、压缩)密集型和IO(需要进行磁盘上的查找，尤其是对于exact deduplication)密集型的[5]。
 
-
-这种负载有计算还有IO，还有其他复杂特性。
 
 ---
 
