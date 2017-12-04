@@ -33,3 +33,7 @@ e.g. Let’s describe TPC-C to give a flavor of these benchmarks.
 - error-prone
 
 -prone 意思是易于。。。  这里的意思是有错误倾向的
+
+- ad-hoc
+
+专门的
