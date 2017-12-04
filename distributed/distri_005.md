@@ -1,4 +1,4 @@
-# 文件系统/数据库/SSD设备中的各种日志(Log)
+# Log-Structured
 
 ## 文件系统中的 Logging FS 和 Log-Structured FS
 
@@ -29,7 +29,10 @@ LWN中一篇介绍文件系统的文章[3]中说这种结构并没有被广泛�
 
 [1] What is the difference between log structured filesystems and copy on write filesystems?, https://www.quora.com/What-is-the-difference-between-log-structured-filesystems-and-copy-on-write-filesystems
 
-## 数据库中的undo log和redo log
+## log structured merge tree
+
+HBase、levelDB 都用这种树，适合于写大于读的数据库。
+
 
 ---
 
@@ -43,6 +46,8 @@ LWN中一篇介绍文件系统的文章[3]中说这种结构并没有被广泛�
 
 [4] Yang, Jingpei, et al. "Don't Stack Your Log On My Log." INFLOW. 2014.
 
-[3] UTLK
+[5] UTLK
 
-[4] PLKA
+[6] PLKA
+
+[7] Log Structured Merge Tree, https://www.slideshare.net/ssuser7e134a/log-structured-merge-tree
