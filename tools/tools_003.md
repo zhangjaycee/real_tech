@@ -22,6 +22,13 @@ make install
 
 
 ## fio
+Centos 安装：
+
+源码编译或者：
+```
+yum install epel-release
+yum install fio
+```
 
 ## stress
 
