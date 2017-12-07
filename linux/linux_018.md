@@ -33,6 +33,13 @@ btrace /dev/sda
 
 `iostat -xt`也可以追踪很多io信息，但是blktrace / btrace可以给出一个设备每个CPU的请求情况，更详细。
 
+centos下的安装：
+
+```bash
+yum -y install sysstat
+```
+
+
 
 
 ## 参考
