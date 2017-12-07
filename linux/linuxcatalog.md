@@ -42,7 +42,7 @@
 
 1. [[Linux及内核的同步机制|linux_020]]
 
-1. [[Linux中存储设备的“虚拟化” loopback / dm(Device Mapper)等|linux_021]]
+1. [[Linux中的存储“虚拟化” loopback / dm(Device Mapper)/ 裸设备Raw Device等|linux_021]]
 
 1. [[DRAM内存作存储(ramdisk/ramfs/tmpfs/memcached/radis)|linux_022]]
 
