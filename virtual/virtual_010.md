@@ -55,7 +55,7 @@ yum install libaio-devel
 # QEMU confifure时加入以下参数
 --enable-linux-aio #开启linux native aio(libaio)
 ```
-### OpenGL加速
+### OpenGL
 
 配置opengl硬件加速[1]：
 
