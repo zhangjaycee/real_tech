@@ -42,3 +42,38 @@ make
 ~~~bash
 make install
 ~~~
+
+
+## 6. 其他的一些编译参数
+
+配置支持'aio=native' 需要加上以下参数，这样QEMU就可以用libaio而不是posix异步io了。
+```
+# 得有libaio的开发库
+yum install libaio-devel
+# QEMU confifure时加入以下参数
+--enable-linux-aio #开启linux native aio(libaio)
+```
+
+配置opengl硬件加速的额外参数[1]：
+```
+# yum安装必要的库
+yum install SDL2-devel pulseaudio-libs-devel libepoxy-devel
+
+# 编译virglrenderer
+# 到https://rpms.remirepo.net/rpmphp/zoom.php?rpm=virglrenderer下载源码并编译
+
+# QEMU confifure时加入以下参数
+--enable-sdl
+--with-sdlabi=2.0
+--enable-opengl
+--enable-virglrenderer
+--enable-system
+--enable-modules
+--audio-drv-list=pa
+```
+
+---
+
+### 参考：
+
+[1] QEMU with hardware graphics acceleration, https://at.projects.genivi.org/wiki/display/GDP/QEMU+with+hardware+graphics+acceleration
