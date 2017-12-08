@@ -38,6 +38,8 @@
 
 1. [[SLA / SLO|virtual_019]]
 
+1. [[GPU虚拟化|virtual_020]]
+
 #### [博客推荐]
 
 * ->[笑便世界] http://smilejay.com/ (关于KVM/Qemu)
