@@ -7,7 +7,7 @@
 
 参考[2]介绍了virtio-gpu在4.2进入内核主线（2D），4.4内核主线加入3D功能。
 
-参考[3]是virgil 3D GOU项目的github主页，貌似virgil 3D就是virtio-GPU。
+参考[3]是virgil 3D GPU项目的github主页，貌似virgil 3D就是virtio-GPU。
 
 
 ## CUDA / OpenCL & Mesa（OpenGL）/Direct3D
