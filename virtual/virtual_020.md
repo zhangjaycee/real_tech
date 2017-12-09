@@ -10,11 +10,12 @@
 参考[3]是virgil 3D GPU项目的github主页，貌似virgil 3D就是virtio-GPU。
 
 
-## CUDA / OpenCL & Mesa（OpenGL）/Direct3D
+## CUDA / OpenCL & OpenGL(Mesa[4]) / Direct3D
 
->  [4]The Mesa project began as an open-source implementation of the OpenGL specification - a system for rendering interactive 3D graphics.
 
-OpenCL和CUDA是利用GPU进行计算，OpenGL或者DirectX中的Direct3D是用来渲染3D（显卡最初的用途）。
+OpenCL和CUDA是利用GPU进行通用计算（general-purpose graphics processing units, GPGPU）的。
+
+OpenGL和DirectX中的Direct3D是用来渲染3D来做图形加速的（显卡最初的用途）。
 
 ## passthrough & virtualization
 
@@ -38,3 +39,5 @@ passthrough和virtualization是不同的。passthrough性能肯定更好，但�
 [6] [2016] vGPU on KVM - A VFIO Based Framework by Neo Jia & Kirti Wankhede, https://www.youtube.com/watch?time_continue=1767&v=Xs0TJU_sIPc
 
 [7] Sharing 1 graphics card across multiple guests or machines, https://forums.anandtech.com/threads/sharing-1-graphics-card-across-multiple-guests-or-machines.2393622/
+
+[8] C. Hong, I. Spence, and D. S. Nikolopoulos, “GPU Virtualization and Scheduling Methods,” ACM Comput. Surv., vol. 50, no. 3, pp. 1–37, 2017.
