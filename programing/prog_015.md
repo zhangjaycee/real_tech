@@ -15,7 +15,7 @@ __attribute__((attribute_name))
 
 ## 1. QEMU中的应用
 
-QEMU中有很多"module"的初始化使用了`__attribute__((constructor))`这个特性，来在main前完成init过程。具体如下：
+QEMU中有很多"module"的初始化使用了`__attribute__((constructor))`这个特性，来在main前完成init函数的注册过程过程。使用方法具体如下：
 
 ```cpp
 // QEMU_2.10_SRC/include/qemu/module.h中：
@@ -91,7 +91,7 @@ module_call_init(MODULE_INIT_BLOCK)          ---------------- util/module.c
 l = find_type(MODULE_INIT_BLOCK)  -->  QTAILQ_FOREACH(e, l, node){e->init()}
 
 ```
-我们看到虽然`module_call_init(MODULE_INIT_BLOCK)`和上边step 1.中的`register_module_init(function, type)`函数都在`util/module.c`中，但是调用的时机是不同的，step1中的register注册模块，step2中的call才是在真正调用init函数，而step1是在main前执行的，step2是在main后执行的。
+我们看到虽然`module_call_init(MODULE_INIT_BLOCK)`和上边step 1.中的`register_module_init(function, type)`函数都在`util/module.c`中，但是调用的时机是不同的，step1中的register注册模块，step2中的call才是在真正调用init函数，而step1是在main前执行的，step2是在main函数中执行的。
 
 
 ---
