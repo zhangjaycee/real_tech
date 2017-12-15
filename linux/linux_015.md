@@ -11,6 +11,32 @@ Linux Block layer 中有几个重要的概念：请求、请求队列、调度�
 
 (最新内核中没有"__make_request"这个函数，从内核版本3.1改名叫`blk_queue_bio`了；blk_mq出来之后，其和原来的io scheduler处于同等地位，因此有了`blk_mq_make_request`这个函数，`blk_queue_bio`和`blk_mq_make_request`这两个较为通用的函数和其他"make_request_fn"一样都通过blk_queue_make_request()函数进行注册，其中`blk_queue_bio`在`block/blk-core.c`中，`blk_mq_make_request`在`block/blk-mq.c`中。)
 
+4.13内核中，使用了blk_mq_make_request注册make_request_fn函数的文件如下：
+```
+arch/m68k/emu/nfblock.c|126| <<nfhd_init_one>> blk_queue_make_request(dev->queue, nfhd_make_request);
+arch/powerpc/sysdev/axonram.c|263| <<axon_ram_probe>> blk_queue_make_request(bank->disk->queue, axon_ram_make_request);
+arch/xtensa/platforms/iss/simdisk.c|277| <<simdisk_setup>> blk_queue_make_request(dev->queue, simdisk_make_request);
+block/blk-core.c|990| <<blk_init_allocated_queue>> blk_queue_make_request(q, blk_queue_bio);
+block/blk-mq.c|2347| <<blk_mq_init_allocated_queue>> blk_queue_make_request(q, blk_mq_make_request);
+drivers/block/brd.c|428| <<brd_alloc>> blk_queue_make_request(brd->brd_queue, brd_make_request);
+drivers/block/drbd/drbd_main.c|2845| <<drbd_create_device>> blk_queue_make_request(q, drbd_make_request);
+drivers/block/null_blk.c|767| <<null_add_dev>> blk_queue_make_request(nullb->q, null_queue_bio);
+drivers/block/pktcdvd.c|2474| <<pkt_init_queue>> blk_queue_make_request(q, pkt_make_request);
+drivers/block/ps3vram.c|758| <<ps3vram_probe>> blk_queue_make_request(queue, ps3vram_make_request);
+drivers/block/rsxx/dev.c|286| <<rsxx_setup_dev>> blk_queue_make_request(card->queue, rsxx_make_request);
+drivers/block/umem.c|897| <<mm_pci_probe>> blk_queue_make_request(card->queue, mm_make_request);
+drivers/block/zram/zram_drv.c|1160| <<zram_add>> blk_queue_make_request(queue, zram_make_request);
+drivers/lightnvm/core.c|283| <<nvm_create_tgt>> blk_queue_make_request(tqueue, tt->make_rq);
+drivers/md/bcache/super.c|805| <<bcache_device_init>> blk_queue_make_request(q, NULL);
+drivers/md/dm.c|2068| <<dm_setup_md_queue>> blk_queue_make_request(md->queue, dm_make_request);
+drivers/md/md.c|5268| <<md_alloc>> blk_queue_make_request(mddev->queue, md_make_request);
+drivers/nvdimm/blk.c|266| <<nsblk_attach_disk>> blk_queue_make_request(q, nd_blk_make_request);
+drivers/nvdimm/btt.c|1292| <<btt_blk_init>> blk_queue_make_request(btt->btt_queue, btt_make_request);
+drivers/nvdimm/pmem.c|369| <<pmem_attach_disk>> blk_queue_make_request(q, pmem_make_request);
+drivers/s390/block/dcssblk.c|633| <<dcssblk_add_store>> blk_queue_make_request(dev_info->dcssblk_queue, dcssblk_make_request);
+drivers/s390/block/xpram.c|352| <<xpram_setup_blkdev>> blk_queue_make_request(xpram_queues[i], xpram_make_request);
+```
+
 ```
 From c20e8de27fef9f59869c81c288ad6cf28200e00c Mon Sep 17 00:00:00 2001
 From: Jens Axboe <jaxboe@fusionio.com>
