@@ -28,4 +28,4 @@
 
 1. [[软件测试(pytest / ...)|prog_014]]
 
-1. [[C程序不都是从main开始的(gcc attribute的构造和析构函数)|prog_015]]
+1. [[C程序不都是从main开始的(gcc attribute的构造和析构函数, 以QEMUqcow2初始化为例)|prog_015]]
