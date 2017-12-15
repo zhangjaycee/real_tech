@@ -16,8 +16,12 @@ Linux Block layer 中有几个重要的概念：请求、请求队列、调度�
 arch/m68k/emu/nfblock.c|126| <<nfhd_init_one>> blk_queue_make_request(dev->queue, nfhd_make_request);
 arch/powerpc/sysdev/axonram.c|263| <<axon_ram_probe>> blk_queue_make_request(bank->disk->queue, axon_ram_make_request);
 arch/xtensa/platforms/iss/simdisk.c|277| <<simdisk_setup>> blk_queue_make_request(dev->queue, simdisk_make_request);
+
+
 block/blk-core.c|990| <<blk_init_allocated_queue>> blk_queue_make_request(q, blk_queue_bio);
 block/blk-mq.c|2347| <<blk_mq_init_allocated_queue>> blk_queue_make_request(q, blk_mq_make_request);
+
+
 drivers/block/brd.c|428| <<brd_alloc>> blk_queue_make_request(brd->brd_queue, brd_make_request);
 drivers/block/drbd/drbd_main.c|2845| <<drbd_create_device>> blk_queue_make_request(q, drbd_make_request);
 drivers/block/null_blk.c|767| <<null_add_dev>> blk_queue_make_request(nullb->q, null_queue_bio);
@@ -26,6 +30,7 @@ drivers/block/ps3vram.c|758| <<ps3vram_probe>> blk_queue_make_request(queue, ps3
 drivers/block/rsxx/dev.c|286| <<rsxx_setup_dev>> blk_queue_make_request(card->queue, rsxx_make_request);
 drivers/block/umem.c|897| <<mm_pci_probe>> blk_queue_make_request(card->queue, mm_make_request);
 drivers/block/zram/zram_drv.c|1160| <<zram_add>> blk_queue_make_request(queue, zram_make_request);
+
 drivers/lightnvm/core.c|283| <<nvm_create_tgt>> blk_queue_make_request(tqueue, tt->make_rq);
 drivers/md/bcache/super.c|805| <<bcache_device_init>> blk_queue_make_request(q, NULL);
 drivers/md/dm.c|2068| <<dm_setup_md_queue>> blk_queue_make_request(md->queue, dm_make_request);
