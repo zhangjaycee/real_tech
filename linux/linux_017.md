@@ -83,7 +83,12 @@ $> vim /sys/kernel/debug/tracing/trace
 ```
 
 [1] ftrace 简介, https://www.ibm.com/developerworks/cn/linux/l-cn-ftrace/
+
 [2] Red Hat Guide - Ftrace, https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/6/html/developer_guide/ftrace
+
+[3] 使用 ftrace 调试 Linux 内核，第 2 部分, https://www.ibm.com/developerworks/cn/linux/l-cn-ftrace2/index.html
+
+[4] Secrets of the Ftrace function tracer, https://lwn.net/Articles/370423/
 
 ## perf
 [Perf -- Linux下的系统性能调优工具，第 1 部分] https://www.ibm.com/developerworks/cn/linux/l-cn-perf1/index.html
