@@ -26,4 +26,4 @@ fdisk -l
 
 * 参考
 
-[1] hwlock and lstopo to easily check out the cpu topology, https://community.centminmod.com/threads/hwloc-and-lstopo.4317/
+[1] Display Hardware Topology in Linux, http://www.tuxfixer.com/display-hardware-topology-in-linux/
