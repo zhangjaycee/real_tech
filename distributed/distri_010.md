@@ -29,6 +29,8 @@
 
   - 模拟NFSv3/CIFS文件服务器的文件系统benchmark。 
 
+* YCSB
+
 ### I/O和计算混合负载
 
 * 数据库TPC-C[1][2][4]
