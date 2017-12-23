@@ -46,4 +46,7 @@
 
 1. [[DRAM内存作存储(ramdisk/ramfs/tmpfs/memcached/radis)|linux_022]]
 
+1. [[查看系统软硬件配置|linux_023]]
+
 1. [[VFIO|]]
+
