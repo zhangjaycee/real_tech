@@ -14,6 +14,7 @@ yum -y install hwloc hwloc-gui
 lstopo --of txt --no-io # 查看从CPU核NUMA分布、各级缓存到memory的分布和大小
 lstopo # gui显示包括IO连接的拓扑图
 ```
+pci设备会给出设备编号，可以在 http://pci-ids.ucw.cz/ 中查询。
 
 ## 存储
 ```
