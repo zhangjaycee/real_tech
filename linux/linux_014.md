@@ -1,9 +1,11 @@
-# FUSE (Filesystem in Userspace)
+从内核空间到用户空间（FUSE / VFIO / SPDK / DPDK ...)
+
+## 1. FUSE (Filesystem in Userspace)
 
 fuse是内核中已经有的模块，要写自己的fuse文件系统，要安装libfuse。
 
 
-## 安装和编译libfuse
+### 安装和编译libfuse
 
 step 1. 安装meson
 ```
@@ -36,7 +38,7 @@ ninja install
 [2] libfuse, https://github.com/libfuse/libfuse
 
 
-## 开发fuse文件系统
+### 开发fuse文件系统
 
 
 ---
@@ -46,3 +48,15 @@ ninja install
 fuse： https://github.com/libfuse/libfuse
 
 一个golang版的fuse：https://github.com/bazil/fuse
+
+
+## 2. VFIO
+
+## 3. SPDK
+* DOC(getting started) http://www.spdk.io/doc/getting_started.html
+
+---
+
+[1] Storage Performance Development Kit, http://www.spdk.io/doc/getting_started.html
+
+## 4. DPDK
