@@ -53,10 +53,18 @@ fuse： https://github.com/libfuse/libfuse
 ## 2. VFIO
 
 ## 3. SPDK
-* DOC(getting started) http://www.spdk.io/doc/getting_started.html
 
+```
+sudo scripts/setup.sh # kernel nvme driver ---> spdk
+sudo HUGEMEM=4096 scripts/setup.sh # spdk ---> kernel driver
+```
 ---
 
 [1] Storage Performance Development Kit, http://www.spdk.io/doc/getting_started.html
+
+[2] DOC(getting started) http://www.spdk.io/doc/getting_started.html
+
+[3] Accelerate Your NVMe Drives with SPDK, https://software.intel.com/en-us/articles/accelerating-your-nvme-drives-with-spdk
+
 
 ## 4. DPDK
