@@ -50,4 +50,6 @@
 
 1. [[Linux中监控锁的数据(lock stat)|linux_024]]
 
+1. [[linux CPU管理相关|linux_025]]
+
 
