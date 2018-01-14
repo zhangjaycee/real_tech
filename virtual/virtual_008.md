@@ -379,6 +379,26 @@ Precedes: v2.7.0-rc0
                  ...
 ```
 
+还可以注意到`[QEMU_SRC]/qemu/docs/devel/multiple-iothreads.txt`文件，以下是关于它的解释：
+```
+Author: Stefan Hajnoczi <stefanha@redhat.com>  2014-07-23 19:55:32
+Committer: Kevin Wolf <kwolf@redhat.com>  2014-08-15 21:07:13
+Parent: 8e436ec1f307a01882fd9166477667370c9dbfff (docs: Make the recommendation for the backing file name position a requirement)
+Child:  5c6b3c50cca2106e5fbcbc6efa94c2f8b9d29fd8 (Merge remote-tracking branch 'remotes/stefanha/tags/tracing-pull-request' into staging)
+Branches: master, remotes/origin/master, remotes/origin/stable-2.10, remotes/origin/stable-2.2, remotes/origin/stable-2.3, remotes/origin/stable-2.4, remotes/origin/stable-2.5, remotes/origin/stable-2.6, remotes/origin/stable-2.7, remotes/origin/stable-2.8, remotes/origin/stable-2.9
+Follows: v2.1.0
+Precedes: v2.2.0-rc0
+
+    docs/multiple-iothreads.txt: add documentation on IOThread programming
+    
+    This document explains how IOThreads and the main loop are related,
+    especially how to write code that can run in an IOThread.  Currently
+    only virtio-blk-data-plane uses these techniques.  The next obvious
+    target is virtio-scsi; there has also been work on virtio-net.
+    
+    Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
+    Reviewed-by: Eric Blake <eblake@redhat.com>
+```
 
 ### 相关资料
 
