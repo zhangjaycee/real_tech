@@ -399,27 +399,30 @@ Precedes: v2.2.0-rc0
     Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
     Reviewed-by: Eric Blake <eblake@redhat.com>
 ```
+QEMU-devel上讨论过这个问题：is it possible to use a disk with multiple iothreads ?（http://qemu-devel.nongnu.narkive.com/evjo6jLa/is-it-possible-to-use-a-disk-with-multiple-iothreads）
+
+论文"Improving Performance by Bridging the Semantic Gap between Multi-queue SSD and I/O Virtualization Framework" 将QEMU原来的一个iothread变为多个，每个vCPU绑定一个。
 
 ### 相关资料
 
-> [paper] [virtio: Towards a De-Facto Standard For Virtual I/O Devices](http://www.ozlabs.org/~rusty/virtio-spec/virtio-paper.pdf)
+[1] [paper]virtio: Towards a De-Facto Standard For Virtual I/O Devices(http://www.ozlabs.org/~rusty/virtio-spec/virtio-paper.pdf)
 
-> [(KVM连载)5.1.1 VIRTIO概述和基本原理（KVM半虚拟化驱动）](http://smilejay.com/2012/11/virtio-overview/)
+[2] (KVM连载)5.1.1 VIRTIO概述和基本原理（KVM半虚拟化驱动, http://smilejay.com/2012/11/virtio-overview/
 
-> [Virtio 基本概念和设备操作] (http://www.ibm.com/developerworks/cn/linux/1402_caobb_virtio/)
+[3] Virtio 基本概念和设备操作, http://www.ibm.com/developerworks/cn/linux/1402_caobb_virtio/
 
-> [Virtio：针对 Linux 的 I/O 虚拟化框架](https://www.ibm.com/developerworks/cn/linux/l-virtio/)
+[4] Virtio：针对 Linux 的 I/O 虚拟化框架, https://www.ibm.com/developerworks/cn/linux/l-virtio/
 
-> [[Linux KVM]半虚拟化驱动（Paravirtualization Driver）](https://godleon.github.io/blog/2016/08/20/KVM-Paravirtualization-Drivers)
+[5] [Linux KVM]半虚拟化驱动（Paravirtualization Driver, https://godleon.github.io/blog/2016/08/20/KVM-Paravirtualization-Drivers
 
-> [Virtio-Blk性能加速方案](http://royluo.org/2014/08/31/virtio-blk-improvement/)
+[6] Virtio-Blk性能加速方案, http://royluo.org/2014/08/31/virtio-blk-improvement/
 
-> [Centos6下Virtio-SCSI(multi-queues)/Virtio-SCSI/Virtio-blk性能对比](http://blog.csdn.net/bobpen/article/details/41515119)
+[7] Centos6下Virtio-SCSI(multi-queues)/Virtio-SCSI/Virtio-blk性能对比, http://blog.csdn.net/bobpen/article/details/41515119
 
-> [QEMU-KVM I/O性能优化之Virtio-blk-data-plane](http://blog.sina.com.cn/s/blog_9c835df30102vpgd.html)
+[8] QEMU-KVM I/O性能优化之Virtio-blk-data-plane, http://blog.sina.com.cn/s/blog_9c835df30102vpgd.html
 
-> [read 系统调用剖析](https://www.ibm.com/developerworks/cn/linux/l-cn-read/)
+[9] read 系统调用剖析, https://www.ibm.com/developerworks/cn/linux/l-cn-read/
 
-> [virtio驱动如何同设备交互](http://blog.csdn.net/qiushanjushi/article/details/38404341)
+[10] virtio驱动如何同设备交互, http://blog.csdn.net/qiushanjushi/article/details/38404341
 
-> [Virtio-Blk浅析] http://royluo.org/2014/08/29/virtio-blk/
+[11] Virtio-Blk浅析, http://royluo.org/2014/08/29/virtio-blk/
