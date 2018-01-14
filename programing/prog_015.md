@@ -13,6 +13,9 @@ __attribute__((attribute_name))
 * 参考
 [1] \_\_ATTRIBUTE\_\_ 你知多少？, http://www.cnblogs.com/astwish/articles/3460618.html
 
+[2] Does the kernel have a main() function? 
+ https://unix.stackexchange.com/questions/86955/does-the-kernel-have-a-main-function
+
 ## 1. QEMU中的应用
 
 QEMU中有很多"module"的初始化使用了`__attribute__((constructor))`这个特性，来在main前完成init函数的注册过程过程。使用方法具体如下：
