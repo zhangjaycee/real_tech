@@ -353,7 +353,7 @@ include/standard-headers/linux/virtio_ring.h
 
 
 ### virtio-blk和multiqueue
-用以下命令`gitk [QEMU_SRC]/hw/block/dataplane/virtio-blk.c` 搜索multiqueue，可以看到，virtio-blk dataplane在16年6月QEMU2.7开始支持multi-queue了。
+用以下命令`gitk [QEMU_SRC]/hw/block/dataplane/virtio-blk.c` 搜索multiqueue，可以看到，virtio-blk dataplane在16年6月QEMU2.7开始支持multi VirtQueue了，但是这种multi是假的，因为还是只有一个IOThread，将来可能当QEMU Block layer支持multiqueue时，可能会使用multi IOThreads。
 ```
 
 Author: Stefan Hajnoczi <stefanha@redhat.com>  2016-06-21 20:13:15
