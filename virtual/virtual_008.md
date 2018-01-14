@@ -4,7 +4,7 @@
 1. [概述](#概述)
 2. [前端驱动分析](#前端驱动分析linux-kernel)
 3. [后端设备分析](#后端设备分析qemu)
-3. [virtio-bllk和multiqueue](#virtio-bllk和multiqueue)
+3. [virtio-blk和multiqueue](#virtio-bllk和multiqueue)
 4. [相关资料](#相关资料)
 
 
@@ -352,7 +352,7 @@ include/standard-headers/linux/virtio_ring.h
 ```
 
 
-### virtio-bllk和multiqueue
+### virtio-blk和multiqueue
 用以下命令`gitk [QEMU_SRC]/hw/block/dataplane/virtio-blk.c` 搜索multiqueue，可以看到，virtio-blk dataplane在16年6月QEMU2.7开始支持multi-queue了。
 ```
 
