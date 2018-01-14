@@ -401,6 +401,8 @@ Precedes: v2.2.0-rc0
 ```
 QEMU-devel上讨论过这个问题：is it possible to use a disk with multiple iothreads ?（http://qemu-devel.nongnu.narkive.com/evjo6jLa/is-it-possible-to-use-a-disk-with-multiple-iothreads）
 
+Stefan Hajnoczi在KVM Forum 14中解释了IO Thread的设计（https://www.youtube.com/watch?v=KVD9FVlbqmY）
+
 论文"Improving Performance by Bridging the Semantic Gap between Multi-queue SSD and I/O Virtualization Framework" 将QEMU原来的一个iothread变为多个，每个vCPU绑定一个。
 
 ### 相关资料
