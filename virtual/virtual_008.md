@@ -4,6 +4,7 @@
 1. [概述](#概述)
 2. [前端驱动分析](#前端驱动分析linux-kernel)
 3. [后端设备分析](#后端设备分析qemu)
+3. [virtio-bllk和multiqueue](#virtio-bllk和multiqueue)
 4. [相关资料](#相关资料)
 
 
@@ -19,23 +20,23 @@ virtio提高了io效率，（？也为host和guest间更复杂的合作机制实
 
 ### 前端驱动分析（Linux Kernel）
 
-> [virtio-blk浅析](http://www.2cto.com/os/201408/329744.html)
+[1] virtio-blk浅析, http://www.2cto.com/os/201408/329744.html
 
-> [Virtio：针对 Linux 的 I/O 虚拟化框架](https://www.ibm.com/developerworks/cn/linux/l-virtio/)
+[2] Virtio：针对 Linux 的 I/O 虚拟化框架, https://www.ibm.com/developerworks/cn/linux/l-virtio/
 
-> [Virtio 原理与Guest OS driver](http://blog.csdn.net/wanthelping/article/details/47069429)
+[3] Virtio 原理与Guest OS driver, http://blog.csdn.net/wanthelping/article/details/47069429
 
-> [virtio-blk请求发起](http://blog.csdn.net/LPSTC123/article/details/44983707)
+[4] virtio-blk请求发起, http://blog.csdn.net/LPSTC123/article/details/44983707
 
-> [The multiqueue block layer](https://lwn.net/Articles/552904/)
+[5] The multiqueue block layer, https://lwn.net/Articles/552904/
 
-> [Linux Multi-Queue Block IO Queueing Mechanism (blk-mq)](https://www.thomas-krenn.com/en/wiki/Linux_Multi-Queue_Block_IO_Queueing_Mechanism_(blk-mq))
+[6] Linux Multi-Queue Block IO Queueing Mechanism (blk-mq),(https://www.thomas-krenn.com/en/wiki/Linux_Multi-Queue_Block_IO_Queueing_Mechanism_(blk-mq)
 
-> [KVM+QEMU世界中的pci总线与virtio总线](http://blog.chinaunix.net/uid-23769728-id-4467752.html)
+[7] KVM+QEMU世界中的pci总线与virtio总线, http://blog.chinaunix.net/uid-23769728-id-4467752.html
 
-> [virtio前端驱动详解](http://www.cnblogs.com/ck1020/p/6044134.html)
+[8] virtio前端驱动详解, http://www.cnblogs.com/ck1020/p/6044134.html
 
-> [Linux Multi-Queue Block IO Queueing Mechanism (blk-mq)](https://www.thomas-krenn.com/en/wiki/Linux_Multi-Queue_Block_IO_Queueing_Mechanism_(blk-mq))
+
 
 前端驱动已经并到Linux内核主线了，所以要去内核找相关代码分析。
 
@@ -171,14 +172,14 @@ drivers/virtio/virtio_ring.c                                        drivers/bloc
 ### 后端设备分析（QEMU）
 
 
-> [virtio-blk后端处理-请求接收、解析、提交
-](http://blog.csdn.net/LPSTC123/article/details/45171515)
+[1] virtio-blk后端处理-请求接收、解析、提交
+, http://blog.csdn.net/LPSTC123/article/details/45171515
 
-> [Qemu-kvm的ioeventfd创建与触发的大致流程](http://blog.csdn.net/LPSTC123/article/details/45111949)
+[2] Qemu-kvm的ioeventfd创建与触发的大致流程, http://blog.csdn.net/LPSTC123/article/details/45111949
 
-> [virtio后端驱动详解](http://www.cnblogs.com/ck1020/p/5939777.html)
+[3] virtio后端驱动详解, http://www.cnblogs.com/ck1020/p/5939777.html
 
-> [virtIO前后端notify机制详解](http://www.cnblogs.com/ck1020/p/6066007.html)
+[4] virtIO前后端notify机制详解, http://www.cnblogs.com/ck1020/p/6066007.html
 
 
 
@@ -349,6 +350,35 @@ include/standard-headers/linux/virtio_ring.h
 
 
 ```
+
+
+### virtio-bllk和multiqueue
+用以下命令`gitk [QEMU_SRC]/hw/block/dataplane/virtio-blk.c` 搜索multiqueue，可以看到，virtio-blk dataplane在16年6月QEMU2.7开始支持multi-queue了。
+```
+
+Author: Stefan Hajnoczi <stefanha@redhat.com>  2016-06-21 20:13:15
+Committer: Stefan Hajnoczi <stefanha@redhat.com>  2016-06-28 20:08:32
+Parent: b234cdda958b329dbbec840702c65432f4907623 (virtio-blk: tell dataplane which vq to notify)
+Child:  ab3b9c1be8739f109596985588eb061b7f66c1d1 (virtio-blk: dataplane cleanup)
+Branches: master, remotes/origin/master, remotes/origin/stable-2.10, remotes/origin/stable-2.7, remotes/origin/stable-2.8, remotes/origin/stable-2.9
+Follows: v2.6.0
+Precedes: v2.7.0-rc0
+
+    virtio-blk: dataplane multiqueue support
+    
+    Monitor ioeventfds for all virtqueues in the device's AioContext.  This
+    is not true multiqueue because requests from all virtqueues are
+    processed in a single IOThread.  In the future it will be possible to
+    use multiple IOThreads when the QEMU block layer supports multiqueue.
+    
+    Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
+    Reviewed-by: Fam Zheng <famz@redhat.com>
+    Message-id: 1466511196-12612-7-git-send-email-stefanha@redhat.com
+    Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
+
+                 ...
+```
+
 
 ### 相关资料
 
