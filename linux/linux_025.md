@@ -1,4 +1,4 @@
-# Linux CPU&MEM affinity(资源亲和性/资源绑定 ...)
+# Linux CPU&MEM affinity(资源亲和性/资源绑定，numactl/taskset/cgroups ...)
 
 > Processor and memory binding, also called 'affinity'.[1]
 
