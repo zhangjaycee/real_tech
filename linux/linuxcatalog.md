@@ -53,3 +53,5 @@
 1. [[Linux CPU&MEM affinity(资源亲和性/资源绑定，numactl/taskset/cgroups ...)|linux_025]]
 
 1. [[Linux NVMe Driver|linux_026]]
+
+1. [[CRIU | linux_027]]
