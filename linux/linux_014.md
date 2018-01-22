@@ -55,8 +55,8 @@ fuse： https://github.com/libfuse/libfuse
 ## 3. SPDK
 
 ```
-sudo scripts/setup.sh # kernel nvme driver ---> spdk
-sudo HUGEMEM=4096 scripts/setup.sh # spdk ---> kernel driver
+sudo [HUGEMEM=4096] scripts/setup.sh # kernel nvme driver ---> spdk
+sudo scripts/setup.sh reset # spdk ---> kernel driver
 ```
 ---
 
