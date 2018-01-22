@@ -8,12 +8,17 @@
 
 ```cpp
 // CRIU_SRC_PATH/criu/cr-dump.c
+ int cr_dump_tasks(pid_t pid)
+          while(...) {
+                  dump_one_task(item);
+          }
 
  static int dump_one_task(struct pstree_item *item)
           struct parasite_drain_fd *dfds = NULL;
           dfds = xmalloc(sizeof(*dfds));
           ret = collect_fds(pid, &dfds);
           ret = dump_task_files_seized(parasite_ctl, item, dfds);
+
 
 // CRIU_SRC_PATH/criu/files.c
 int dump_task_files_seized(struct parasite_ctl *ctl, struct pstree_item *item, struct parasite_drain_fd *dfds)
@@ -32,6 +37,7 @@ static int dump_one_file(struct pid *pid, int fd, int lfd, struct fd_opts *opts,
 int dump_one_reg_file(int lfd, u32 id, const struct fd_parms *p)
         return pb_write_one(rimg, &fe, PB_FILE);
         
+
 // CRIU_SRC_PATH/criu/protobuf.c
 /*
  * Writes PB record (header + packed object pointed by @obj)
