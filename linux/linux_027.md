@@ -25,7 +25,7 @@ static int dump_one_file(struct pid *pid, int fd, int lfd, struct fd_opts *opts,
          dump_socket(&p, lfd, e);  -+
          dump_chrdev(&p, lfd, e);   +-->   do_dump_gen_file();  --->  dump_one_reg_file();
            ...                      |
-           ...                     _+
+           ...                     -+
 
 
 // CRIU_SRC_PATH/criu/files-reg.c
