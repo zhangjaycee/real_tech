@@ -51,6 +51,25 @@ int bwritev(struct bfd *bfd, const struct iovec *iov, int cnt)
 
 ```
 
+一些相关的函数指针注册结构和宏定义结构，读代码时可能会用到。
+
+```cpp
+// criu/files-reg.c
+#define FD_PARMS_INIT           \
+(struct fd_parms) {         \
+    .fd = FD_DESC_INVALID,  \
+    .fown   = FOWN_ENTRY__INIT, \
+    .link   = NULL,         \
+    .mnt_id = -1,           \
+}
+
+// criu/include/files.h
+const struct fdtype_ops regfile_dump_ops = {
+    .type       = FD_TYPES__REG,
+    .dump       = dump_one_reg_file,
+};
+```
+
 ### restore
 
 从这堆文件中将进程恢复过来。
