@@ -11,7 +11,7 @@ Linux Block layer 中有几个重要的概念：请求、请求队列、调度�
 
 (最新内核中没有"__make_request"这个函数，从内核版本3.1改名叫`blk_queue_bio`了；blk_mq出来之后，其和原来的io scheduler处于同等地位，因此有了`blk_mq_make_request`这个函数，`blk_queue_bio`和`blk_mq_make_request`这两个较为通用的函数和其他"make_request_fn"一样都通过blk_queue_make_request()函数进行注册，其中`blk_queue_bio`在`block/blk-core.c`中，`blk_mq_make_request`在`block/blk-mq.c`中。)
 
-4.13内核中，使用了blk_mq_make_request注册make_request_fn函数的文件如下：
+4.13内核中，使用了blk_queue_make_request注册make_request_fn函数的文件如下：
 ```
 arch/m68k/emu/nfblock.c|126| <<nfhd_init_one>> blk_queue_make_request(dev->queue, nfhd_make_request);
 arch/powerpc/sysdev/axonram.c|263| <<axon_ram_probe>> blk_queue_make_request(bank->disk->queue, axon_ram_make_request);
