@@ -1,6 +1,15 @@
-# Log-Structured
+#  Log-structured & Copy-on-write
 
-## 文件系统中的 Logging FS 和 Log-Structured FS
+## 1. log-structured 和 copy-on-write的区别
+
+---
+
+[1] What is the difference between log structured filesystems and copy on write filesystems?, https://www.quora.com/What-is-the-difference-between-log-structured-filesystems-and-copy-on-write-filesystems
+
+
+## 2. Log-structured
+
+#### 文件系统中的 Logging FS 和 Log-Structured FS
 
 * Logging(Journaling) Filesystem
 
@@ -17,21 +26,22 @@ Logging Filesystem(日志文件系统，又名journaling filesystem)和Log-Struc
 LWN中一篇介绍文件系统的文章[3]中说这种结构并没有被广泛应用。相反，这种结构在SSD中却是很常见。[1][2]
 
 
-## SSD中的Log-Structured
+#### SSD中的Log-Structured
 
 由于SSD的写放大效应，导致SSD的写操作较读操作昂贵，所以Log-Structured这种结构天生的适用于SSD[2]。
 
 论文[4]中还提到了Log-Structured的重叠现象，说的是应用层、FS层和SSD硬件层如果都采用了这种结构，会导致互相的不利影响，导致性能下降、容量损失和寿命损失。
 
-## log-structured 和 copy-on-write的区别
 
----
-
-[1] What is the difference between log structured filesystems and copy on write filesystems?, https://www.quora.com/What-is-the-difference-between-log-structured-filesystems-and-copy-on-write-filesystems
-
-## log structured merge tree
+#### log structured merge tree
 
 HBase、levelDB 都用这种树，适合于写大于读的数据库。
+
+
+## 3. Copy-on-write (COW)
+
+### qcow2镜像格式中的COW
+
 
 
 ---
