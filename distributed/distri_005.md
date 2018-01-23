@@ -38,15 +38,7 @@ LWN中一篇介绍文件系统的文章[3]中说这种结构并没有被广泛�
 HBase、levelDB 都用这种树，适合于写大于读的数据库。
 
 
-## 3. Copy-on-write (COW)
-
-### qcow2镜像格式中的COW
-
-
-
 ---
-
-### 参考
 
 [1] Rosenblum, Mendel, and John K. Ousterhout. "The design and implementation of a log-structured file system." ACM Transactions on Computer Systems (TOCS) 10.1 (1992): 26-52.
 
@@ -61,3 +53,11 @@ HBase、levelDB 都用这种树，适合于写大于读的数据库。
 [6] PLKA
 
 [7] Log Structured Merge Tree, https://www.slideshare.net/ssuser7e134a/log-structured-merge-tree
+
+## 3. Copy-on-write (COW)
+
+### qcow2镜像格式中的COW
+
+---
+[1] qcow2 doc, https://github.com/qemu/qemu/blob/master/docs/interop/qcow2.txt
+
