@@ -58,6 +58,8 @@ HBase、levelDB 都用这种树，适合于写大于读的数据库。
 
 ### qcow2镜像格式中的COW
 
+
 ---
 [1] qcow2 doc, https://github.com/qemu/qemu/blob/master/docs/interop/qcow2.txt
 
+[2] Q. Chen, L. Liang, Y. Xia, and H. Chen, “Mitigating Sync Amplification for Copy-on-write Virtual Disk,” 14th USENIX Conf. File Storage Technol. (FAST 16), pp. 241–247, 2016.
