@@ -1,5 +1,15 @@
 # Stackable Block Layer
 
+Linux的IO栈中有一块可选的部分，可以我称为Stackable Block Layer：
+
+```bash
+# Linux IO stack
+Userspace >> VFS >> (Stackable Block Layer) >> Block Layer >> Block Drivers >> Storage Hardware
+                                                    v
+                                     (IO Scheduler / Block Multi-queue)
+```
+
+
 ### SSD作HDD的缓存(Bcache / ZFS / Fusion-io ...)
 
 * Bcache
