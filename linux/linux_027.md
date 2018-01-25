@@ -74,6 +74,15 @@ const struct fdtype_ops regfile_dump_ops = {
     .type       = FD_TYPES__REG,
     .dump       = dump_one_reg_file,
 };
+
+// criu/image-desc.c
+// 不同类型image文件的文件名和文件打开标志位的定义
+struct cr_fd_desc_tmpl imgset_template[CR_FD_MAX] = {
+    FD_ENTRY(INVENTORY, "inventory"),
+    FD_ENTRY(FDINFO,    "fdinfo-%u"),
+    FD_ENTRY(PAGEMAP,   "pagemap-%lu"),
+       ...
+}
 ```
 
 ### restore
