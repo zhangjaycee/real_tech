@@ -87,7 +87,63 @@ struct cr_fd_desc_tmpl imgset_template[CR_FD_MAX] = {
 
 ### restore
 
-从这堆文件中将进程恢复过来。
+从这堆文件中将进程恢复过来。从打印的日志文件，可以分析出最耗时的读文件过程在`CRIU_SRCS/criu/pie/restorer.c`:
+
+
+```cpp
+/*
+ * The main routine to restore task via sigreturn.
+ * This one is very special, we never return there
+ * but use sigreturn facility to restore core registers
+ * and jump execution to some predefined ip read from
+ * core file.
+ */
+long __export_restore_task(struct task_restore_args *args)
+{
+    ...
+      
+    rio = args->vma_ios;
+    for (i = 0; i < args->vma_ios_n; i++) {
+        struct iovec *iovs = rio->iovs;
+        int nr = rio->nr_iovs;
+        ssize_t r;
+
+        while (nr) {
+            pr_debug("Preadv %lx:%d... (%d iovs)\n",
+                    (unsigned long)iovs->iov_base,
+                    (int)iovs->iov_len, nr);
+            r = sys_preadv(args->vma_ios_fd, iovs, nr, rio->off);
+            if (r < 0) {
+                pr_err("Can't read pages data (%d)\n", (int)r);
+                goto core_restore_end;
+            }
+
+            pr_debug("`- returned %ld\n", (long)r);
+            rio->off += r;
+            /* Advance the iovecs */
+            do {
+                if (iovs->iov_len <= r) {
+                    pr_debug("   `- skip pagemap\n");
+                    r -= iovs->iov_len;
+                    iovs++;
+                    nr--;
+                    continue;
+                }
+
+                iovs->iov_base += r;
+                iovs->iov_len -= r;
+                break;
+            } while (nr > 0);
+        }
+
+        rio = ((void *)rio) + RIO_SIZE(rio->nr_iovs);
+    }
+
+    sys_close(args->vma_ios_fd);
+    
+    ...
+}
+```
 
 ### Lazy Restore & Migration
 
