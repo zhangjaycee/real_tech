@@ -147,6 +147,23 @@ long __export_restore_task(struct task_restore_args *args)
 
 ### Lazy Restore & Migration
 
+### log 
+
+CRIU以`pr_debug()`函数打印日志，的log相关数据结构定义在`SRC_PATH/criu/log.c`。每次打印日志，都会打印时间戳，可以观察耗时情况。
+
+```cpp
+static void timediff(struct timeval *from, struct timeval *to)
+{
+    to->tv_sec -= from->tv_sec;
+    if (to->tv_usec >= from->tv_usec)
+        to->tv_usec -= from->tv_usec;
+    else {
+        to->tv_sec--;
+        to->tv_usec += 1000000 - from->tv_usec;
+    }
+}
+...
+```
 ---
 
 [1] Lazy Migration in CRIU’s master branch, https://lisas.de/~adrian/?p=1287
@@ -154,3 +171,5 @@ long __export_restore_task(struct task_restore_args *args)
 [2] Userfaultfd, https://criu.org/Userfaultfd
 
 [3] man page, https://github.com/checkpoint-restore/criu/blob/master/Documentation/criu.txt
+
+[4] CRIU wiki - Copy-on-write memory, https://criu.org/Copy-on-write_memory 
