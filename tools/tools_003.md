@@ -66,6 +66,8 @@ yum install stress
 ```
 
 
+具体可以看man手册，可以产生多种进程数，指定每个进程malloc的内存等。--vm-keep N 还可以保证malloc的内存保持多少时间再free，N为0时为一直不free。
+
 ## iometer
 
 
