@@ -1,3 +1,28 @@
+# OSTEP Part1(Virtualization) 笔记
+
+大部分截图来自原书，贴出书的官方主页： 《[Operating Systems: Three Easy Pieces](http://pages.cs.wisc.edu/~remzi/OSTEP/)》
+(作者Remzi H. Arpaci-Dusseau and Andrea C. Arpaci-Dusseau)。感谢原作者这么好的书。
+
+## 第一节 进程的抽象
+
+#### 1. 策略和机制
+
+Policy在mechanism（策略和机制）在操作系统中通常是分开设计的。比如如何切换上下文是一个low-level的mechanism，指底层的方法或者协议。当前时刻应该让哪个进程运行更好是一个high-level的policy的问题，指一些“智能”的调度。
+
+
+#### 2. 虚拟化和OS
+
+OS本身就可以看做是“虚拟机”(virtual machine)。系统通过在可以被接受的合理开销（时间、空间）范围内，将计算机CPU、内存、存储等资源进行虚拟化（抽象），目的是为了用户的方便使用。
+
+**CPU虚拟化** 主要体现在将任务抽象为 **进程(process)** ，将资源按进程隔离，然后多个进程轮转使用计算资源； **内存虚拟化** 主要体现在 **虚拟地址空间(virtual address space 或 adress space)** ；而对于持久化的 **存储** ，OS让文件共享，没有那么多私有隔离，OS假定用户会用文件来共享数据。 (？？？？)
+
+## 第二节 进程API
+
+#### 1. fork和exec
+
+* exec()函数组和fork()的区别是，exec执行以后就再也不会返回
+
+
 # OSTEP Part3(Persistence) 笔记
 
 大部分截图来自原书，贴出书的官方主页： 《[Operating Systems: Three Easy Pieces](http://pages.cs.wisc.edu/~remzi/OSTEP/)》
