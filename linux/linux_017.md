@@ -36,7 +36,8 @@ zjc@/SSD$ pstack 108633
 
 ## strace -- 应用程序的系统调用追踪
 
-例如还是对于程序`hello.c`，运行程序后，运行strace的结果：
+strace可以追踪一个用户程序调用系统调用的情况，包括调用栈、调用时间等，默认会打印调用栈，例如还是对于程序`hello.c`，运行程序后，运行strace的结果：
+
 ```bash
 $ strace -p 107917
 Process 107917 attached
@@ -52,7 +53,10 @@ write(1, "world!\n", 7)                 = 7
 exit_group(0)                           = ?
 +++ exited with 0 +++
 ```
-展示了所有系统调用。
+
+若加上参数`-c`会在程序结束时给出每个系统调用所占用了时间（这个时间应该属于system time）。
+
+在Mac 中类似的工具叫做 **dtruss** 。
 
 ---
 
