@@ -46,6 +46,14 @@ only the port argument is used.
 netsplice： Like net, but uses splice(2) and vmsplice(2) to map data and send/receive.
 guasi The GUASI I/O engine is the Generic Userspace Asynchronous Syscall Interface approach to asycnronous I/O.
 ```
+* clat & slat:
+
+> copy from: http://tate.cx/using-fio-to-measure-io-performance/
+>
+>The first latency metric is submission latency (slat), “how long did it take to submit this IO to the kernel for processing?”.
+>
+>Next is completion latency (clat), “the time that passes between submission to the kernel and when the IO is complete, not including submission latency”.
+
 
 ---
 
@@ -64,7 +72,6 @@ centos:
 yum install epel-release
 yum install stress
 ```
-
 
 具体可以看man手册，可以产生多种进程数，指定每个进程malloc的内存等。--vm-keep N 还可以保证malloc的内存保持多少时间再free，N为0时为一直不free。
 
