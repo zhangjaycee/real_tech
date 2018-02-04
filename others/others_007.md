@@ -214,7 +214,132 @@ write buffering是有好处的，等一等再往下存，可以batch一些请求
 [[p3_008.png]]
 
 
-## 第十节 LFS(log-structured filesystem)
+## 第七节 FSCK和Journaling
+
+
+#### 7.1 Crash Consistency
+
+FS的数据结构和其他内存中的数据结构不同，必须持久化存储。但是由于一次写请求是必定引起多次的磁盘IO（比如，要更新一个文件，需要更新或添加数据块、更新inode信息、可能更新bitmap块等。），若在一次写请求的多次IO之间系统崩溃了（可能由于断电等原因），那么文件系统结构就可能出现不一致。作者将这个问题成为crash consistency问题，并假设一次写请求分解成了3次基本IO操作（更新数据块、更新inode块、更新bitmap块），总结了几种情况，总结如下表(F for finished, N for not finished)：
+
+| 数据块 | inode块 |bitmap块|一致性|备注|
+|--------|--------|-------|----|---|
+|N|N|N|一致|相当于什么也没干，FS一致，虽然写没有成功|
+|N|N|F|不一致（bitmap和实际占用空间）|若bitmap记录了分配了新空间，可能导致“空间泄露”（道理类似内存泄漏），|
+|N|F|N|不一致（inode指针和实际存储位置）|这时inode指向了并未更新的数据块，后续的读操作会返回一堆“垃圾”数据|
+|N|F|F|不一致|同上，可能读到“垃圾”数据|
+|  F  |    N    |    N |一致|虽然写请求没有成功，但因为bitmap和inode都没变，写入数据块只是相当于白写了，没有引起不一致|
+|F|N|F|不一致|由于inode没有更新，可能读不到更新的数据块|
+|F|F|N|不一致（bitmap空闲空间和实际所用空间）|未更新的bitmap可能导致再次申请时覆盖有效数据|
+|F|F|F|一致|请求正常完成了|
+
+FSCK和Journaling是保证crash consistency的两种最基本、最广泛的方法。FSCK即File System ChKer, Journaling又可以叫logging，都是保证crash consistency的方法。这些保证只是说保证系统不发生错误，无法保证写请求的成功。（类似DBMS的事务，consistency就是一次事务要么完了，要么没发生过，不能发生一半）
+
+#### 7.2 FSCK
+
+思路很简单，在每次FS挂载时，进行FSCK检查，进行必要的修复。 **缺点是很慢，因为每次都要全局进行检查。** 检查方法如下：
+
+**Superblock** 检查超级块有没有异常，如果有异常，会启用备用超级块。
+
+**Bitmap** 逐一检查inode和indirect块，生成一个记录分配情况的新bitmap，这样就不会有数据块和inode块与bitmap记录的不一致的问题。
+
+**Inode** 检查有没有异常，比如标志位是不是有效，检查Inode的link count是不是正确，如果inode没有被任何目录指向，会放到lost+found文件夹；如果指向的块没有在有效范围，可能inode会被清除以保证一致性。
+
+**Data block** 如果两个inode指向同一个块，会复制一份让两个inode各自拥有一份数据块；directory数据块会检查前两个是不是.和..目录，并且要保证每个inode没有在同一个目录被link两次。
+
+#### 7.3 Journaling
+
+借鉴了DBMS的write-ahead logging的方法来改进FS的一致性，将恢复时间由O(size-of-disk-volumn)降低到O(size-of-the-log)，ext3、ext4、XFS、JFS、NTFS等FS都用了这种方法。
+
+可以分为两种：metadata journaling和full mode journaling。后者在更新磁盘区域时，会提前将所有新数据写到journal区域；而前者在FS journal区域只存储inode、bitmap等metadata，不存user data，因为节省bandwidth，更为常用。
+
+##### 7.3.1 full mode journaling 
+
+**大概需要三步：**
+
+1. Journal write: 在journal区域以一个TxB(Transaction Begin)标志开始讲需要journal的data、metadata写入。
+2. Journal commit: 在日志写好后写一个TxE(Transaction End)标志表示日志写结束了。
+3. Checkpoint: Checkpoint过程就是真正更新磁盘的过程。
+4. Free: 过一段时间后，需要更新journal的superblock，mark这次事务为free
+
+如下图：
+
+[[p3_009.png]]
+
+**两个问题：**
+
+1. 其中为了将a)和b)两次IO合成一次减少性能开销，可以在TxB和TxE中都写一下日志的校验和(checksum)，这样恢复的时候就可以根据TxB的checksum和已经存储的检验日志的完整性了，这个方法是被作者的团队提出的，现在被用于 **ext4** 中。
+2. journal的区域是一定的，不能无限增长，所以采用了类似环形链表的数据结构存储log，只需要存储开始块和结束块的指针就可以了。
+
+##### 7.3.2. metadata journaling 
+
+
+**User Data 和 Journal的提交顺序：**
+
+metadata journaling中，根据user data写盘的顺序，又可以分为ordered journaling和non-ordered journaling，前者保证先写user data到磁盘，再写metadata到日志，最后写metadata到磁盘；后者的区别不保证user data和metadata的顺序性，实际这不会造成什么问题。所以NTFS、XFS等FS都采用了non-ordered metadata journaling的方式保证一致性。
+
+**大概分为五步**
+
+1. Data write
+2. Journal metadata write
+3. Journal commit
+4. Checkpoint metadata
+5. Free
+
+这里，只是将journal的内容减少了user data。在ordered mode中，data要先写完再开始下一步；在non-ordered mode中，data write和其他步顺序无关，异步进行。如图，complete顺序和具体运行有关：
+
+[[p3_010.png]]
+
+#### 7.4 其他方法
+
+除了1)fsck、2)journaling，还可以用其他的方法保证一致性。比如3)Soft Update[1][2]，4)copy-on-write(COW)被用于ZFS，5)backpointer-based consistency(BBC)，等等。
+
+---
+
+[1] M. Dong and H. Chen, “Soft Updates Made Simple and Fast on Non-volatile Memory,” Atc, 2017.
+
+[2] M. McKusick and G. Ganger, “Soft updates: a technique for eliminating most synchronous writes in the fast filesystem,” ATEC ’99 Proc. Annu. Conf. USENIX Annu. Tech. Conf., 1999.
+
+
+## 第八节 LFS(log-structured filesystem)
 
 What does “level of indirection” mean in David Wheeler's aphorism?
 , https://stackoverflow.com/questions/18003544/what-does-level-of-indirection-mean-in-david-wheelers-aphorism
+
+## 第九节 数据完整性和数据保护
+
+## 第十~十二节 分布式系统简介、NFS和AFS
+
+介绍了分布式系统很复杂，系统各部分的错误是无法消除的，需要使用各种手段保证系统正常运行。
+
+分布式系统的问题包括性能、安全、通信等问题，本节主要谈通信问题。首先，通信本身就是不可靠的，在网络传输中，丢包不可避免。TCP能保证传输可靠性，但性能牺牲太大，UDP只提供了简单的checksum机制，需要分布式系统自己保证传输的可靠。比如，作者较详细地介绍了RPC(详见原文)，其一般为了保证性能，用UDP而不用TCP。
+
+作者在下两节分别介绍了NFS和AFS两种分布式文件系统。
+
+#### 10.1 Sun's Network File System(NFS)协议
+
+NFS由SUN公司开发，并没有被实现为一种特定的系统，而是指定了一种开方的协议（open protocol）。现在最新为v4版，作者重点介绍NFSv2。
+
+首先，NFSv2被实现为一种无状态协议(stateless protocol)，即每个客户端的单个操作都包含着完成请求所需的所有信息。其次，它应该兼容POSIX，来方便用户和应用使用。
+
+NFSv2的关键概念是 **file handle** 。它包括3部分：volume identifier、inode number和generation number。volume ID用于指定请求的是哪个server，inode number指明了是哪个文件，而generation number用于重复使用一个inode number使对请求进行区分。协议如图：
+
+[[p3_011.png]]
+
+
+#### 10.2 The Andrew File System(AFS)协议
+
+AFS用的不多了，其特色思路已经被最新的NFSv4引入，人们大多用NFS和CIFS等代替它。作者重点是讲其思路。AFS最初由CMU开发，版本1(ITC)和版本2之间有较大变革。
+
+与NFS不同，AFS是以文件为单位进行下载和更新的，而NFS是以块为单位的。
+
+AFSv1的协议如下：
+
+
+[[p3_012.png]]
+
+
+#### 10.3 NFS和AFS
+
+两者性能对比表如下：
+
+[[p3_013.png]]
