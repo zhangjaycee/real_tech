@@ -1,11 +1,24 @@
 #  Log-structured & Copy-on-write
 
-## 1. log-structured 和 copy-on-write的区别
+## 1. log-structured、copy-on-write和redirect-on-write
+
+copy-on-write和redirect-on-write在快照中都很常用。前者指写数据时，将被快照的数据拷贝到别处，然后在原位置覆盖写；后者redirect-on-write指直接将新的数据块写到空白处，这样就避免了拷贝(对原数据块一次读和一次写)，不过应该要建立新的映射。
+
+log-structured结构最初是FS中用于将随机写转为追加顺序写的结构，CoW、RoW与之相似的地方是由于性能问题，被拷贝的数据或新写的数据也一般也会顺序追加都后边。所以CoW、RoW是为了达到快照的目的而进行原数据块拷贝或新数据块异地写，并未规定一定要顺序追加地写。log-structured是为了以顺序追加写来优化磁盘的写性能，并不一定是因为要实现快照技术。
+
+LFS用了log-structured技术。
+
+WAFL、Btrfs和ZFS的快照都是用了RoW技术。LVM的快照用了Cow技术。
+
+qcow2是QEMU Copy on Write Version 2的简称，但其快照机制更类似RoW技术，只不过write时，它是将原数据从backing image拷贝到了新的image file里，这样保证了对进行快照的backing image的读操作。
 
 ---
 
 [1] What is the difference between log structured filesystems and copy on write filesystems?, https://www.quora.com/What-is-the-difference-between-log-structured-filesystems-and-copy-on-write-filesystems
 
+[2] zfs & btrfs are ROW not COW – redirect-on-write, not copy-on-write
+
+[3] Snapshots? Don’t have a C-O-W about it!, https://storagegaga.wordpress.com/tag/redirect-on-write/
 
 ## 2. Log-structured
 
