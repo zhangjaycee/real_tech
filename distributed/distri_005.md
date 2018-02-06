@@ -1,4 +1,4 @@
-#  Log-structured & Copy-on-write
+# Log-Structured、Copy-on-Write和Redirect-on-Write
 
 ## 1. log-structured、copy-on-write和redirect-on-write的联系
 
