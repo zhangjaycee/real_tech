@@ -1,16 +1,29 @@
 #  Log-structured & Copy-on-write
 
-## 1. log-structured、copy-on-write和redirect-on-write
+## 1. log-structured、copy-on-write和redirect-on-write的联系
 
 copy-on-write和redirect-on-write在快照中都很常用。前者指写数据时，将被快照的数据拷贝到别处，然后在原位置覆盖写；后者redirect-on-write指直接将新的数据块写到空白处，这样就避免了拷贝(对原数据块一次读和一次写)，不过应该要建立新的映射。
 
 log-structured结构最初是FS中用于将随机写转为追加顺序写的结构，CoW、RoW与之相似的地方是由于性能问题，被拷贝的数据或新写的数据也一般也会顺序追加都后边。所以CoW、RoW是为了达到快照的目的而进行原数据块拷贝或新数据块异地写，并未规定一定要顺序追加地写。log-structured是为了以顺序追加写来优化磁盘的写性能，并不一定是因为要实现快照技术。
 
-LFS用了log-structured技术。
 
-WAFL、Btrfs和ZFS的快照都是用了RoW技术。LVM的快照用了Cow技术。
+## 2. Copy on Write 和 Redirect on Write
 
-qcow2是QEMU Copy on Write Version 2的简称，但其快照机制更类似RoW技术，只不过write时，它是将原数据从backing image拷贝到了新的image file里，这样保证了对进行快照的backing image的读操作。
+WAFL、Btrfs、ZFS和QEMU qcow2镜像格式的快照都是用了RoW技术。[2][3]LVM的快照用了Cow技术。
+
+#### 2.1 qcow2快照
+
+qcow2是QEMU Copy on Write Version 2的简称。其支持两种快照形式，external snapshots和internal snapshots。 [5][6]qcow2的快照机制更类似RoW技术。
+
+external snapshots是将原数据从backing image拷贝到了新的image file里，这样保证了对进行快照的backing image的读操作。
+
+internel snapshot直接在一个qcow2文件就可以实现，不用其他文件来支持。具体数据结构描述可以参考[4][7]。在快照时会复制L1 table及其指向的L2 table，然后Reference Table也会计数增加。写时应该用了RoW技术（还没有看代码确认）。
+
+#### 2.2 LVM快照
+
+#### 2.3 ZFS快照
+
+#### 2.4 WAFL快照
 
 ---
 
@@ -20,9 +33,17 @@ qcow2是QEMU Copy on Write Version 2的简称，但其快照机制更类似RoW�
 
 [3] Snapshots? Don’t have a C-O-W about it!, https://storagegaga.wordpress.com/tag/redirect-on-write/
 
-## 2. Log-structured
+[4] qcow2 doc, https://github.com/qemu/qemu/blob/master/docs/interop/qcow2.txt
 
-#### 文件系统中的 Logging FS 和 Log-Structured FS
+[5] Internal Snapshot of qcow2 disk image, https://github.com/vrms/virsh-kvm-qemu-notes/wiki/Internal-Snapshot-of-qcow2-disk-image
+
+[6] Virtual machine snapshots, https://kashyapc.fedorapeople.org/virt/lc-2012/lceu-2012-virt-snapshots-kashyap-chamarthy.pdf
+
+[7] Q. Chen, L. Liang, Y. Xia, and H. Chen, “Mitigating Sync Amplification for Copy-on-write Virtual Disk,” 14th USENIX Conf. File Storage Technol. (FAST 16), pp. 241–247, 2016.
+
+## 3. Log-structured
+
+#### 3.1 文件系统中的 Logging FS 和 Log-Structured FS
 
 * Logging(Journaling) Filesystem
 
@@ -39,17 +60,16 @@ Logging Filesystem(日志文件系统，又名journaling filesystem)和Log-Struc
 LWN中一篇介绍文件系统的文章[3]中说这种结构并没有被广泛应用。相反，这种结构在SSD中却是很常见。[1][2]
 
 
-#### SSD中的Log-Structured
+#### 3.2 SSD中的Log-Structured
 
 由于SSD的写放大效应，导致SSD的写操作较读操作昂贵，所以Log-Structured这种结构天生的适用于SSD[2]。
 
 论文[4]中还提到了Log-Structured的重叠现象，说的是应用层、FS层和SSD硬件层如果都采用了这种结构，会导致互相的不利影响，导致性能下降、容量损失和寿命损失。
 
 
-#### log structured merge tree
+#### 3.3 log structured merge tree
 
 HBase、levelDB 都用这种树，适合于写大于读的数据库。
-
 
 ---
 
@@ -66,13 +86,3 @@ HBase、levelDB 都用这种树，适合于写大于读的数据库。
 [6] PLKA
 
 [7] Log Structured Merge Tree, https://www.slideshare.net/ssuser7e134a/log-structured-merge-tree
-
-## 3. Copy-on-write (COW)
-
-### qcow2镜像格式中的COW
-
-
----
-[1] qcow2 doc, https://github.com/qemu/qemu/blob/master/docs/interop/qcow2.txt
-
-[2] Q. Chen, L. Liang, Y. Xia, and H. Chen, “Mitigating Sync Amplification for Copy-on-write Virtual Disk,” 14th USENIX Conf. File Storage Technol. (FAST 16), pp. 241–247, 2016.
