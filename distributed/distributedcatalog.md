@@ -14,5 +14,5 @@
 1. [[👍 文件系统性能 / IO性能的benchmarks|distri_010]]
 1. [[什么是分布式存储系统？|distri_011]]
 1. [[Persistent Memory|distri_012]]
-1. [[Coherence & Consistency|distri_013]]
+1. [[Coherence & Consistency & Consensus|distri_013]]
 1. [[存储栈中的各种”放大“|distri_014]]
