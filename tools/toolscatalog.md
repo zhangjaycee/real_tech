@@ -7,7 +7,7 @@
 1. [[ps|tools_ps]]
 1. [[find|tools_find]]
 1. [[包管理器|tools_002]]
-1. [[关于系统IO测量的工具|tools_003]]
+1. [[系统测试工具|tools_003]]
 1. [[Cscope基本使用|tools_004]]
 1. [[关于tar|tools_005]]
 1. [[iptables|tools_006]]
