@@ -215,18 +215,88 @@ page table 由 page-table entry(PTE)组成，一个x86的PTE如下：
 
 [[p1_006.png]]
 
+一个PTE可以有很多内容，比如：valid bit用于标注虚拟地址存在（在地址空间中），但是没有被使用的项，这样OS就可以不去为其分配实际的物理空间，节省了内存占用；protection bits(R/W U/S)标注一个页是否可以写、读或者执行；present bit(P)指明页是在内存中了还是磁盘中了（被swap出去了）；dirty bit (D)用于说明某个页是否被修改过；reference bit(或access bit)(A)用来记录一个页是不是被访问过了，这对判断一个页是不是热的很有用，可以为页面换出提供参考。PWT, PCD, PAT和G用于决定硬件的cache方法。
+
+Page Table 很大切在内存中，它会引起更多的内存范文，拖慢运行速度。比如，对于每条指令，都应该先从page table中将code中这条指令的虚拟地址转换成物理地址，然后再去物理地址访问，这就导致一次访问放大为两次。如果涉及mov等指令，不只指令本身需要增加一次转换，如果操作数中包括数组地址，对数组地址也需要一次虚拟到物理的转换，进一步拖慢了速度。
+
+所以分页虽然能减小外部碎片，但是却让内存访问次数增多，系统运行速度变慢。
 
 #### 7.2 TLB(translation lookaside buffer)硬件加速
 
+类似分段中用base-and-bound硬件寄存器来辅助地址转换，分页中用的是硬件cache加速的方法：即TLB(translation-lookaside buffer)，TLB也属于MMU。
+
+TLB和其他cache的思想是一样的，也是利用了spatical locality和temporal locality。页长越大，因为PTE的个数少了，TLB命中率会越高。而之所以不能把所有page table都放入TLB，是因为越快的存储硬件，面积也会越小，所以大容量和高速是个悖论。
+
+TLB中一般有几十(32、64、128等)项，且是全相联(fully associative)的，即任何项可以被存储到任意一个位置，查找命中时并行搜索，所以在硬件中，TLB也被称为fully-associative cache，一个TLB项由和PTE类似的VPN、PFN和一些标志位组成。
+
+因为存在进程切换，所以进行进程切换时，需要防止正在运行的进程访问其他进程留下的缓存项。有两种方法：1）切换时将所有项的TLB的valid bit置零，并把部分项进行必要的flush（软件TLB可以直接执行相应的硬件指令，硬件TLB可以在存储page table的register改变时进行）；2）可以在TLB项中加入ASID(address space identifer)位，来标注这个缓存项属于哪个进程。
+
+TLB是cache，当然还涉及到置换算法的选择，比如LRU等，这方面和其他的cache很类似。
+
+作者详细介绍了一种MIPS的TLB项，如下图：
+
+[[p1_007.png]]
+
+global bit(G)用于标注是否是项是否被多个进程共享；3个Coherence(C) bit，用来指示怎么被硬件cache；dirty(D)用来指示项是否被更改过；Valid(V)用来表示该项的转换是否可用；还有一个图中没有标注的page mask区域，用来支持不同的页长。
+
+TLB的大小对性能影响很大，如果TLB没有通过时间和空间局部性将要访问的PTE项cache到，那么就会引起性能的损失，所以作者指出： **RAM isn't always RAM.** 即可以设想如果过于随机地访问内存会造成TLB miss，会损失性能。大的page size不仅可以减小page table的总大小，也可以提升TLB的命中率，这种大页更适用于DBMS这种拥有大页和随机访问需求的系统。
+
+TLB也可能造成对CPU pipeline性能，因为如果CPU的cache是physically indexed cache的话，虚拟到物理地址的转换就要在CPU cache之前，造成性能下降；所以人们提出了virtually indexed cache，但这又会给硬件设计带来新的问题。
+
 #### 7.3 高级页表(Advanced Page Tables)
 
-## 第八节 交换空间
+分段解决了内存空间被浪费的问题，但是不能解决外部碎片的问题；分页解决了内存管理中外部碎片的问题，但分页管理的page table占用空间太大。（比如刚刚为一个进程分配若干内存地址空间后，就要创建相应数量的PTE，这造成page table在开始时空间利用率很低，造成内存的浪费，尤其是每个进程都有一个page table，当系统进程多时，会造成内存的紧张。）
 
-#### 8.1 机制
+解决的page table太大的方法之一是上节提到的 **增大页长**， 但是太大的页长会导致 **内部碎片** 问题产生，即页内空间利用效率低。很多商用高端系统和DBMS会用多种页长，这也会相应的导致内存管理特别复杂。
 
-#### 8.2 策略
+##### 7.3.1 段页式(Hybrid Approch: segements and paging)
+
+本节主要讲了用分页和分段进行混合(hybrid)的方法。具体思路是：每个逻辑段有一个page table，并且MMU中的base寄存器指向段的page table的起始地址（而不是原来的段起始地址），bound寄存器存有对应段中最大的有效页号。如果我们将进程内存分为code、stack、heap三段，则我们有3对base和bound寄存器。
+
+如下图是一个简单的段页式地址格式：
+
+[[p1_008.png]]
+
+Seg用于决定用那一对base/bound寄存器；VPN用于在相应page table中查找并转换为PFN；Offset不用转换，是实际访问的页中偏移量。
+
+但是段页式仍旧可能存在page table浪费内存的问题：在最原始的地址空间中，我们讨论的内存浪费直接指heap和stack之间的未利用空间无法被其他进程分配，在段页式管理中，内存浪费指的是page table中有不必要的内存分配（比如某个段很稀疏，但是最小和最大的项里的较远，中间仍旧有很多无效的PTE），即 **内部碎片** 问题；并且虽然数据以固定长度的页单位存储，但page table的大小却是任意的，这再次引入了 **外部碎片** 问题，将导致不容易找到一个合适的存储空间来存储page table。
+
+**这里讨论的内外部碎片问题或浪费内存空间的问题，指page table数据；而上几节中讨论的碎片和内存浪费问题，指的是进程数据，但道理都是一样的。**
+
+##### 7.3.1 多级页表(multi-level page tables)
+
+接着上节，为了解决page table的内存空间利用问题，缩减page table的占用的无效空间，多级页表被提出。其基本思路是将page table分成按固定页长分开，然后引入page directory的概念，其中的项PDE记录的都是存有page table的页的地址。传统页表和多级页表的对比如下：
+
+[[p1_009.png]]
+
+可以看到，如果PDE中对应的Page Table页中没有一项，可以将PDE的valid bit置零，这样对应的page table 页就不用被分配，节省了内存；而传统的线性page table中，
+
+如果说段页式是segamentation+paging，那么多级页表就是paging+paging，将page table的table就是page directory。本质上，多级页表在分页管理PT到page间接的基础上，又多加入了一层PD到PT的间接(level of indirection)，这种间接可以压缩原本稀疏存储，但是肯定会带来性能损失，而且会使实现的复杂性增加，也就是一对time-space trade-off。
+
+可以想到，道理上还可以增加更多的间接，形成更多级的页表，这也许在有些极端情况有用，具体问题需要具体分析。甚至，还有一种倒排页表(inverted page table)有时也会发挥其作用，其用一个单独的page table记录每个物理页由哪个进程使用，并记录了对应的虚拟地址。
+
+
+## 第八节 交换空间(Swap Space)
+
+swap **机制** 可以让软件产生拥有磁盘级别的巨大内存的幻觉，其实就是在内存空间吃紧的时候，将不常用的内存页换到磁盘上预先划分的swap space中。PTE中有一个present bit，如果为0时，则会产生page fault，说明此页有可能已经被换出到磁盘上了。为了访问磁盘取回换出页，换出时，需要将目标磁盘位置记录到page table 的PTE中。
+
+当需要换出时，肯定需要由一些 **策略** ，这时，又要决定使用哪种页面置换算法了，比如LRU等。
 
 ## 第九节 实例：VAX/VMS内存管理系统
+
+在实际中，一个VM管理系统需要具有一般性、通用性，所以通常不会为单一的硬件优化，在某一硬件上达到最优。
+
+VAX的VMS的地址空间可分为用户部分和系统内核部分，其中用户部分随进程切换而改变，而内核部分不变且被映射到每一个进程的地址空间中。因为内核和用户在一个地址空间，所以加入了pretection bits将内核和用户程序分成不同优先级进行保护。
+
+[[p1_010.png]]
+
+为了解决一个进程占用过多的内存的问题，进行换入换出时，可以采用segemted FIFO，即每个进程都有一个最大的page数的FIFO队列；为了保证性能，又再次基础上增加了second-chance lists(进一步分为clean-page free list和dirty-page list)，这些second-chance lists越大，其实就越接近于LRU算法。
+
+**clustering** 的被引入到了dirty page 的flush中，可以减少些的次数，提升性能。
+
+**demand zeroing** 优化的是为了保证安全在分配前做的物理内存清零操作，demand zeroing 用了懒惰的办法，在进程真正读写一个页时，才trap到内核进行清零，这样减少了不必要的性能开销。
+
+**copy-on-write** 主要用于优化页在内存中的拷贝，尤其是在Unix系统中，fork和exec经常使用，且fork后一般很快会执行exec覆盖掉fork的进程的地址空间，如果每次fork后马上拷贝一份新的地址空间再返回是没有必要的。因此COW可以在内存拷贝时进行映射，并将新的虚拟页标上只读标记，在写虚拟页时陷入内核再进行真的拷贝。
 
 ---
 
