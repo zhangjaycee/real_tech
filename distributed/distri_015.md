@@ -8,6 +8,10 @@ ZFS是Sun公司2005年随OpenSolaris操作系统发布的文件系统，由于�
 
 但是后来ZFS成为了Oracle的资产，并在2010年被停止公开开发。一些OpenSolaris的用户和开发者因此将ZFS最后的公开release版本fork为Illumos项目；后来在此基础上，OpenZFS项目开始。后来，Oracle ZFS和OpenZFS就成为了技术上的两个分支，据称相对ZFS，openZFS中50%的代码已经改过，所以两者已经不同了，但是还都是用`zfs`命令进行管理。
 
+## 编译ZFS on Linux
+
+[4]
+
 ---
 
 [1] OpenZFS, http://open-zfs.org/wiki/Main_Page
@@ -15,3 +19,5 @@ ZFS是Sun公司2005年随OpenSolaris操作系统发布的文件系统，由于�
 [2] ZFS on Linux, http://zfsonlinux.org/
 
 [3] ZFS vs. OpenZFS, https://www.ixsystems.com/blog/zfs-vs-openzfs/
+
+[4] Building ZFS, https://github.com/zfsonlinux/zfs/wiki/Building-ZFS
