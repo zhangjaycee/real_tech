@@ -35,3 +35,5 @@ Persistent Memory Summit。[3]
 [6] Programming and Usage Models for Non-Volatile Memory, http://research.cs.wisc.edu/sonar/tutorial/
 
 [7] 舒继武 大数据时代的存储系统若干变化的思考, part1: http://myslide.cn/slides/6485   part2: http://myslide.cn/slides/6491
+
+[8] 如何在英特尔® 架构服务器上仿真持久性内存, https://software.intel.com/zh-cn/articles/how-to-emulate-persistent-memory-on-an-intel-architecture-server
