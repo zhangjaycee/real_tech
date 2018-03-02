@@ -18,7 +18,7 @@
 
 1. [[数据库压缩技术|db_008]]
 
-1. [[Shadow paging|db_009]]
+1. [[Shadow paging和Write ahead logging(DBMS 数据恢复技术)|db_009]]
 
 #### [博客推荐]
 
