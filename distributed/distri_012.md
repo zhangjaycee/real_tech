@@ -12,6 +12,9 @@ Persistent Memory Programming这个项目[1]，专注于PM编程，做了工具�
 
 SNIA提出了NVM编程的标准(NVM Programming Model, NPM)[2]，在其开头，明确区分了"NVM-block"和PM的区别，并将模型分为四类，具体见原文。
 
+[6]是威斯康星大学一个关于PM编程的一个讲座的ppt和相关的paper。
+
+
 ### 一个相关会议
 
 Persistent Memory Summit。[3]
@@ -27,3 +30,5 @@ Persistent Memory Summit。[3]
 [4] (Kernel Doc) DAX, https://www.kernel.org/doc/Documentation/filesystems/dax.txt
 
 [5] DAX, mmap(), and a "go faster" flag, https://lwn.net/Articles/684828/
+
+[6] Programming and Usage Models for Non-Volatile Memory, http://research.cs.wisc.edu/sonar/tutorial/
