@@ -18,6 +18,8 @@
 
 1. [[数据库压缩技术|db_008]]
 
+1. [[Shadow paging|db_009]]
+
 #### [博客推荐]
 
 * ->[Jeremy Cole] https://blog.jcole.us (关于InnoDB)
