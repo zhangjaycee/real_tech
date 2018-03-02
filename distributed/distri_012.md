@@ -14,6 +14,7 @@ SNIA提出了NVM编程的标准(NVM Programming Model, NPM)[2]，在其开头，
 
 [6]是威斯康星大学一个关于PM编程的一个讲座的ppt和相关的paper。
 
+[7]舒继武教授的一个演讲的ppt中涉及不少的讨论和paper。
 
 ### 一个相关会议
 
@@ -32,3 +33,5 @@ Persistent Memory Summit。[3]
 [5] DAX, mmap(), and a "go faster" flag, https://lwn.net/Articles/684828/
 
 [6] Programming and Usage Models for Non-Volatile Memory, http://research.cs.wisc.edu/sonar/tutorial/
+
+[7] 舒继武 大数据时代的存储系统若干变化的思考, part1: http://myslide.cn/slides/6485   part2: http://myslide.cn/slides/6491
