@@ -22,7 +22,7 @@ Persistent Memory Summit。[3]
 
 ### Intel
 
-Intel基于3D XPOINT技术，推出了NVMe接口的Optane SSD，还将推出DIMM接口的NVRAM(NVDIMM, NVM)。Intel的编程模型遵循SNIA的标准[2][9]。
+Intel基于3D XPOINT技术，推出了NVMe接口的Optane SSD，还将推出DIMM接口的NVRAM(NVDIMM, NVM)。Intel的编程模型遵循SNIA的标准[2][9]。一些英特尔的视频、文档。[10]
 
 ---
 
@@ -43,3 +43,5 @@ Intel基于3D XPOINT技术，推出了NVMe接口的Optane SSD，还将推出DIMM
 [8] 如何在英特尔® 架构服务器上仿真持久性内存, https://software.intel.com/zh-cn/articles/how-to-emulate-persistent-memory-on-an-intel-architecture-server
 
 [9] https://software.intel.com/en-us/persistent-memory
+
+[10] https://software.intel.com/en-us/persistent-memory/documentation
