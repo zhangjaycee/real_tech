@@ -20,6 +20,10 @@ SNIA提出了NVM编程的标准(NVM Programming Model, NPM)[2]，在其开头，
 
 Persistent Memory Summit。[3]
 
+### Intel
+
+Intel基于3D XPOINT技术，推出了NVMe接口的Optane SSD，还将推出DIMM接口的NVRAM(NVDIMM, NVM)。Intel的编程模型遵循SNIA的标准[2][9]。
+
 ---
 
 [1] Persistent Memory Programming, http://pmem.io/
@@ -37,3 +41,5 @@ Persistent Memory Summit。[3]
 [7] 舒继武 大数据时代的存储系统若干变化的思考, part1: http://myslide.cn/slides/6485   part2: http://myslide.cn/slides/6491
 
 [8] 如何在英特尔® 架构服务器上仿真持久性内存, https://software.intel.com/zh-cn/articles/how-to-emulate-persistent-memory-on-an-intel-architecture-server
+
+[9] https://software.intel.com/en-us/persistent-memory
