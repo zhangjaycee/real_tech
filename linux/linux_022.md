@@ -1,4 +1,4 @@
-# DRAM内存作存储(ramdisk/ramfs/tmpfs/memcached/radis)
+# DRAM内存作存储(ramdisk/ramfs/tmpfs)
 
 首先，ramdisk / ramfs / tmpfs / memcached /radis 这几种内存作为存储（缓存）的方法，数据都是掉电就丢的，这也是由DRAM的特性决定的。
 
