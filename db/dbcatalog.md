@@ -20,6 +20,8 @@
 
 1. [[Shadow paging和Write ahead logging(DBMS 数据恢复技术)|db_009]]
 
+1. [[KV-stores(memcached, redis, levelDB ...)|db_010]]
+
 #### [博客推荐]
 
 * ->[Jeremy Cole] https://blog.jcole.us (关于InnoDB)
