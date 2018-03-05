@@ -1,5 +1,6 @@
 ## Linux man命令数字含义
 
+```
 1.      User Commands       
 用户在shell环境中可以操作的命令或可执行文件 
 2.      System Calls        
@@ -18,8 +19,9 @@
 系统管理用的命令,这些命令只能由系统管理员使用,如ifconfig 
 9.      Others    
 跟内核有关的文件
+```
+---
 
+[1] http://samuschen.iteye.com/blog/700944
 
-> http://samuschen.iteye.com/blog/700944
-
-> http://blog.csdn.net/abcd1f2/article/details/46678929
+[2] http://blog.csdn.net/abcd1f2/article/details/46678929
