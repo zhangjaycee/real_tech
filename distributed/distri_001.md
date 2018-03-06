@@ -4,6 +4,25 @@
 
 qemu源码中已经提供支持，相关源码在 `QEMU_SRC/block/sheepdog.c` 文件里，这是QEMU存储层次的最底层protocol layer(与file-posix、nbd等同级)，所以完全可以兼容protocol layer上面的层次（如raw、qcow2），从而使用qcow2的多种功能[4]。
 
+```
+                        +---------------+    e.g. virtio-blk / nvme / ide
+Frontend Devices  +-->  | Guest Devices |
+                        +-------+-------+    srcs in: QEMU_SRC/hw/block/*
+                                |                     QEMU_SRC/hw/ide/*
+                                |
+                                |
+                   +-   +-------+-------+    e.g. qcow2 / raw
+                   |    | Format Driver |
+                   |    +---------------+    srcs in: QEMU_SRC/block/*
+                   |
+Backend Drivers  +-+            |
+                   |   +--------+--------+   e.g. file-posix / file-win32 / nbd / 【sheepdog】
+                   |   | Protocol Driver |
+                   +-  +-----------------+   srcs in: QEMU_SRC/block/*
+
+```
+
+
 同时sheepdog层还支持纠删码[5]。
 
 ---
