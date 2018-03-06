@@ -26,7 +26,7 @@
 
 1. [[虚拟机镜像格式和性能|virtual_013]]
 
-1. [[OpenStack|virtual_014]]
+1. [[OpenStack与QEMU|virtual_014]]
 
 1. [[KVM内存虚拟化|virtual_015]]
 
