@@ -16,7 +16,7 @@ Frontend Devices  +-->  | Guest Devices |
                    |    +---------------+    srcs in: QEMU_SRC/block/*
                    |
 Backend Drivers  +-+            |
-                   |   +--------+--------+   e.g. file-posix / file-win32 / nbd / 【sheepdog】
+                   |   +--------+--------+   e.g. file-posix / nbd / 【sheepdog】
                    |   | Protocol Driver |
                    +-  +-----------------+   srcs in: QEMU_SRC/block/*
 
