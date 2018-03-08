@@ -6,5 +6,5 @@
 4. [[一些统计学规律|others_004]]
 5. [[爬虫|others_005]]
 6. [[test|others_006]]
-
 7. [[Notes of OSTEP|others_007]]
+8. [[LaTeX|others_008]]
