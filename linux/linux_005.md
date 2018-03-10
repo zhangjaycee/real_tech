@@ -1,7 +1,6 @@
-# 内核中read等文件系统的系统调用分析
+# Linux Storage Stack 存储栈
 
-> [阿里云云栖社区][Linux内核文件系统-页高速缓存](https://yq.aliyun.com/articles/5864)
 
-> [IBMdeveloperWorks][read 系统调用剖析](https://www.ibm.com/developerworks/cn/linux/l-cn-read/)
+> [1] High Performance Storage Devices in the Linux Kernel, https://www.slideshare.net/kerneltlv/high-performance-storage-devices-in-the-linux-kernel
 
-> [IBMdeveloperWorks][Linux 文件系统剖析](http://www.ibm.com/developerworks/cn/linux/l-linux-filesystem/)
+> [2] Linux Storage Stack Diagram, https://www.thomas-krenn.com/en/wiki/Linux_Storage_Stack_Diagram
