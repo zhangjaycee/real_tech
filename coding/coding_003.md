@@ -1,5 +1,9 @@
 # 在存储系统中应用数据压缩技术
 
+## Intel SSD硬件层
+
+---
+[1] Differences Between Intel® SSD Controllers—Data Compression, https://www.intel.com/content/www/us/en/support/articles/000006433/memory-and-storage.html
 
 ## 块层
 
