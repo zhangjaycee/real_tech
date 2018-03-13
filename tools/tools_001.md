@@ -124,3 +124,26 @@ set -o vi
 不过，写Makefile的时候，tab有特殊含义——表明这行是规则，不是目标——不能转换成空格
 但是执行set noexpandtab命令又麻烦，怎么办呢？
 可以先敲ctrl-v组合键，再敲tab键，这样就不会被转换成空格了
+
+
+## vim中如何贪婪匹配 [1]
+
+```
+vim中的匹配实在是不如perl好用，一直想实现非贪婪匹配，今天偶然发现可以用量词匹配来实现，具体可以看:h /\{
+\{n,m} Matches n to m of the preceding atom, as many as possible
+\{n} Matches n of the preceding atom
+\{n,} Matches at least n of the preceding atom, as many as possible
+\{,m} Matches 0 to m of the preceding atom, as many as possible
+\{} Matches 0 or more of the preceding atom, as many as possible (like *)
+\{-n,m} matches n to m of the preceding atom, as few as possible
+\{-n} matches n of the preceding atom
+\{-n,} matches at least n of the preceding atom, as few as possible
+\{-,m} matches 0 to m of the preceding atom, as few as possible
+\{-} matches 0 or more of the preceding atom, as few as possible
+也就是.\{-}可以实现.*的非贪婪匹配，.\{-1,}可以实现.+的非贪婪匹配。
+```
+
+---
+
+[1] http://blog.csdn.net/jiaolongdy/article/details/40588585
+
