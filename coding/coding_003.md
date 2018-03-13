@@ -24,3 +24,5 @@ ZFS、NTFS、BtrFS、[e2compr](http://e2compr.sourceforge.net/)、[FuseCompress]
 * 数据库应用
 
   - MySQL的Table Compression Format 和 Transparent Page Compression
+
+  - RocksDB和LevelDB中的压缩
