@@ -22,6 +22,8 @@
 
 1. [[KV-stores(memcached, redis, levelDB ...)|db_010]]
 
+1. [[RocksDB性能测试|db_011]] 
+
 #### [博客推荐]
 
 * ->[Jeremy Cole] https://blog.jcole.us (关于InnoDB)
