@@ -27,7 +27,9 @@ rpmbuild -bp --target=$(uname -m) kernel.spec
 cd rpmbuild/SOURSES
 tar -xvf linux-xxx.tar.gz
 ```
-rpmbuild之后，源码在`rpmbuild/BUILD`文件夹中
+rpmbuild之后，源码在`rpmbuild/BUILD`文件夹中。
+
+注意，这里如果用的不是发行版采用的内核，而是后来用的elrepo升级的内核，可能需要自己去[github中kernel的release](https://github.com/torvalds/linux/releases)中找到对应的版本源码下载。
 
 #### 2. 修改drivers/block/virtio_blk.c
 比如我在init函数里面加了一行printk
