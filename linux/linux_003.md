@@ -1,8 +1,46 @@
 # Linux内核&内核模块的升级/更换/编译
 
-## 升级centos的内核
+## 更换centos的内核
 
-> [How to Install or Upgrade to Latest Kernel Version in CentOS 7]https://www.tecmint.com/install-upgrade-kernel-version-in-centos-7/
+可以从elrepo[1]安装较新内核，也可以自己编译内核。下边主要是自己编译内核的步骤：
+
+#### 1. 下载完整版的内核源码
+
+从github中的kernel release版本可以随便下一个内核：https://github.com/torvalds/linux/releases
+
+#### 2. 解压内核源码包，进入目录
+
+```bash
+tar -xvf xxx.tar.gz
+cd xxx
+```
+#### 3. 配置合适的.config文件
+
+可以先把当前内核的config文件拿过来，再用 `make menuconfig` 修改并保存覆盖`.config`。
+
+```bash
+cp /boot/config-$(uname -r) .config
+make menuconfig
+```
+
+#### 4. 编译并安装
+
+```bash
+make -jX # X为你的核数，这样编译最快
+sudo make modules_install install  # 安装
+```
+
+#### 5. 生成新的内核启动镜像，并调整GRUB配置，重启完成
+```
+sudo dracut -f
+sudo vim /etc/default/grub #其中`GRUB_DEFAULT=x`为默认选择的内核顺序
+sudo grub2-mkconfig -o /boot/grub2/grub.cfg
+reboot
+```
+
+---
+
+[1] How to Install or Upgrade to Latest Kernel Version in CentOS 7, https://www.tecmint.com/install-upgrade-kernel-version-in-centos-7/
 
 ## 编译内核模块
 
