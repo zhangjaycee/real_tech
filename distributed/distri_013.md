@@ -1,5 +1,20 @@
 # Coherence & Consistency
 
+
+### 1. Consistency
+
+#### 1.1 Consistency (Database and Filesystem)
+
+
+#### 1.2 Memory Consistency (Distributed)
+
+#### 1.3 Crash Consistency & Application Consistency (backup system)
+
+### 2. Cache Coherence 
+
+
+### 3. Consensus (Distributed)
+
 > 摘自[1] 
 >
 >This is actually Tannenbaum’s defintion of “strict consistency”; I disagree with the way he organizes things. He says that “strict consistency” is “impossible to implement in a distributed system” and that sequential consistency “is a slightly weaker model than strict consistency.” Both statements are, in my view, misleading.
