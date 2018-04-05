@@ -33,9 +33,10 @@ mkfs.ext4 /dev/ram0p1
 mount /dev/ram0p1 /RAMDISK
 ```
 Step 3. 然后就可以正常用了。。。
+
 Step 4. 销毁ramdisk
 ```
-# 接触挂载
+# 解除挂载
 umount /dev/ram0p1
 # 卸载内核模块
 modprobe -r brd
