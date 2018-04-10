@@ -17,7 +17,7 @@
 
 #### 1.2 pmemkv 
 
-基于PMDK的libpmemobj抽象实现，并提供了接入KV的接口，现只会b-tree和blackhole(接口例子，哑接口)。
+基于PMDK的libpmemobj抽象实现，并提供了接入KV的接口，现支持b-tree和blackhole(接口例子，哑接口)。
 
 ----
 [1] "Device DAX" for persistent memory, https://lwn.net/Articles/687489/
