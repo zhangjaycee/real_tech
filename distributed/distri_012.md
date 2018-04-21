@@ -46,7 +46,13 @@ ext4-dax和xfs-dax目前还只支持metadata-consistency,data-consistency不支�
 
 
 
-### 2. 其他资料
+### 3. BTT - Block Translation Table
+
+可以看做是一层间接(a level of indirection)，将PM的IO粒度由cache line(64 Bytes)转换为扇区(512 Bytes)。
+
+https://www.kernel.org/doc/Documentation/nvdimm/btt.txt
+
+### A. 其他资料
 
 Persistent Memory Programming这个项目[1]，专注于PM编程，做了工具叫PMDK，专门用于PM编程。PMDK开发基于DAX[4][5]。
 
