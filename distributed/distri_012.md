@@ -5,7 +5,27 @@
 在我理解PM应该除了掉电不丢数据，应该更接近DRAM而不是传统的块设备，即应该是DIMM接口，可字节寻址的。
 
 
+### 0. DAX
 
+
+#### 0.1 device-dax和filesytem-dax
+
+通过ndctl工具(可以通过yum或编译安装)可以在device-dax(/dev/daxX)和filesystem-dax(/dev/pmemX)模式之间转换。两者的区别在于是否抽象成块设备+文件系统，device-dax可能带来更大自由度、更高性能和更低使用便捷性[1]。
+
+#### 0.2 consistency
+
+首先文件系统间的DAX是不一致的，ext4只能整个文件系统DAX或者不DAX，而XFS是基于inode的DAX，粒度更细。 [3]
+
+ext4-dax和xfs-dax目前还只支持metadata-consistency,data-consistency不支持。[4]
+
+
+[1] "Device DAX" for persistent memory, https://lwn.net/Articles/687489/
+
+[2] http://linux.hpe.com/nvdimm/LinuxSDKReadme.htm
+
+[3] The future of DAX, https://lwn.net/Articles/717953/
+
+[4] https://www.snia.org/sites/default/files/PM-Summit/2017/presentations/Swanson_steven_NOVA_Fastest_File_system_for_NVDIMMsv2.pdf
 
 ### 1. PMDK
 
@@ -20,9 +40,11 @@
 基于PMDK的libpmemobj抽象实现，并提供了接入KV的接口，现支持b-tree和blackhole(接口例子，哑接口)。
 
 ----
-[1] "Device DAX" for persistent memory, https://lwn.net/Articles/687489/
+
 
 [2] Installing pmemkv, https://github.com/pmem/pmemkv/blob/master/INSTALLING.md#fedora_latest_pmdk
+
+
 
 ### 2. 其他资料
 
