@@ -29,22 +29,24 @@ ext4-dax和xfs-dax目前还只支持metadata-consistency,data-consistency不支�
 
 ### 1. PMDK
 
-#### 1.1 device-dax和filesytem-dax
+#### 1.1 PMDK同时支持device-dax和filesytem-dax
 
-通过ndctl工具(可以通过yum或编译安装)可以在device-dax(/dev/daxX)和filesystem-dax(/dev/pmemX)模式之间转换。两者的区别在于是否抽象成块设备+文件系统，device-dax可能带来更大自由度、更高性能和更低使用便捷性[1]。
-
-以安装使用pmemkv为例[2]，两种模式都可以传递给pmemkv使用，性能可能不同（还没测试）。
+以安装使用pmemkv为例[1]，两种模式都可以传递给pmemkv使用，性能可能不同（还没测试）。
 
 #### 1.2 pmemkv 
 
 基于PMDK的libpmemobj抽象实现，并提供了接入KV的接口，现支持b-tree和blackhole(接口例子，哑接口)。
 
+
+#### 1.3 PMDK的consistency
+
+> [2]Data allocated with PMDK is put to the virtual memory address space, and concrete ranges are relying on result of mmap(2) operation performed on the user defined files. Such files can exist on any storage media, however data consistency assurance embedded within PMDK requires frequent synchronisation of data that is being modified. Depending on platform capabilities, and underlying device where the files are, a different set of commands is used to facilitate synchronisation. It might be msync(2) for the regular hard drives, or combination of cache flushing instructions followed by memory fence instruction for the real persistent memory.
+
 ----
 
+[1] Installing pmemkv, https://github.com/pmem/pmemkv/blob/master/INSTALLING.md#fedora_latest_pmdk
 
-[2] Installing pmemkv, https://github.com/pmem/pmemkv/blob/master/INSTALLING.md#fedora_latest_pmdk
-
-
+[2] https://pmem.io/2016/02/22/pm-emulation.html
 
 ### 3. BTT - Block Translation Table
 
