@@ -5,10 +5,11 @@
 
 #### 1.1 Consistency (Database and Filesystem)
 
+WAL (logging, journaling), soft update, CoW ...
 
 #### 1.2 Memory Consistency (Distributed)
 
-#### 1.3 Crash Consistency & Application Consistency (backup system)
+#### 1.3 Crash Consistency & Application Consistency (backup system) ???
 
 ### 2. Cache Coherence 
 
