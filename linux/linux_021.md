@@ -1,6 +1,8 @@
 # Linux中的“存储虚拟化”
 
-## dm(Device Mapper)
+## DM (Device Mapper)和MD (Multiple Devices)
+详见 [[Stackable Block Layer|linux_016]]
+
 
 ## loopback
 
