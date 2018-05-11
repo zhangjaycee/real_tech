@@ -6,7 +6,7 @@
 
 1. [[关于MySQL的索引|db_003]]
 (difference between Clustered&Secondary key, InnoDB&MyISAM indexes)
-1. [[InnoDB的Transparent Page Compression|db_004]]
+1. [[👍 InnoDB的Transparent Page Compression|db_004]]
 
 1. [[关于InnoDB bufferpool的flush method|db_005]]
 
@@ -24,7 +24,7 @@
 
 1. [[RocksDB性能测试|db_011]] 
 
-1. [[levelDB的目录结构和分目录存储的源码修改|db_012]]
+1. [[👍 levelDB的目录结构和分目录存储的源码修改|db_012]]
 
 #### [博客推荐]
 
