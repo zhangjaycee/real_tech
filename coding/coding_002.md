@@ -8,6 +8,15 @@ e.g. 校验(checksum)比如CRC等，hash比如MD5、SHA等。
 
 [1][2] 中给出了CPU的测试。[3]中给出了GPU的测试。
 
+* 印象
+
+
+|算法| CPU|GPU|
+|-|-|-|
+|SHA1|~500 MB/s|~8 GB/s|
+|MD5|~500 MB/s|~20 GB/s|
+|SHA256|~250MB/s|~3 GB/s|
+
 ---
 
 
