@@ -10,3 +10,4 @@ https://www.ibm.com/developerworks/cn/linux/l-cn-kvm-mem/
 https://events.linuxfoundation.org/slides/2011/linuxcon-japan/lcj2011_guangrong.pdf
 
 https://blog.csdn.net/xelatex_kvm/article/details/17679529
+http://blog.vmsplice.net/2016/01/qemu-internals-how-guest-physical-ram.html
