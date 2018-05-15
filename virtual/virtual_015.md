@@ -8,3 +8,5 @@ mmu虚拟化分为软件虚拟化和硬件虚拟化。软件对应影子页表�
 
 https://www.ibm.com/developerworks/cn/linux/l-cn-kvm-mem/
 https://events.linuxfoundation.org/slides/2011/linuxcon-japan/lcj2011_guangrong.pdf
+
+https://blog.csdn.net/xelatex_kvm/article/details/17679529
