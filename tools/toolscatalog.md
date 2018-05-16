@@ -24,3 +24,4 @@
 1. [[wordpress|tools_013]]
 1. [[可视化工具|tools_014]]
 1. [[搭建共享文件服务器(SMB)|tools_015]]
+1. [[文件操作命令 (dd, fallocate ...)|tools_016]]
