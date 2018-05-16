@@ -26,6 +26,10 @@ taskset 0x0001 <program>
 
 （待续、、、）
 
+## Intel Memory Latency Checker
+
+可以测试各个节点CPU到各个节点内存的延迟。
+
 
 ---
 [1] Processor and memory binding, https://www.ibm.com/support/knowledgecenter/en/linuxonibm/liaai.hpctune/cpuandmemorybinding.htm
