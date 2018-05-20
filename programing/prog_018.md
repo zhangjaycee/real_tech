@@ -1,10 +1,11 @@
 # 内存操作指令
-
-## 内存排序指令 mfence、sfence、sfence
-
 图片（来自[1]）：
 
 ![fig1](prog_018_001.png)
+
+## 内存排序指令 mfence、sfence、sfence
+
+sfence保证它之前的CPU到内存的store是按顺序执行的，一般在`clflushopt`后使用。类似的，mfence用于load和store，lfence仅用于load。
 
 代码如下：[2]
 ```cpp
@@ -17,8 +18,6 @@ void _mm_lfence(void)
 void _mm_sfence(void)
 void _mm_mfence(void)
 ```
-
-sfence保证它之前的CPU到内存的store是按顺序执行的，一般在`clflushopt`后使用。类似的，mfence用于load和store，lfence仅用于load。
 
 ## 内存原子指令
 
