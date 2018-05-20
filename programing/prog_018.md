@@ -1,7 +1,7 @@
 # 内存操作指令
 图片（来自[1]）：
 
-![fig1](prog_018_001.png)
+![fig1](./prog_018_001.png)
 
 ## 内存排序指令 mfence、sfence、sfence
 
