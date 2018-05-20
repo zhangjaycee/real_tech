@@ -33,3 +33,5 @@
 1. [[Tkinter写Python界面|prog_016]]
 
 1. [[编译常见错误|prog_017]]
+
+1. [[内存操作指令 (mfence, sfence, lfence ...)|prog_018]]
