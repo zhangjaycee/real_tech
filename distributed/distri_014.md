@@ -2,7 +2,7 @@
 
 ### 1. FS写放大
 
-文件系统中，读写单元固定，比如都是4K，这样，如果write函数写的数据小于4K，则要先把整块读入，再修改，再把新的4K整体写入。这个过程可以称为RMW(Read-Modify-Write)，这就是File System的写放大问题。
+文件系统中，读写单元固定，比如都是4K，这样，如果write函数写的数据小于4K，则要先把整块读入，再修改，再把新的4K整体写入。这个过程可以称为 **RMW** (Read-Modify-Write)，这就是File System的写放大问题。
 
 ---
 
@@ -19,6 +19,4 @@
 ---
 [1] Q. Chen, L. Liang, Y. Xia, and H. Chen, “Mitigating Sync Amplification for Copy-on-write Virtual Disk,” 14th USENIX Conf. File Storage Technol. (FAST 16), pp. 241–247, 2016.
 
-[2] J. Yang, N. Plasson, G. Gillis, N. Talagala, and S. Sundararaman, “Don’t stack your Log on my Log,” Inflow ’14, 2014.
-
-[3] K. Shen, S. Park, and M. Zhu, “Journaling of Journal Is (Almost) Free,” Fast ’14, pp. 287–293, 2014.
+[2] J. Yang, N. Plasson, G. Gillis, N. Talagala, and S. Sundararaman, “Don’t stack your Log on my Log,” Inf
