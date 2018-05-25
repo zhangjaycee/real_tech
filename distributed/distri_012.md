@@ -18,6 +18,7 @@
 
 ext4-dax和xfs-dax目前还只支持metadata-consistency,data-consistency不支持。[4]
 
+有一个叫BTT的东西试图把64 B粒度转为512 B。[5]
 
 [1] "Device DAX" for persistent memory, https://lwn.net/Articles/687489/
 
@@ -26,6 +27,8 @@ ext4-dax和xfs-dax目前还只支持metadata-consistency,data-consistency不支�
 [3] The future of DAX, https://lwn.net/Articles/717953/
 
 [4] https://www.snia.org/sites/default/files/PM-Summit/2017/presentations/Swanson_steven_NOVA_Fastest_File_system_for_NVDIMMsv2.pdf
+
+[5] https://lwn.net/Articles/686150/
 
 ### 2. PMDK
 
