@@ -1,5 +1,10 @@
 # IRQ 中断
 
+硬件中断时，其他的进程会被暂停，因此，内核中实现了软中断来解决这个问题，tasklet和workqueue基于软中断实现，是驱动中较常用的延迟执行硬件中断逻辑的方法。2.6.29后，threaded interrupt handlers被merge到主线。tasklet不支持sleep
+
+
+
+
 摘自[1]:
 
 >
@@ -15,3 +20,5 @@
 > 下边一个实际例子来说明它的应用。在手机平台中，检测耳机的插入一般是通过耳机插孔中机械变化导致一个baseband gpio的电平的变化，在该gpio中断里进行耳机插入处理。但是耳机插入一般都有个抖动的过程，需要消抖处理。最简单的办法是在中断发生后，延时一段时间（例如200ms），然后再检查GPIO状态是否稳定来确定是否有效插入。如果用老的中断方式，不得不用workqueue的方式，你需要在顶半里激活一个delay 200ms的workqueue，然后在workqueue里检查。用线程化的处理方式，你仅仅需要在thread_fn里sleep 200ms，然后在检查即可。看，事情就这么简单！
 
 [1] https://blog.csdn.net/batoom/article/details/8645021
+
+[2] Moving interrupts to threads, https://lwn.net/Articles/302043/
