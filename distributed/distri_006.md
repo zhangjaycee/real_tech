@@ -51,6 +51,10 @@ NGFF > PCIe > SAS > SATA > SCSI > ATA/IDE
 
 IDE, AHCI和NVMe等都是传输协议，它们在传输接口(PCIe, SATA, ATA等)之上工作。
 
+一般来说，AHCI在host chip set （**硬件中**）实现为Host Bust Adapter (HBA)。如下示意图展示了这种分层：AHCI和NVMe都在OS中有对应的driver；host chip set中，对应于设备的AHCI和PCIe的adapter被实现；最后基于PCIe或SATA物理、链路层、和传输层协议的不同的设备连入Host。[6]
+
+[[distri_006_p2.png]]
+
 * IDE(Integrated Drive Electronics)是IDE接口的一种“协议”，它表示磁盘控制器集成到了硬件驱动器中，无需host进行移动磁道臂等低层次的控制。
 
 * AHCI(Advanced Host Controller Interface)一般用作SATA盘的协议，不过也有些情况SATA盘用IDE协议(老版本的Windows中默认的IDE/legacy模式就是这样)来模拟。
@@ -58,6 +62,10 @@ IDE, AHCI和NVMe等都是传输协议，它们在传输接口(PCIe, SATA, ATA等
 * SAS的协议向下兼容SATA盘。
 
 * NVMe支持PCIe接口或者NGFF接口的盘。
+
+下图还对比了AHCI和NVMe协议：
+
+[[distri_006_p3.png]]
 
 
 ### 参考
@@ -71,3 +79,5 @@ IDE, AHCI和NVMe等都是传输协议，它们在传输接口(PCIe, SATA, ATA等
 [4] https://www.intel.com/nvm
 
 [5] Hard disk drive interface, Wikipedia, https://en.wikipedia.org/wiki/Hard_disk_drive_interface
+
+[6] https://sata-io.org/sites/default/files/documents/NVMe%20and%20AHCI%20as%20SATA%20Express%20Interface%20Options%20-%20Whitepaper_.pdf
