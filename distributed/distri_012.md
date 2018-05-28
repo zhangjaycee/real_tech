@@ -12,6 +12,12 @@
 
 通过ndctl工具(可以通过yum或编译安装)可以在device-dax(/dev/daxX)和filesystem-dax(/dev/pmemX)模式之间转换。两者的区别在于是否抽象成块设备+文件系统，device-dax可能带来更大自由度、更高性能和更低使用便捷性[1]。
 
+> [6]As an interim solution, Linux
+provides Device-DAX [1], which allows an application to open a
+persistent memory device (without a file system), memory map
+it, and utilize userspace flushes to make stores persistent
+
+
 #### 1.2 consistency
 
 首先文件系统间的DAX是不一致的，ext4只能整个文件系统DAX或者不DAX，而XFS是基于inode的DAX，粒度更细。 [3]
@@ -20,7 +26,7 @@ ext4-dax和xfs-dax目前还只支持metadata-consistency,data-consistency不支�
 
 有一个叫BTT的东西试图把64 B粒度转为512 B。[5]
 
-[1] "Device DAX" for persistent memory, https://lwn.net/Articles/687489/
+[1] "Device DAX" for persistent memory, https://lwn.net/Articles/687489/, https://lists.gt.net/linux/kernel/2434768
 
 [2] http://linux.hpe.com/nvdimm/LinuxSDKReadme.htm
 
@@ -29,6 +35,8 @@ ext4-dax和xfs-dax目前还只支持metadata-consistency,data-consistency不支�
 [4] https://www.snia.org/sites/default/files/PM-Summit/2017/presentations/Swanson_steven_NOVA_Fastest_File_system_for_NVDIMMsv2.pdf
 
 [5] https://lwn.net/Articles/686150/
+
+[6] Persistent Memory Programming, https://www.usenix.org/system/files/login/articles/login_summer17_07_rudoff.pdf
 
 ### 2. PMDK
 
