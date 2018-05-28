@@ -35,3 +35,5 @@
 1. [[文件系统中的一致性|distri_016]]
 
 1. [[文件操作的原子性|distri_017]]
+
+1. [[polling or interrupt based I/O|distri_018]]
