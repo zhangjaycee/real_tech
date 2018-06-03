@@ -47,6 +47,11 @@ NGFF(Next Generation Form Factor, M.2)
 
 NGFF > PCIe > SAS > SATA > SCSI > ATA/IDE
 
+
+#### 2.3 串口和并口
+
+IDE属于并行接口，而其他都属于串行接口。串口代替并口是趋势，这是由于信号间的同步问题会导致并行接口的极限较低（最多达到几百MHz），而串口不存在这个问题。注意，虽然PCIe等更先进的接口有多个lanes，但是lanes之间是不需要进行同步的，所以只能说他们有多个串行lanes，还是属于串口的。[7][8]
+
 ## 3. 协议
 
 IDE, AHCI和NVMe等都是传输协议，它们在传输接口(PCIe, SATA, ATA等)之上工作。
@@ -81,3 +86,8 @@ IDE, AHCI和NVMe等都是传输协议，它们在传输接口(PCIe, SATA, ATA等
 [5] Hard disk drive interface, Wikipedia, https://en.wikipedia.org/wiki/Hard_disk_drive_interface
 
 [6] https://sata-io.org/sites/default/files/documents/NVMe%20and%20AHCI%20as%20SATA%20Express%20Interface%20Options%20-%20Whitepaper_.pdf
+
+[7] https://electronics.stackexchange.com/questions/193189/pci-express-data-transfer-method-serial-vs-parallel
+
+[8] https://en.wikipedia.org/wiki/PCI_Express#Serial_bus
+
