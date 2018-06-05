@@ -28,7 +28,7 @@
 
 1. [[Coherence & Consistency & Consensus|distri_013]]
 
-1. [[👍 存储栈中的各种”放大“|distri_014]]
+1. [[👍 存储系统中的各种“写放大”(Write Amplification)|distri_014]]
 
 1. [[ZFS|distri_015]]
 
