@@ -17,3 +17,5 @@
 ---
 
 [1] http://blog.fastforwardlabs.com/2016/11/23/probabilistic-data-structure-showdown-cuckoo.html
+
+[2] Probabilistic Data Structures for C#, https://github.com/mattlorimor/ProbabilisticDataStructures
