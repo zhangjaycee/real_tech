@@ -32,10 +32,12 @@
 
 1. [[ZFS|distri_015]]
 
-1. [[文件系统中的一致性|distri_016]]
+1. [[文件系统中的一致性 (crash consistency)|distri_016]]
 
 1. [[文件操作的原子性|distri_017]]
 
 1. [[polling or interrupt based I/O|distri_018]]
 
 1. [[概率数据结构|distri_019]]
+
+1. [[分布式系统中的共识机制 (consensus)|distri_020]]
