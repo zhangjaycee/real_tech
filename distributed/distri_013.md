@@ -25,5 +25,16 @@ But in another sense, sequential consistency is stronger than strict coherence. 
 Tannenbaum’s definition of “strict consistency” appears to differ by assuming that all operations are instantaneous and non-blocking; I think his assertions may be true under these assumptions, but I find these assumptions strange.
 
 
+> 摘自[2] 
+>
+> We can divide the universe into four types of consensus algorithms:
+> 
+> Known participants, non-byzantine failure: Paxos, Raft
+Unknown participants, limited attack modes: Chord (original) and other distributed hash tables
+Known participants, byzantine failure: PBFT, UpRight, Byzantine Paxos
+Unknown participants, byzantine failure: Proof of Work, Proof of Stake, S-Chord
+
 
 [1] AFS and distributed file systems, www.cs.utexas.edu/users/dahlin/Classes/GradOS/lectures/afs.ps
+
+[2] Are consensus algorithms only proof-of-work, proof-of-stake, proof-of-elapsed time etc.? Or, can we write our own consensus algorithm by our needs mostly to develop an application for a start-up? https://www.quora.com/Are-consensus-algorithms-only-proof-of-work-proof-of-stake-proof-of-elapsed-time-etc-Or-can-we-write-our-own-consensus-algorithm-by-our-needs-mostly-to-develop-an-application-for-a-start-up
