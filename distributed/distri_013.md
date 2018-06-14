@@ -30,9 +30,12 @@ Tannenbaum’s definition of “strict consistency” appears to differ by assum
 > We can divide the universe into four types of consensus algorithms:
 > 
 > Known participants, non-byzantine failure: Paxos, Raft
-Unknown participants, limited attack modes: Chord (original) and other distributed hash tables
-Known participants, byzantine failure: PBFT, UpRight, Byzantine Paxos
-Unknown participants, byzantine failure: Proof of Work, Proof of Stake, S-Chord
+>
+>Unknown participants, limited attack modes: Chord (original) and other distributed hash tables
+>
+>Known participants, byzantine failure: PBFT, UpRight, Byzantine Paxos
+>
+>Unknown participants, byzantine failure: Proof of Work, Proof of Stake, S-Chord
 
 
 [1] AFS and distributed file systems, www.cs.utexas.edu/users/dahlin/Classes/GradOS/lectures/afs.ps
