@@ -38,15 +38,16 @@ Fast 17 中专门有一个分区(包括3篇paper)讲了相关的研究:
 
 [其中写LightNVM的作者Bjørling正是13年SYSTOR写了blk-mq linux块层multi-queue调度器的人，(Linux Block IO: Introducing Multi-queue SSD Access on Multi-core Systems)更多关于blk-mq在本wiki中也有写到：[[blk-mq 相关|linux_015]]]
 
-**TO UPDATE:**
 
-what is the difference between raw flash and open-channel SSD?
+3. raw flash 和 open-channel SSD区别?
 
-## 更多相关网页：
+MTD用来解决raw flash的驱动问题，而open-channel SSD硬件内部有控制器，不需要MTD。使用open-channel SSD时，host主要通过lightNVM等来管理数据放置位置、IO调度策略和垃圾回收GC，而其他的交给控制器管理。
 
-The multiqueue block layer, https://lwn.net/Articles/552904/
+> [2] MTD solves the problem of directly driving raw flash. Whereas Open-Channel SSDs have flash controllers embedded in hardware, that takes care of scheduling, driving hundred of flash chips, and provide power capacitors for durability. The host primarily handles data placement, I/O scheduling, and garbage collection and leaves everything else to the SSD controller. Making it more efficient for >1M IOPS devices.
 
-Support for Open-Channel SSDs (was dm-lightnvm), https://lwn.net/Articles/615341/
+---
 
-Taking control of SSDs with LightNVM, https://lwn.net/Articles/641247/
+[1] Support for Open-Channel SSDs (was dm-lightnvm), https://lwn.net/Articles/615341/
+
+[2] Taking control of SSDs with LightNVM, https://lwn.net/Articles/641247/
   
