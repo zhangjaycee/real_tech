@@ -4,7 +4,7 @@ Linux Block layer 中有几个重要的概念：请求、请求队列、调度�
 
 ## 块IO请求(bio request)
 
-`submit_bio`函数负责传递bio实例，然后调用`generic_make_request`函数创建新的request，`__generic_make_request`函数是块层的通用实现，具体分三步工作:[2]
+`submit_bio`函数负责传递bio实例，然后调用`generic_make_request`函数创建新的request，`__generic_make_request`函数是块层的通用实现，具体分三步工作:[1-p567][2]
 1. `bdev_get_queue`找到涉及的块设备对应的request queue。
 2. `blk_partition_map`重新映射该请求。
 3. `q->make_request_fn`用来根据bio产生request并发送给device driver，一般会调用内核标准的`__make_request`函数
@@ -53,7 +53,7 @@ Now that it's exported, lets put it in a more sane namespace.
 Signed-off-by: Jens Axboe <jaxboe@fusionio.com>
 ```
 
-然后`__make_request`函数又分为几步：[1-p567]
+然后`__make_request`函数又分为几步：
 1. 由bio新创建的请求后，首先检查IO scheduler的queue(elv_queue)是不是空的
 2. 
 3. 
