@@ -4,7 +4,13 @@
 
 NVMe协议支持多队列 (multiple queue)，这就需要NVMe块设备驱动对其进行实现。而Linux内核中，近年来的block layer中的blk-mq也有类似的思想。现在NVMe driver的实现正好与其是对接的。
 
-blk-mq本wiki中也有介绍([[Linux Block Layer中的I/O队列和调度器|linux_015]])，其用于代替原始的IO scheduler。blk-mq分为software queue和hardware queue，而NVMe driver中又分submission queue(SQ)和completion queue(CQ)，SQ和CQ两部分对应于blk-mq中的hardware queue。
+blk-mq本wiki中也有介绍([[Linux Block Layer中的I/O队列和调度器|linux_015]])，其用于代替原始的IO scheduler。blk-mq分为software staging queue和hardware dispatch queue[1]，而NVMe driver中又分submission queue(SQ)和completion queue(CQ)，SQ/CQ对应于blk-mq中的hardware dispatch queue。当driver的SQ/CQ较多时，较多时，其可以和hardware dispatch queue 1：1对应，较少时，可能和hardware dispatch queue N：1对应[2]。
+
+---
+
+[1] M. Bjørling, J. Axboe, D. Nellans, and P. Bonnet, “Linux block IO: Introducing Multi-queue SSD Access on Multi-core Systems,” Systor ’13, p. 1, 2013.
+
+[2] K. Joshi and P. Choudhary, “Enabling NVMe WRR support in Linux Block Layer,” Hotstorage, 2017.
 
 
 ### NVMe驱动中multiple Submission Queue的创建
