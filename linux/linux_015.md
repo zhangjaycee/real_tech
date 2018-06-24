@@ -53,8 +53,11 @@ Now that it's exported, lets put it in a more sane namespace.
 Signed-off-by: Jens Axboe <jaxboe@fusionio.com>
 ```
 
-然后`__make_request`函数又分为几步：
+然后`__make_request`函数又分为几步：[1-p567]
 1. 由bio新创建的请求后，首先检查IO scheduler的queue(elv_queue)是不是空的
+2. 
+3. 
+...
 
 
 [1] UTLK
