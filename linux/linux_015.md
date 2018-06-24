@@ -2,14 +2,16 @@
 
 Linux Block layer 中有几个重要的概念：请求、请求队列、调度器(调度程序，调度算法)等。
 
-## 块IO请求(bio request)
+## 1. 块IO请求(bio request)
 
 `submit_bio`函数负责传递bio实例，然后调用`generic_make_request`函数创建新的request，`__generic_make_request`函数是块层的通用实现，具体分三步工作:[1-p567][2]
-1. `bdev_get_queue`找到涉及的块设备对应的request queue。
+1. `bdev_get_queue`找到涉及的块设备对应的**request queue**。
 2. `blk_partition_map`重新映射该请求。
-3. `q->make_request_fn`用来根据bio产生request并发送给device driver，一般会调用内核标准的`__make_request`函数
+3. `q->make_request_fn`用来根据bio产生request并插入到**request queue**中，一般会调用内核标准的`__make_request`函数
 
-(最新内核中没有"__make_request"这个函数，从内核版本3.1改名叫`blk_queue_bio`了；blk_mq出来之后，其和原来的io scheduler处于同等地位，因此有了`blk_mq_make_request`这个函数，`blk_queue_bio`和`blk_mq_make_request`这两个较为通用的函数和其他"make_request_fn"一样都通过blk_queue_make_request()函数进行注册，其中`blk_queue_bio`在`block/blk-core.c`中，`blk_mq_make_request`在`block/blk-mq.c`中。)
+(最新内核中没有"__make_request"这个函数，从内核版本3.1改名叫`blk_queue_bio`了；blk_mq出来之后，其和原来的io scheduler处于同等地位，因此有了`blk_mq_make_request`这个函数，`blk_queue_bio`和`blk_mq_make_request`这两个较为通用的函数和其他"make_request_fn"一样都通过blk_queue_make_request()函数进行注册，其中`blk_queue_bio`在`block/blk-core.c`中，`blk_mq_make_request`在`block/blk-mq.c`中。
+
+？blk_mq_make_request 不再是把bio请求放入原来单一的**request queue**中，而是放入blk-mq的多队列software staging queue中)
 
 4.13内核中，使用了blk_queue_make_request注册make_request_fn函数的文件如下：
 ```
@@ -64,9 +66,13 @@ Signed-off-by: Jens Axboe <jaxboe@fusionio.com>
 
 [2] PLKA
 
-## I/O Scheduler
+## 2.1 Block Layer -- I/O Scheduler
 
-#### 调度算法
+### 单队列
+
+block layer 中，分为请求队列(**request queue**)和调度队列(**dispatch queue**)。如第1节所说，**request queue**是用于接收上层发来bio请求，而调度队列是**request queue**的`struct list_head queue_head`字段，是经过IO电梯调度之后的结果队列。虽然下边所说的很多调度算法在调度过程中都用到了多个队列来辅助IO请求重排，但是**request queue**和**dispatch queue**都是但队列的(single-queue)。
+
+### 调度算法
 
 * CFQ(complete fairness queue): 多个请求队列，用hash将一个进程号的请求发到一个请求队列（因此，一个进程常发到一个队列）。
 
@@ -81,7 +87,7 @@ Signed-off-by: Jens Axboe <jaxboe@fusionio.com>
 
 * noop(no operation): 简单的FIFO，直接插入到调度队列的末尾。
 
-#### 修改调度算法
+#### Linux系统中修改调度算法的方法：
 ```
 # 比如修改`/dev/sda`的调度算法为noop
 echo 'noop' > /sys/block/sda/queue/scheduler
@@ -91,13 +97,19 @@ echo 'noop' > /sys/block/sda/queue/scheduler
 
 [2] UTLK
 
-## blk-mq 相关(multi-queue)
+## 2.2 Block Layer -- blk-mq (block multi-queue)
 
-根据multi-queue的paper[1]，作者将原来的block layer的一个queue，分为两层多个queue，分别称为software queue和hardware queue：
+### 多队列
 
-* **Software staging queues**: 相对原先的一个软件Queue，现在是一个核或一个socket一个queue，现在CPU都有较大的L3缓存，所以一个socket一个queue效果就比较好。
+根据multi-queue的paper[1]，作者将原来的block layer的一个queue(request queue)，分为两层多个queue，分别称为software queue和hardware queue：
 
-* **Hardware dispatch queues**: 数量决定于每个device driver支持多少个queue。hardware queue不能进行重排序调度，只能由device driver进行FIFO操作，这样减少了锁。
+* **Software staging queues**: 对应原先的一个**request queue**，现在是一个核或一个socket一个queue。负责接收上层的bio请求。由于现在CPU都有较大的L3缓存，所以一个socket一个queue效果就比较好。
+
+* **Hardware dispatch queues**: 数量决定于每个device driver支持多少个queue，比如NVMe设备和驱动支持多个CQ / SQ，所以这时**hardware dispatch queues**就可能和每对CQ/SQ 1:1对应或N:1对应[4]。而原先的单队列块层中，附属于请求队列**request queue**的调度队列**dispatch queue**和只是和设备(而非设备的某对CQ/SQ)1:1对应的关系。**hardware dispatch queues**不能进行重排序调度，只能由device driver进行FIFO操作，这样减少了锁。需要注意的是，即使在不支持多对CQ/SQ的device driver上用blk-mq，也是可以的，这时只要在 **Hardware dispatch queues**提交到device driver SQ时，进行多对一的队列合并即可，并且这种操作并不影响顺序、随机在一个延迟数量级的SSD设备(?但会影响HDD慢设备，所以HDD不太合适用blk-mq)。
+
+总之，**software staging queue**对应于原来IO scheduler的**request queue** (是single-queue)，但这里的Software staging queue是multi-queue的，每个核或者socket对应一个queue。**hardware dispatch queues**类似与原来经过io重排的**dispatch queue**的多队列版本。
+
+---
 
 [1] Bjørling, Matias, et al. "[Linux block IO: introducing multi-queue SSD access on multi-core systems.](http://kernel.dk/blk-mq.pdf)" Proceedings of the 6th international systems and storage conference. ACM, 2013.
 
@@ -107,7 +119,6 @@ https://www.thomas-krenn.com/en/wiki/Linux_Multi-Queue_Block_IO_Queueing_Mechani
 [3] kernel 3.10内核源码分析--块设备层request plug/unplug机制, 
  http://blog.chinaunix.net/xmlrpc.php?r=blog/article&uid=14528823&id=4778396
 
-
-
+[4] K. Joshi and P. Choudhary, “Enabling NVMe WRR support in Linux Block Layer,” Hotstorage, 2017.
 
 
