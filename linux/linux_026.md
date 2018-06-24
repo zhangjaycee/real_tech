@@ -1,9 +1,18 @@
 # Linux NVMe Driver
 
+### NVMe driver的multi-queue和block layer的multi-queue
 
-NVMe块存储设备支持 multiple queue。
+NVMe协议支持多队列 (multiple queue)，这就需要NVMe块设备驱动对其进行实现。而Linux内核中，近年来的block layer中的blk-mq也有类似的思想。现在NVMe driver的实现正好与其是对接的。
 
-Linux内核中的NVMe驱动中，指定了创建多少个queue的规则。可以看到`nvme_loop_init_io_queues`函数中有一句`nr_io_queues = min(opts->nr_io_queues, num_online_cpus());`，io queue的数目是根据某种opts（？）和cpu的最小值来确定。
+blk-mq本wiki中也有介绍([[Linux Block Layer中的I/O队列和调度器|linux_015]])，其用于代替原始的IO scheduler。blk-mq分为software queue和hardware queue，而NVMe driver中又分submission queue(SQ)和completion queue(CQ)，SQ和CQ两部分对应于blk-mq中的hardware queue。
+
+
+### NVMe驱动中multiple Submission Queue的创建
+
+NVMe块存储设备支持 multiple queue (submission queue)。Linux内核中的NVMe驱动中，指定了创建多少个queue的规则：
+
+可以看到`nvme_loop_init_io_queues`函数中有一句`nr_io_queues = min(opts->nr_io_queues, num_online_cpus());`，io queue的数目是根据某种opts（？）和cpu的最小值来确定。`nr_io_queues`被赋值后，后边跟的循环来进行sq (submission queue)初始化。
+
 ```cpp
 // KERNEL_SRC/drivers/nvme/target/loop.c
 static int nvme_loop_init_io_queues(struct nvme_loop_ctrl *ctrl)
