@@ -10,7 +10,7 @@
 
 ## 为什么SSD快
 
-每个SSD内都有多个Flash芯片，单独一个Flash芯片并没有那么快的吞吐量，但是如果它们间是存在并行读写，那就快了。这个感觉类似RAID磁盘阵列的思路，只不过这里可以想象成flash chips组成的阵列。
+每个SSD内都有多个Flash芯片，单独一个Flash芯片并没有那么快的吞吐量(08年时，一个NAND flash memory吞吐不到40 MB/s [9])，但是如果它们间是存在并行读写，那就快了。这个感觉类似RAID磁盘阵列的思路，只不过这里可以想象成flash chips组成的阵列。
 
 而且，在SSD的发展趋势来看，NAND-flash的特征尺寸是减小的，一个package中的dies是增加的
 
@@ -78,3 +78,5 @@ on the workload you are going to run. You must always test your workload.
 [7] SSD的工作原理、GC和TRIM、写入放大以及性能评测, http://blog.csdn.net/scaleqiao/article/details/50511279
 
 [8] https://patrick-nagel.net/blog/archives/337
+
+[9] F. Chen, B. Hou, and R. Lee, “Internal Parallelism of Flash Memory-Based Solid-State Drives,” ACM Trans. Storage, vol. 12, no. 3, pp. 1–39, 2016.
