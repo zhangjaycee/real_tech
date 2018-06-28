@@ -42,4 +42,4 @@
 
 1. [[分布式系统中的共识机制 (consensus)|distri_020]]
 
-1. [[存储I/O中的multi-queue|distri_021]]
+1. [[👍 存储I/O中的multi-queue|distri_021]]
