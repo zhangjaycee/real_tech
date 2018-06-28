@@ -19,6 +19,14 @@ IO设备的驱动程序为上层屏蔽了以下这些实际的IO指令和数据�
 1. **memory-mapped IO**则指的是将设备的某些空间映射到系统的内存地址空间，这样CPU可以像访问内存一样用LOAD/STORE等形式与设备通信；
 2. **port-mapped IO**指的是外部IO设备的地址空间和内存地址空间相互独立，CPU通过某些IO口用IN/OUT等指令和设备通信。
 
+---
+
+[1] 浅谈内存映射I/O(MMIO)与端口映射I/O(PMIO)的区别, https://www.cnblogs.com/idorax/p/7691334.html
+
+[2] wikipedia- Memory-mapped I/O, https://en.wikipedia.org/wiki/Memory-mapped_I/O
+
+[3] OSTEP, http://pages.cs.wisc.edu/~remzi/OSTEP/
+
 
 ### 2. 块层和应用层中polling和interrupt IO的思想
 
