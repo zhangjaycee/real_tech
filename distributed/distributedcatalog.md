@@ -36,7 +36,7 @@
 
 1. [[文件操作的原子性|distri_017]]
 
-1. [[设备I/O模型(polling/interrupt-based IO, DMA, MMIO, PMIO ...)|distri_018]]
+1. [[👍 设备I/O模型 (驱动层(polling/interrupt-based IO, DMA, MMIO, PMIO ...)、块层和应用层)|distri_018]]
 
 1. [[概率数据结构|distri_019]]
 
