@@ -329,9 +329,11 @@ VAX的VMS的地址空间可分为用户部分和系统内核部分，其中用�
 **接口：** 类似软件接口的功能，硬件接口是留给OS和设备交互的。
 **内部结构：** 比如㓟CPU、MEM等基本组件，还有称为固件(firmware)的软件来实现内部功能。
 
-#### 1.3 PIO中的两种模式(Polling和Interrupt)
+#### 1.3 两种IO模式(Polling和Interrupt)
 
-一种典型的协议是 **Polling** (轮询)，步骤有4: 
+Polling的形式，而interrupt。
+
+一种典型的协议是 **Polling** (轮询)，称为programmed IO，步骤有4:
 
 * 循环等待STATUS寄存器直到设备状态为不busy
 * 写数据到DATA寄存器
@@ -340,7 +342,7 @@ VAX的VMS的地址空间可分为用户部分和系统内核部分，其中用�
 
 Polling显著的缺点就是太浪费CPU时间，这是因为IO相对于CPU是很慢的，大量的CPU时间被用在了等待上。
 
-**Interrupt** (中断)方法可以解决这个问题，用Interrupt方法进行IO时，当设备完成操作时，会raise一个硬件interrupt。但是这样的话，如果设备很快(不如现在的NVMe SSD设备)，Interrupt由于需要进程上下文的切换、以及中断的控制等原因，会拖慢IO的速度。所以两种方法各有利弊：
+**Interrupt** (中断)方法（也称为interrupt-handling IO）可以解决这个问题，用Interrupt方法进行IO时，当设备完成操作时，会raise一个硬件interrupt。但是这样的话，如果设备很快(比如现在的NVMe SSD设备)，Interrupt由于需要进程上下文的切换、以及中断的控制等原因，会拖慢IO的速度。所以两种方法各有利弊：
 
 |Polling | Interrupt |
 |--------|--------|
@@ -349,13 +351,8 @@ Polling显著的缺点就是太浪费CPU时间，这是因为IO相对于CPU是�
 
 在IO请求压力时大时小不好确定的系统中，更好的方案可能是采用hybrid(混合)的 **两段协议** ，先poll一会儿，还没完成的话改用interrupt方式。还有一种方式是 **中断合并** ，当一个请求完成，等一等，说不定又有新的请求完成了，这样就见小了中断数，减小了中断带来的性能损失，但是这样做的缺点也是显而易见的--用延迟代价换来了高吞吐。
 
-#### 1.4 设备交互：PIO和MMIO
 
-以上的Interrupt和Polling都属于Programmed I/O(PIO)的方式，这种方式是CPU通过指令和设备进行的交互。
-
-还有一种称为Memory-mapped I/O(MMIO)，这种方法中，设备寄存器被映射到内存地址空间，OS读写这个映射地址，硬件会自动将存取数据路由到设备而不是主存中。
-
-#### 1.5 PIO中传输任务的卸载(Direct Memory Access, DMA)
+#### 1.4 传输任务的卸载(DIRECT MEMORY ACCESS, DMA)
 
 若不使用DMA，虽然可以用中断来讲等待设备IO完成的时间用在其他进程上，但是IO请求中还包括CPU从内存到设备以字长为单位一点一点搬运数据（数据传输）的过程，如图：
 
@@ -367,7 +364,13 @@ Polling显著的缺点就是太浪费CPU时间，这是因为IO相对于CPU是�
 
 当DMA完成任务，DMA控制器会raise一个中断，这样OS就知道传输完成了。
 
-#### 1。6 设备驱动和I/O栈
+#### 1.5 OS和设备的交互：PMIO和MMIO
+
+以上的方法中CPU和设备的通信一般都可以用Port-mapped I/O(PMIO)的方式，这种方式是CPU通过指令和设备通过port进行的IN/OUT指令的通信。
+
+还有一种称为Memory-mapped I/O(MMIO)，这种方法中，设备寄存器被映射到内存地址空间，OS读写这个映射地址，硬件会自动将存取数据路由到设备而不是主存中，这时命令是LOAD/STORE。
+
+#### 1.6 设备驱动和I/O栈
 
 I/O栈各层的抽象(如块设备驱动、文件系统等)当然有好处，其把不同的设备封装成统一的结构，但也有坏处。
 
