@@ -40,7 +40,7 @@
 
 1. [[👍linux 内核中的通用数据结构/设计模式|linux_019]]
 
-1. [[Linux及内核的同步机制|linux_020]]
+1. [[用户态及内核态的同步机制|linux_020]]
 
 1. [[Linux中的存储“虚拟化” loopback / dm(Device Mapper)/ 裸设备Raw Device等|linux_021]]
 
@@ -52,7 +52,7 @@
 
 1. [[Linux CPU&MEM affinity(资源亲和性/资源绑定，numactl/taskset/cgroups ...)|linux_025]]
 
-1. [[Linux NVMe Driver|linux_026]]
+1. [[👍 Linux NVMe Driver|linux_026]]
 
 1. [[CRIU | linux_027]]
 
