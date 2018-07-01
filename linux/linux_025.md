@@ -22,6 +22,9 @@ taskset可以绑定CPU核到指定进程，taskset和numactl的对比在，详�
 taskset 0x0001 <program>
 ```
 
+* 一个将QEMU vCPUs 绑定到核的脚本：
+https://gist.github.com/zhangjaycee/aa18bc75f671f097f5aee442e5a7115c
+
 ## cgroups
 
 （待续、、、）
