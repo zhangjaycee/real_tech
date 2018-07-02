@@ -22,8 +22,9 @@ taskset可以绑定CPU核到指定进程，taskset和numactl的对比在，详�
 taskset 0x0001 <program>
 ```
 
-* 一个将QEMU vCPUs 绑定到核的脚本：
+* 一个将QEMU vCPUs 绑定到核的脚本，方法参考[4]：
 https://gist.github.com/zhangjaycee/aa18bc75f671f097f5aee442e5a7115c
+
 
 ## cgroups
 
@@ -40,3 +41,5 @@ https://gist.github.com/zhangjaycee/aa18bc75f671f097f5aee442e5a7115c
 [2] numactl (8) - Linux Man Pages, https://www.systutorials.com/docs/linux/man/8-numactl/
 
 [3] Managing Process Affinity in Linux, http://www.glennklockwood.com/hpc-howtos/process-affinity.html#3-defining-affinity
+
+[4] (KVM连载)4.1.5 进程的处理器亲和性和VCPU的绑定, http://smilejay.com/2012/08/kvm-vcpu-binding/
