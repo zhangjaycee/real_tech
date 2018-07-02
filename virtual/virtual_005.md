@@ -1,14 +1,6 @@
 # 用QEMU创建一个虚拟机
 
-> 参考
 
-> https://my.oschina.net/kelvinxupt/blog/265108
-
-> https://wiki.archlinux.org/index.php/QEMU
-
-> http://smilejay.com/2013/12/qemu-kvm-install-guest-in-text-mode/
-
->[[Difference between qemu\qemu-kvm\qemu-system-x86_64\qemu-x86_64|virtual_004]]
 
 ### 环境
 ```
@@ -46,7 +38,6 @@ qemu-system-x86_64 -m [memory_size] -enable-kvm [img_name].img -cdrom [system_is
 #最简单的命令：
  qemu-system-x86_64 -m [mem_size] -enable-kvm [img_name].img
 
-
 #比较复杂的命令：
 qemu-system-x86_64 -smp [vCPU_number] -m [memory_size] -enable-kvm\
 -drive file=~/ubuntu_img.qcow2,if=virtio,cache=none,format=qcow2 \
@@ -56,7 +47,34 @@ qemu-system-x86_64 -smp [vCPU_number] -m [memory_size] -enable-kvm\
 #cachemode分别是none和writethrough，格式分别为qcow2和raw，
 #将网络端口22映射到2333，这样登陆的时候就可以用以下命令登陆了：
 ssh root@localhost -p 2333
+
+# 更复杂的命令：
+/home/zjc/bin/qemu-2.12/bin/qemu-system-x86_64 -smp 6 -m 6144M -accel kvm \
+-object iothread,id=jciothread2 \
+-blockdev file,node-name=c7mini_file,cache.direct=on,filename=/home/zjc/vmimgs/c7mini_new_kernel.qcow2,aio=native \
+-blockdev qcow2,node-name=c7mini_qcow2,cache.direct=on,file=c7mini_file \
+-device virtio-blk,iothread=jciothread2,drive=c7mini_qcow2 \
+-object iothread,id=jciothread1 \
+-blockdev file,node-name=optane_file,cache.direct=on,filename=/OPTANE/optane.raw,aio=native \
+-blockdev raw,node-name=optane_raw,cache.direct=on,file=optane_file \
+-device virtio-blk,iothread=jciothread2,drive=optane_raw \
+-object iothread,id=jciothread3 \
+-blockdev file,node-name=optane_file2,cache.direct=on,filename=/OPTANE/optane2.raw,aio=native \
+-blockdev raw,node-name=optane_raw2,cache.direct=on,file=optane_file2 \
+-device virtio-blk,iothread=jciothread3,drive=optane_raw2 \
+-object memory-backend-ram,id=ram,size=4096M -numa node,memdev=ram,cpus=0,nodeid=0 \
+-object memory-backend-file,id=optane,size=2G,mem-path=/pmem0/mem_backend,share=on,discard-data=off,merge=off,align=2M -numa node,memdev=optane,cpus=1,nodeid=1 \
+-net nic -net user,hostfwd=tcp::2333-:22 -nographic
 ```
+---
+
+[1] https://my.oschina.net/kelvinxupt/blog/265108
+
+[2] https://wiki.archlinux.org/index.php/QEMU
+
+[3] http://smilejay.com/2013/12/qemu-kvm-install-guest-in-text-mode/
+
+[4] 本wiki：[[Difference between qemu\qemu-kvm\qemu-system-x86_64\qemu-x86_64|virtual_004]]
 
 
 ### 5. 远程服务器安装和使用需要注意
@@ -64,27 +82,28 @@ ssh root@localhost -p 2333
 * 可以使用`-curses`来在当前终端显示虚拟机终端文字界面。要使用这个特性，需要在（Ubuntu为例）编译QEMU前安装`libcurses5-dev`和`libcursesw5-dev`两个包。
 对于Ubuntu作为guest系统，需要注意，默认不支持curses，需要更改两个grub参数。
 
-> http://blog.zorinaq.com/ubuntu-1004-as-a-guest-under-qemukvm-using-the-curses-driver/
+* 可以使用`-daemonize`来使QEMU后台运行，这样关闭启动终端也不会中断虚拟机运行了。
 
->Jonathan wrote: I didnt need to blacklist any modules, grub and sort this all for us:
+---
 
->In
+[1] http://blog.zorinaq.com/ubuntu-1004-as-a-guest-under-qemukvm-using-the-curses-driver/
 
->/etc/default/grub
+[2] Jonathan wrote: I didnt need to blacklist any modules, grub and sort this all for us:
 
+>In `/etc/default/grub`, 
 >Add nomodeset to this line to prevent most things changing resolution:
-
+>
 >GRUB_CMDLINE_LINUX_DEFAULT="nomodeset"
-
+>
 >Uncomment this line to keep grub in text mode:
-
+>
 >GRUB_TERMINAL=console
-
+>
 >run 'update-grub' to appy your changes.
-
+>
 >reboot and enjoy
 >07 Feb 2015 09:13 UTC
 
-* 可以使用`-daemonize`来使QEMU后台运行，这样关闭启动终端也不会中断虚拟机运行了。
+
 
 
