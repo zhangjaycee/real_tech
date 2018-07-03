@@ -1,16 +1,20 @@
 # 内存操作指令
-## HTM
+## HTM (基于硬件的并发控制)
 
 Intel平台称为 RTM (Restricted Transactional Memory)。[1]
 
+
 ---
 [1]  x86 Transactional Memory Intrinsics, https://gcc.gnu.org/onlinedocs/gcc-7.3.0/gcc/x86-transactional-memory-intrinsics.html
+
+
+## flush (从cache到memory的同步指令)
 
 图片（来自[1]）：
 
 [[prog_018_001.png]]
 
-## 内存排序指令 mfence、sfence、sfence
+## 内存排序指令 mfence、sfence、sfence (防止CPU乱序的barrier操作)
 
 sfence保证它之前的CPU到内存的store是按顺序执行的，一般在`clflushopt`后使用。类似的，mfence用于load和store，lfence仅用于load。
 
