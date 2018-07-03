@@ -1,4 +1,11 @@
 # 内存操作指令
+## HTM
+
+Intel平台称为 RTM (Restricted Transactional Memory)。[1]
+
+---
+[1]  x86 Transactional Memory Intrinsics, https://gcc.gnu.org/onlinedocs/gcc-7.3.0/gcc/x86-transactional-memory-intrinsics.html
+
 图片（来自[1]）：
 
 [[prog_018_001.png]]
