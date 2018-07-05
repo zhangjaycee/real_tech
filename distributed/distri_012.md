@@ -10,7 +10,7 @@
 
 #### 1.1 device-dax和filesytem-dax
 
-通过ndctl工具(可以通过yum或编译安装)可以在device-dax(/dev/daxX)和filesystem-dax(/dev/pmemX)模式之间转换。两者的区别在于是否抽象成块设备+文件系统，device-dax可能带来更大自由度、更高性能和更低使用便捷性[1]。
+通过ndctl工具(可以通过yum或编译安装)可以在device-dax(/dev/daxX)和filesystem-dax(/dev/pmemX)模式之间转换。两者的区别在于是否抽象成块设备+文件系统，device-dax可能带来更大自由度、更高性能和更低使用便捷性[1]。[7]中分析了ext4的fsync函数，其中涉及一些ext4的dax实现，写的很详细。
 
 > [6]As an interim solution, Linux
 provides Device-DAX [1], which allows an application to open a
@@ -37,6 +37,8 @@ ext4-dax和xfs-dax目前还只支持metadata-consistency,data-consistency不支�
 [5] https://lwn.net/Articles/686150/
 
 [6] Persistent Memory Programming, https://www.usenix.org/system/files/login/articles/login_summer17_07_rudoff.pdf
+
+[7] Linux fsync和fdatasync系统调用实现分析（Ext4文件系统）, https://blog.csdn.net/luckyapple1028/article/details/61413724
 
 ### 2. PMDK
 
