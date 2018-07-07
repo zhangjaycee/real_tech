@@ -1,6 +1,8 @@
 # Linux I/O 模型
 
-##
+## 理解同步/异步和阻塞/非阻塞？
+
+我是这样理解的：
 
 ## libaio
 
@@ -17,7 +19,7 @@ libaio是POSIX异步IO之外的一种aio，只支持O_DIRECT。其他几种[1]�
 
 ## I/O多路复用 (网络IO常用) select/poll/epoll
 
-[linux_007_001.png]
+[[linux_007_001.png]]
 
 ---
 
