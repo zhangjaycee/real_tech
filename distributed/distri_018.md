@@ -30,19 +30,17 @@ IO设备的驱动程序为上层屏蔽了以下这些实际的IO指令和数据�
 
 ### 2. 块层和应用层中polling和interrupt IO的思想
 
-We only focus on block device polling here, rather than networking.
-
 #### Userspace polling and network programming:
 
 poll / epoll / select are all userspace polling, they are usually referred in context of network programming.
 
 #### Kernel polling of blk-mq for file I/O:
 
-In kernel, polling is only supported in NVMe driver or block layer's blk-mq. And the corresponding user space system call are preadv2 / pwritev2 with a flag RWF_HIPRI.[1] 
+In kernel, polling is only supported in NVMe driver or block layer's blk-mq. And the corresponding user space system call are preadv2 / pwritev2 with a flag RWF_HIPRI.[1][2]
 
 Facebook uses polling and NVMe SSDs to optimize their MyRocks database [3].
 
-FIO also support polling IO engine. (pvsync2)
+FIO also support polling IO engine. (pvsync2) [4]
 
 ---
 [1] The return of preadv2()/pwritev2(), https://lwn.net/Articles/670231/
