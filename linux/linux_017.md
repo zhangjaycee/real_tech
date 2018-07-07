@@ -95,9 +95,13 @@ $> vim /sys/kernel/debug/tracing/trace
 [4] Secrets of the Ftrace function tracer, https://lwn.net/Articles/370423/
 
 ## perf
-[Perf -- Linux下的系统性能调优工具，第 1 部分] https://www.ibm.com/developerworks/cn/linux/l-cn-perf1/index.html
 
-[Perf -- Linux下的系统性能调优工具，第 2 部分] 
+---
+[1] http://www.brendangregg.com/perf.html
+
+[2] Perf -- Linux下的系统性能调优工具，第 1 部分, https://www.ibm.com/developerworks/cn/linux/l-cn-perf1/index.html
+
+[3] Perf -- Linux下的系统性能调优工具，第 2 部分, 
 https://www.ibm.com/developerworks/cn/linux/l-cn-perf2/index.html
 
 
