@@ -30,9 +30,11 @@ IO设备的驱动程序为上层屏蔽了以下这些实际的IO指令和数据�
 
 ### 2. 块层和应用层中polling和interrupt IO的思想
 
-#### Userspace polling and network programming:
+#### Userspace polling:
 
-poll / epoll / select are all userspace polling, they are usually referred in context of network programming.
+poll / epoll / select are all userspace polling. Originally, they are usually referred in context of network programming.
+
+but now, **epoll can be used with libaio.** [5]
 
 #### Kernel polling of blk-mq for file I/O:
 
@@ -50,3 +52,5 @@ FIO also support polling IO engine. (pvsync2) [4]
 [3] A. Eisenman et al., “[DRAM+Optane]Reducing DRAM Footprint with NVM in Facebook,” EuroSys ’18, 2018. 
 
 [4] https://fio.readthedocs.io/en/latest/fio_doc.html
+
+[5] https://github.com/littledan/linux-aio#use-with-epoll
