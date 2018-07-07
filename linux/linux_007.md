@@ -1,5 +1,7 @@
 # Linux I/O 模型
 
+##
+
 ## libaio
 
 libaio是POSIX异步IO之外的一种aio，只支持O_DIRECT。其他几种[1]：
