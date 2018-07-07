@@ -15,7 +15,13 @@ libaio是POSIX异步IO之外的一种aio，只支持O_DIRECT。其他几种[1]�
 
 ## I/O多路复用 (网络IO常用) select/poll/epoll
 
-> [Linux IO模式及 select、poll、epoll详解]  (https://segmentfault.com/a/1190000003063859?utm_source=Weibo&utm_medium=shareLink&utm_campaign=socialShare&from=timeline&isappinstalled=0)
+[linux_007_001.png]
+
+---
+
+[1] Linux IO模式及 select、poll、epoll详解  (https://segmentfault.com/a/1190000003063859?utm_source=Weibo&utm_medium=shareLink&utm_campaign=socialShare&from=timeline&isappinstalled=0)
+
+[2] Unix网络编程卷一
 
 ### edge-triggered & level-trigered
 
