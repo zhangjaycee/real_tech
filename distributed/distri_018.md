@@ -38,9 +38,9 @@ but now, **epoll can be used with libaio.** [5]
 
 #### Kernel polling of blk-mq for file I/O:[6][7]
 
-In kernel, polling is only supported in NVMe driver or block layer's blk-mq. And the corresponding user space system call are preadv2 / pwritev2 with a flag RWF_HIPRI.[1][2]
+In kernel, polling is only supported in NVMe driver or block layer's blk-mq. And the corresponding user space system call are preadv2 / pwritev2 / io_submit with a flag RWF_HIPRI.[1][2][8]
 
-Facebook uses polling and NVMe SSDs to optimize their MyRocks database [3].
+Facebook uses polling (preadv2 / pwritev2) and NVMe SSDs to optimize their MyRocks database [3].
 
 FIO also support polling IO engine. (pvsync2) [4]
 
@@ -58,3 +58,5 @@ FIO also support polling IO engine. (pvsync2) [4]
 [6] IO-Polling实现分析与性能评测, https://blog.csdn.net/memblaze_2011/article/details/51007766
  
 [7] IO-Polling的代码分析, https://blog.csdn.net/memblaze_2011/article/details/51016092
+
+[8] http://man7.org/linux/man-pages/man2/io_submit.2.html
