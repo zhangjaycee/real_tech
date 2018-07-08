@@ -36,6 +36,8 @@ poll / epoll / select are all userspace polling. Originally, they are usually re
 
 but now, **epoll can be used with libaio.** [5]
 
+To use libaio, we can choose to use  linux/aio_abi.h interface  or the userspace libaio.h wrapper.[8]
+
 #### Kernel polling of blk-mq for file I/O:[6][7]
 
 In kernel, polling is only supported in NVMe driver or block layer's blk-mq. And the corresponding user space system call are preadv2 / pwritev2 / io_submit with a flag RWF_HIPRI.[1][2][8]
@@ -60,3 +62,5 @@ FIO also support polling IO engine. (pvsync2) [4]
 [7] IO-Polling的代码分析, https://blog.csdn.net/memblaze_2011/article/details/51016092
 
 [8] http://man7.org/linux/man-pages/man2/io_submit.2.html
+
+[9] http://backend.blog.163.com/blog/static/20229412620135257159731/
