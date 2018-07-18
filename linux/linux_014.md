@@ -51,6 +51,12 @@ fuse： https://github.com/libfuse/libfuse
 
 
 ## 2. VFIO
+[1]是内核文档，[2]是一个VFIO和QEMU相关的论文。
+
+---
+[1] https://www.kernel.org/doc/Documentation/vfio-mediated-device.txt
+
+[2] B. Peng, “MDev-NVMe : A NVMe Storage Virtualization Solution with Mediated,” 2018.
 
 ## 3. SPDK
 
