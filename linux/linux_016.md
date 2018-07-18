@@ -15,6 +15,14 @@ Userspace >> VFS >> (Stackable Block Layer) >> Block Layer >> Block Drivers >> S
 
 LVM、Bcache、软RAID等都基于这层实现。其中LVM基于DM[1]。
 
+
+#### 1.1 利用mdadm创建和停止RAID0
+
+```
+ mdadm --create --verbose /dev/md0 --level=0 --raid-devices=2 --chunk=4K /dev/sdx /dev/sdy
+mdadm --stop /dev/md0
+```
+
 ---
 [1] What is the difference between dm and md in Linux kernel?, https://stackoverflow.com/questions/23164384/what-is-the-difference-between-dm-and-md-in-linux-kernel
 
