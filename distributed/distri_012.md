@@ -17,6 +17,12 @@ provides Device-DAX [1], which allows an application to open a
 persistent memory device (without a file system), memory map
 it, and utilize userspace flushes to make stores persistent
 
+另外，device DAX 不仅支持4 K的页大小，还支持 2 M的hugepage大小，可以减小TLB占用[8]。qemu 2.12也为其以file为backend的NVDIMM模拟硬件加入了`align`选项，方便将`/dev/daxX.X`设备的对齐设为2 M：
+
+> [9] The align option specifies the base address alignment when QEMU mmap(2) mem-path, and accepts common suffixes, eg 2M. Some backend store specified by mem-path requires an alignment different than the default one used by QEMU, eg the device DAX /dev/dax0.0 requires 2M alignment rather than 4K. In such cases, users can specify the required alignment via this option.
+
+
+
 
 #### 1.2 consistency
 
@@ -39,6 +45,10 @@ ext4-dax和xfs-dax目前还只支持metadata-consistency,data-consistency不支�
 [6] Persistent Memory Programming, https://www.usenix.org/system/files/login/articles/login_summer17_07_rudoff.pdf
 
 [7] Linux fsync和fdatasync系统调用实现分析（Ext4文件系统）, https://blog.csdn.net/luckyapple1028/article/details/61413724
+
+[8] https://nvdimm.wiki.kernel.org/2mib_fs_dax
+
+[9] https://qemu.weilnetz.de/doc/qemu-doc.html
 
 ### 2. PMDK
 
