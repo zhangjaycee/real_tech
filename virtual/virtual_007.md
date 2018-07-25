@@ -1,7 +1,7 @@
 # 关于Qemu/KVM 虚拟机的网络配置
 
 ## 1. 默认为用户模式
-[1]:
+[1] (QEMU default):
 ```
 By using the option -net user (default configuration if no -net option is specified), QEMU uses a completely user mode network stack (you don’t need root privilege to use the virtual network). The virtual network configuration is the following:
 
@@ -63,6 +63,8 @@ qemu-system-x86_64 -m 1000 -enable-kvm ~/vmimgs/u1604server.img \
 
 4.通过 vnc 连入 guest，配置其 /etc/network/interfaces 文件，然后通过 `/etc/init.d/networking restart` 重启服务。
 ~~~
+#### 若是Ubuntu：
+
 # KVM GUEST: /etc/network/interfaces
 
 source /etc/network/interfaces.d/*
@@ -79,14 +81,18 @@ gateway 192.168.4.1 # 这里应该设置成 host 中 br0 的 ip，
 #up route add default gw 192.168.4.1 dev ens3 # 经过实验，这句于上一句效果等
                                               # 价，二者留一即可，所以注释掉了
 
-# 若是centos，则修改/etc/sysconfig/network-scripts/ifcfg-xxx
+#### 若是centos，则修改/etc/sysconfig/network-scripts/ifcfg-xxx ####
 
-vim /etc/sysconfig/network-scripts/ifcfg-xxx
-BOOTPROTO=static
-IPADDR=192.168.1.200
+$ vim /etc/sysconfig/network-scripts/ifcfg-xxx
+
+# 增加以下：
+BOOTPROTO=static # 将dhcp改为static
+IPADDR=192.168.122.100 # 即本机ip，要和网桥ip在一个网段
 NETMASK=255.255.255.0
-GATEWAY=192.168.1.1
-service network restart
+GATEWAY=192.168.122.1 # 即bridge的ip
+DNS1=192.168.122.1 # 即bridge的ip
+
+$ service network restart
 ~~~
 
 #### 测试
