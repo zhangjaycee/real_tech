@@ -70,3 +70,24 @@ Journaling 即 Write-ahead logging，以Ext3文件系统为例，其log机制和
 ## Copy-on-write (shadow paging)
 
 ## Soft Updates
+
+[1]中以两种FFS实现为例，介绍了soft updates的设计理念。在最开始的FFS中，所有操作时同步的，即任何一个文件操作都要阻塞到实际磁盘修改完成才返回，同时，所有写更改也按照必要的顺序进行，这样保证了crash consistency。而后来有了FFS-async，即异步的FFS，与原来的版本对应，操作不是同步的，性能最好，但是可能掉电后文件系统就坏了，无法恢复。
+
+soft updates位于FFS和FFS-async两者之间，同样是异步的延迟写操作，但是可以保证crash consistency。思想是让app看到的都是最新的metadata，让disk看到的都是一致的metadata，并且一致的metadata可以不是最新的。方法是将最新的metadata放到内存中延迟刷入磁盘，在刷入时要保证一定的顺序以保证crash consistency。
+
+**Soft Updates的依赖问题：** Soft updates的难点就在怎么把内存中的各个metadata块按照能保证crash consistency的顺序刷入磁盘。为此提出了用记录以来(dependency)的方法进行排序。具体流程是：
+1. 先以任意方法选一个刷写block顺序
+2. 按dependency list进行检查
+3. 若发现被选中的block中的metadata有依赖其他block中的数据（需要其他block先写），那么这个block中的metadata部分会被rollback到以前的safe-state，当所有所需的rollback完成后，最开始选中的被rollback处理后的block会被写到磁盘。当一个block写完后，满足的dependency会被删除，然后所有被rollback的值会被恢复。
+
+并且soft update总结了order的规范：[2]
+1. 数据结构分配好、初始化好之后再指过去。
+2. 重用一块空间时要把其他指向它的指针先去掉。
+3. 更改一项活跃的资源时，不要在改完之前将老的指针丢掉。
+
+这种方法rollback/roll forward的方法肯定会导致写放大。因为有rollback就必然在后边添加roll forward的请求，如果roll forward 无法与其他请求在一个块，那么roll forward的这次写就必然是多出来的写放大。
+
+
+---
+[1] M. I. Seltzer et al., “Journaling versus Soft Updates: Asynchronous Meta-data Protection in File Systems,” 2000.
+[2] M. Dong and H. Chen, “Soft Updates Made Simple and Fast on Non-volatile Memory,” Atc, 2017.
