@@ -64,19 +64,27 @@ guasi The GUASI I/O engine is the Generic Userspace Asynchronous Syscall Interfa
 
 ## stress
 
-这个是产生压力的，不是测试的。安装方法：
+这个是产生压力的，不是测试的。stress-ng这个工具是stress的升级版，可以指定CPU负载的百分比。安装方法：
 
 ubuntu:
 ```
-apt install stree
+apt install stress
+apt install stress-ng
+
 ```
 centos:
 ```
 yum install epel-release
 yum install stress
+yum install stress-ng
 ```
 
 具体可以看man手册，可以产生多种进程数，指定每个进程malloc的内存等。--vm-keep N 还可以保证malloc的内存保持多少时间再free，N为0时为一直不free。
+
+一个用stress-ng在第一个核产生90%负载的例子：
+~~~shell
+taskset 0x0001 stress-ng --cpu 1 --cpu-load 90 --cpu-load-slice 10
+~~~
 
 ## iometer
 
