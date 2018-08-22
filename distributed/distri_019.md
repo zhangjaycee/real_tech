@@ -1,5 +1,5 @@
 # 概率数据结构
-
+# 1. 分类
 ## Bloom Filter
 
 * Counting Bloom filter
@@ -61,10 +61,18 @@ hi(x) = hj(x) ^ hash(item_x)
 
 ## TopK
 
-
-
 ---
 
 [1] http://blog.fastforwardlabs.com/2016/11/23/probabilistic-data-structure-showdown-cuckoo.html
 
 [2] Probabilistic Data Structures for C#, https://github.com/mattlorimor/ProbabilisticDataStructures
+
+# 2. 持久化相关
+
+
+[1] A. Abraham, P. Krömer, and V. Snášel, “Flash Assisted Segmented Bloom Filter for Deduplication,” Adv. Intell. Syst. Comput., vol. 334, no. November 2014, 2015.
+[2] M. Canim, G. Mihaila, and B. Bhattacharjee, “Buffered Bloom filters on solid state storage,” Proc. Int. Work. Acceclerating Data Manag. Syst. using Mod. Process. Storage Archit., pp. 1–8, 2010.
+[3] M. Goswami, D. Medjedovic, E. Mekic, and P. Pandey, “Buffered Count-Min Sketch on SSD: Theory and Experiments,” no. Esa, 2018.
+[4] B. Debnath, S. Sengupta, J. Li, D. J. Lilja, and D. H. C. Du, “BloomFlash: Bloom filter on flash-based storage,” Proc. - Int. Conf. Distrib. Comput. Syst., pp. 635–644, 2011.
+[5] L. Luo, D. Guo, R. T. B. Ma, O. Rottenstreich, and X. Luo, “Optimizing Bloom Filter: Challenges, Solutions, and Comparisons,” pp. 1–34, 2018.
+[6] L. Guanlin, B. Debnath, and D. H. C. Du, “A Forest-structured Bloom Filter with flash memory,” IEEE Symp. Mass Storage Syst. Technol., pp. 1–6, 2011.
