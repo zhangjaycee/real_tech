@@ -54,8 +54,9 @@ hi(x) = hj(x) ^ hash(item_x)
 
 ## Count-Min Sketch
 
-
 ## HyperLogLog
+
+## quotient filter
 
 ## MinHash
 
