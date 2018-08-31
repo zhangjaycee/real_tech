@@ -82,3 +82,22 @@ hi(x) = hj(x) ^ hash(item_x)
 [5] L. Luo, D. Guo, R. T. B. Ma, O. Rottenstreich, and X. Luo, “Optimizing Bloom Filter: Challenges, Solutions, and Comparisons,” pp. 1–34, 2018.
 
 [6] L. Guanlin, B. Debnath, and D. H. C. Du, “A Forest-structured Bloom Filter with flash memory,” IEEE Symp. Mass Storage Syst. Technol., pp. 1–6, 2011.
+
+# 3. 一些相关源码下载：
+morton filter (include BF and CF): https://github.com/Roudovic/Filter-Tester/tree/master
+
+cuckoo filter (原版) https://github.com/efficient/cuckoofilter
+
+cuckoo filter 2 https://github.com/begeekmyfriend/CuckooFilter
+
+Counting Quotient Filter: (A General-Purpose Counting Filter, 2017)  https://github.com/splatlab/cqf/tree/master
+
+path hashing https://github.com/Pfzuo/Path-Hashing
+
+(from A General-Purpose Counting Filter: counting quotient filter)
+
+C++ Bloom filter library: https://code.google.com/p/bloom/
+
+Counting Bloom filter source code in C++:   https://github.com/mavam/libbf
+
+
