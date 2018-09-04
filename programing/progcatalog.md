@@ -37,3 +37,5 @@
 1. [[内存操作指令 (fense, flush, HTM, non-cacheable stores ...)|prog_018]]
 
 1. [[polling & interrupt 轮询和中断|prog_019]]
+
+1. [[动态库和静态库|prog_020]]
