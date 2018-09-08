@@ -42,6 +42,8 @@
 
 1. [[硬件辅助的虚拟化|virtual_021]]
 
+1. [[qemu-img|virtual_022]]
+
 #### [博客推荐]
 
 * ->[笑便世界] http://smilejay.com/ (关于KVM/Qemu)
