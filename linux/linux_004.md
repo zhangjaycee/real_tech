@@ -8,6 +8,12 @@ mmap简单的应用是把一个普通文件映射到一段内存buffer，这样�
 
 例如，实现一个类似于cp命令的程序，对于mmap，只需要映射源和目标两个文件到一个地址（进程的一个缓冲区），然后用memcpy就可以完成从一个内核缓冲区(page cache)到内核另一个缓冲区的拷贝；而不用像read和write拷贝一样先把内容从内核缓冲区拷贝到程序（用户空间）缓冲区，然后再拷贝回内核缓冲区。
 
+在NVM中运用mmap，虽然会去除I/O栈，但还是无法避免内存的page fault、page table construction等开销。[1]
+
+---
+
+[1] J. Choi and J. Kim, “Efficient Memory Mapped File I / O for In-Memory File Systems.” (Slides:https://www.usenix.org/sites/default/files/conference/protected-files/hotstorage17_slides_choi.pdf)
+
 #### 2. 设备映射 (MMIO)
 
 若设备驱动支持mmap的情况下，使用mmap可能会将设备文件的内存或者寄存器映射到用户进程的内存空间中。
