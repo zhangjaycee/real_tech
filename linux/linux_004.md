@@ -12,8 +12,6 @@ mmap简单的应用是把一个普通文件映射到一段内存buffer，这样�
 
 * mmap 和 page fault:
 
-[2]
-
 内存page有三种状态：[3]
 ```
 (1) unmapped: if the program has not written to the memory region since requesting its allocation, then it is by definition filled with all-zeroes. The Operating System does not have to store it at all, since it knows it’s just filled with zero bytes. Thus the OS will just mark the page as ‘unmapped’ until the program actually writes to it. Thus, on most Operating Systems, when you allocate “memory”, the OS will give you an address range but won’t actually map it to physical storage (yet).
@@ -34,7 +32,7 @@ mmap简单的应用是把一个普通文件映射到一段内存buffer，这样�
 
 [2] http://imagewzh.blogspot.com/2010/03/page-fault-and-mmap_21.html
 
-[3]
+[3] https://frogatto.com/2009/10/30/what-every-programmer-should-know-about-memory-management/
 
 #### 2. 设备映射 (MMIO)
 
