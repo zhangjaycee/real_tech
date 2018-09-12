@@ -24,7 +24,7 @@ mmap简单的应用是把一个普通文件映射到一段内存buffer，这样�
 
 状态(1)会引起minor page fault，这时虽然被分配了，但是进程还没有读写过对应的线性区(memory region)，所以读写时会产生一次minor page fault。
 
-状态(3)会引起major page fault，需要磁盘IO来恢复页, minor page fault指
+状态(3)会引起major page fault，需要磁盘IO来恢复页。
 
 ---
 
