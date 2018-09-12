@@ -10,9 +10,31 @@ mmap简单的应用是把一个普通文件映射到一段内存buffer，这样�
 
 在NVM中运用mmap，虽然会去除I/O栈，但还是无法避免内存的page fault、page table construction等开销。[1]
 
+* mmap 和 page fault:
+
+[2]
+
+内存page有三种状态：[3]
+```
+(1) unmapped: if the program has not written to the memory region since requesting its allocation, then it is by definition filled with all-zeroes. The Operating System does not have to store it at all, since it knows it’s just filled with zero bytes. Thus the OS will just mark the page as ‘unmapped’ until the program actually writes to it. Thus, on most Operating Systems, when you allocate “memory”, the OS will give you an address range but won’t actually map it to physical storage (yet).
+
+(2) resident: the page corresponds to a page in RAM.
+
+(3) swapped: the page corresponds to a page that has been swapped to disk.
+```
+访问一个页时，应在状态(2)。
+
+状态(1)会引起minor page fault，这时虽然被分配了，但是进程还没有读写过对应的线性区(memory region)，所以读写时会产生一次minor page fault。
+
+状态(3)会引起major page fault，需要磁盘IO来恢复页, minor page fault指
+
 ---
 
 [1] J. Choi and J. Kim, “Efficient Memory Mapped File I / O for In-Memory File Systems.” (Slides:https://www.usenix.org/sites/default/files/conference/protected-files/hotstorage17_slides_choi.pdf)
+
+[2] http://imagewzh.blogspot.com/2010/03/page-fault-and-mmap_21.html
+
+[3]
 
 #### 2. 设备映射 (MMIO)
 
