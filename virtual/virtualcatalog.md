@@ -28,7 +28,7 @@
 
 1. [[OpenStack与QEMU|virtual_014]]
 
-1. [[KVM内存虚拟化|virtual_015]]
+1. [[内存虚拟化|virtual_015]]
 
 1. [[QEMU追踪(tracing)|virtual_016]]
 
