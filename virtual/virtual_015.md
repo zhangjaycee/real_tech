@@ -21,6 +21,12 @@
 
 mmu虚拟化分为软件虚拟化和硬件虚拟化。软件对应影子页表；硬件对应Intel的EPT(Extent Page Table)技术和AMD的NPT(Nest Page Table)技术。
 
+* EPT
+
+KVM支持Intel EPT页表，即用于VM的扩展页表。基于EPT的GVA-->HPA转换中，首先，(1) GVA->GPA(HVA) 由Guest OS维护的page table进行，(2)这时Guest 会尝试用GPA(HVA)作为HPA直接访问物理内存，这肯定会引起权限错误，导致一种称为EPT异常的异常，(3)KVM处理EPT异常时，根据产生EPT异常的Guest和实现注册好的EPT页表，进行从GPA(HVA)->HPA的过程，完成整个的地址转换过程。
+
+(？这样，Guest中产生的缺页也不会产生VM-exit了，直接Guest内核处理，HVA->HPA若产生缺页，直接Host内核处理。)
+
 ### 参考：
 
 https://www.ibm.com/developerworks/cn/linux/l-cn-kvm-mem/
