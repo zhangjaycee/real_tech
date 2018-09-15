@@ -77,6 +77,15 @@ ext4-dax和xfs-dax目前还只支持metadata-consistency,data-consistency不支�
 
 https://www.kernel.org/doc/Documentation/nvdimm/btt.txt
 
+
+### 2.4 通过配置grub创建PM设备[9]
+CentOS 7 为例：
+```
+vim /etc/default/grub
+grub2-mkconfig -o /boot/grub2/grub.cfg
+#最后 reboot
+```
+
 ### A. 其他资料
 
 Persistent Memory Programming这个项目[1]，专注于PM编程，做了工具叫PMDK，专门用于PM编程。PMDK开发基于DAX[4][5]。
