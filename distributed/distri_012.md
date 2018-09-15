@@ -78,7 +78,7 @@ ext4-dax和xfs-dax目前还只支持metadata-consistency,data-consistency不支�
 https://www.kernel.org/doc/Documentation/nvdimm/btt.txt
 
 
-### 2.4 通过配置grub创建PM设备[9]
+### 2.4 通过配置grub创建PM设备[8]
 CentOS 7 为例：
 ```
 vim /etc/default/grub
