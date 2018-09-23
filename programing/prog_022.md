@@ -30,12 +30,7 @@ type  [var]: digits
 
 union和struct不同，struct中所有的变量都会一一排开，而union中所有成员都是从0偏移量开始的，所以一般同一时间只能使用一个，也只有那一个是有意义的。
 
-
-
-
-
-
-
+---
 [1] https://blog.csdn.net/zhangxiong2532/article/details/50826917
 
 [2] https://www.cnblogs.com/bigrabbit/archive/2012/09/20/2695543.html
