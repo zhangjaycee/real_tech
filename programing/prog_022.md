@@ -24,7 +24,7 @@ type  [var]: digits
 ```
 其中type只能为int，unsigned int，signed int三种类型。
 
-一种紧凑的存储形式。。。待续。。。[3]
+一种紧凑的存储形式。。。待续。。。[3][4]
 
 ### 4. union
 
@@ -41,3 +41,5 @@ union和struct不同，struct中所有的变量都会一一排开，而union中�
 [2] https://www.cnblogs.com/bigrabbit/archive/2012/09/20/2695543.html
 
 [3] https://en.wikipedia.org/wiki/Bit_field
+
+[4] https://www.geeksforgeeks.org/bit-fields-c/
