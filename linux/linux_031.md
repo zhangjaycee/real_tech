@@ -25,16 +25,22 @@
 
 ## 2. KVM(EPT)的缺页
 
+EPT分页机制详见本wiki ([硬件辅助的虚拟化](https://github.com/zhangjaycee/real_tech/wiki/virtual_021#%E5%86%85%E5%AD%98%E8%99%9A%E6%8B%9F%E5%8C%96ept))。
+
+KVM辅助的虚拟机内存虚拟化也有缺页的问题，主要有两个方面：
+1. GVA到GPA的缺页，其实就是GuestOS的缺页，由于KVM中，Guest的页表地址可以加载到CR3寄存器中，GuestOS的缺页与Host无关，由GuestOS内核进行管理。
+
+2. HVA到HPA(PFN)的缺页才涉及到Host及EPT页表。由于EPT页表不完整或导致EPT voilation，这时空缺的、需要补充的是Host EPT页表，也由HostOS 内核的KVM模块进行管理。
+
+类似于page fault的处理过程，KVM的voilation处理程序`handle_ept_violation`会负责找到可用的物理页填充适当的内容，然后以这个物理页补全不完整的EPT页表项。
 
 ## 3. userfaultfd
 
-即用户空间的page fault handler。
+即用户空间的page fault handler，它为用户处理缺页提供了可能，增加了灵活性。(？但可能由于类似FUSE之于内核FS的问题影响性能)
 
-要使用此功能，首先应该用userfaultfd调用来创建一个fd，然后用ioctl来配置这个fd，比如可能需要用ioctl-userfaultfd支持的UFFDIO_API、UFFDIO_REGISTER等进行设置。
+要使用此功能，首先应该用userfaultfd调用来创建一个fd，然后用ioctl来配置这个fd，比如可能需要用ioctl-userfaultfd支持的UFFDIO_API、UFFDIO_REGISTER等进行设置。关于userfaultfd系统调用及例子见[1]，关于ioctl设置选项ioctl_userfaultfd见[2]。
 
-* 文档
-
-关于userfaultfd系统调用及例子见[1]，关于ioctl设置选项ioctl_userfaultfd见[2]。
+此特性目前只对匿名页、shmem以及hugetlb等页支持，内核中对应的`handle_userfault`函数可能被这几部分的page fault handler所调用，普通文件映射的mmap暂时不支持userfault。
 
 ---
 [1] http://man7.org/linux/man-pages/man2/userfaultfd.2.html
