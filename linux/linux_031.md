@@ -1,22 +1,20 @@
 # Page fault
 
-## 1. Linux的缺页
+## 1. Linux的page fault
 
-page fault:
+内存也可以分为三种状态：[1]
 
-内存page有三种状态：[1]
-```
-(1) unmapped: if the program has not written to the memory region since requesting its allocation, then it is by definition filled with all-zeroes. The Operating System does not have to store it at all, since it knows it’s just filled with zero bytes. Thus the OS will just mark the page as ‘unmapped’ until the program actually writes to it. Thus, on most Operating Systems, when you allocate “memory”, the OS will give you an address range but won’t actually map it to physical storage (yet).
+1. **未映射页(unmapped)**: 如果memory region在被程序分配后，没有被写过，那么它会被看作全零的，OS也因此无须找物理页来存这些零。多数OS在内存被分配时将地址范围返回给用户，但是把这些页标记为unmapped，暂不与物理页关联。
 
-(2) resident: the page corresponds to a page in RAM.
+2. **驻留页(resident)**：页实实在在在物理RAM中。
 
-(3) swapped: the page corresponds to a page that has been swapped to disk.
-```
-访问一个页时，应在状态(2)。
+3. **换出页(swapped)**：页在RAM中存在过，但现在被换出(swap)到了磁盘中。
 
-状态(1)会引起minor page fault，这时虽然被分配了，但是进程还没有读写过对应的线性区(memory region)，所以读写时会产生一次minor page fault。
+访问一个页时，若非状态(2)，会引起page fault，page fault一般又可以分为两种：
 
-状态(3)会引起major page fault，需要磁盘IO来恢复页。
+1. 状态(1)会引起**minor page fault**，这时虽然被分配了，但是进程还没有读写过对应的线性区(memory region)，所以读写时会产生一次minor page fault。
+
+2. 状态(3)会引起**major page fault**，需要磁盘IO来恢复页。
 
 ---
 [1] https://frogatto.com/2009/10/30/what-every-programmer-should-know-about-memory-management/
