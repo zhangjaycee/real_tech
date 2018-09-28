@@ -47,8 +47,7 @@
 
 # 4. 关系图
 
-下面是以`handle_mm_fault`为中心的，上面三方面之间的内核调用关系图：
-下面为
+下面是以`handle_mm_fault`为中心的，上面三方面之间的内核调用关系。mm/fault.c 中的do_page_fault 会调用handle_mm_fault，然后调用关系如图：
 
 
 ```
