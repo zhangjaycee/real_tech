@@ -96,41 +96,41 @@ handle_mm_fault -+-> hugetlb_fault --> hugetlb_no_page -----> handle_userfault <
 
 ```
 handle_ept_violation {
-    	vmcs_readl(EXIT_QUALIFICATION)       // 获取 EPT 退出的原因。
-    	vmcs_read64(GUEST_PHYSICAL_ADDRESS)  // 获取发生缺页的 GPA 根据 exit_qualification 
-    	                                     // 内容得到 error_code，可能是 read fault / 
+        vmcs_readl(EXIT_QUALIFICATION)       // 获取 EPT 退出的原因。
+        vmcs_read64(GUEST_PHYSICAL_ADDRESS)  // 获取发生缺页的 GPA 根据 exit_qualification 
+                                             // 内容得到 error_code，可能是 read fault / 
                                              // write fault / fetch fault / 
                                              // ept page table is not present
-   		kvm_mmu_page_fault 
-    	vcpu->arch.mmu.page_fault (tdp_page_fault ①) 
-    }
---> tdp_page_fault ①{
-    	gfn = gpa >> PAGE_SHIFT      //将 GPA 右移 pagesize 得到 gfn(guest frame number)
-    	mapping_level                //计算 gfn 在页表中所属 level，不考虑 hugepage 则为 L1
-    	try_async_pf ②              //将 gfn 转换为 pfn(physical frame number)
-    	__direct_map ③
-    }
---> try_async_pf ②{
-		kvm_vcpu_gfn_to_memslot --> __gfn_to_memslot         //找到 gfn 对应的 slot
-        __gfn_to_pfn_memslot {                                //找到 gfn 对应的 pfn
-            __gfn_to_hva_many --> __gfn_to_hva_memslot           //计算 gfn 对应的起始 HVA
-            hva_to_pfn ④                                        //计算 HVA 对应的 pfn，
-        }                                                        //同时确保该物理页在内存中
+        kvm_mmu_page_fault 
+        vcpu->arch.mmu.page_fault (tdp_page_fault ① ) 
+    }   
+--> tdp_page_fault ① { 
+        gfn = gpa >> PAGE_SHIFT      //将 GPA 右移 pagesize 得到 gfn(guest frame number)
+        mapping_level                //计算 gfn 在页表中所属 level，不考虑 hugepage 则为 L1  
+        try_async_pf ②               //将 gfn 转换为 pfn(physical frame number)
+        __direct_map ③
+    }   
+--> try_async_pf ② { 
+        kvm_vcpu_gfn_to_memslot --> __gfn_to_memslot         //找到 gfn 对应的 slot
+        __gfn_to_pfn_memslot {                               //找到 gfn 对应的 pfn 
+            __gfn_to_hva_many --> __gfn_to_hva_memslot       //计算 gfn 对应的起始 HVA 
+            hva_to_pfn ④                                     //计算 HVA 对应的 pfn，
+        }                                                    //同时确保该物理页在内存中
 }
 
---> __direct_map ③{                       //更新 EPT，将新的映射关系逐层添加到 EPT 中
-        for_each_shadow_entry {               //从 level4(root) 开始，逐层补全页表，对于每一层：
-            mmu_set_spte                    //对于 level1 的页表，其页表项肯定是缺的，
-                                           //所以不用判断直接填上 pfn 的起始 hpa
-            is_shadow_present_pte {          //如果下一级页表页不存在，即当前页表项没值 (*sptep = 0)
-                kvm_mmu_get_page            //分配一个页表页结构
-                link_shadow_page            //将新页表页的 HPA 填入到当前页表项 (sptep) 中
-			}
-		}
-	}
+--> __direct_map ③ {                      //更新 EPT，将新的映射关系逐层添加到 EPT 中
+        for_each_shadow_entry {           //从 level4(root) 开始，逐层补全页表，对于每一层：
+            mmu_set_spte                  //对于 level1 的页表，其页表项肯定是缺的，
+                                          //所以不用判断直接填上 pfn 的起始 hpa 
+            is_shadow_present_pte {       //如果下一级页表页不存在，即当前页表项没值 (*sptep = 0)
+                kvm_mmu_get_page          //分配一个页表页结构
+                link_shadow_page          //将新页表页的 HPA 填入到当前页表项 (sptep) 中
+            }   
+        }   
+    }   
 
---> hva_to_pfn ④(先尝试hva_to_pfn_fast失败了)-->
-hva_to_pfn_slow --> get_user_pages_unlocked --> __get_user_pages_locked --> 
+--> hva_to_pfn ④ (先尝试hva_to_pfn_fast失败了)-->
+hva_to_pfn_slow --> get_user_pages_unlocked --> __get_user_pages_locked -->
 __get_user_pages (没有找到存在的页框?)--> faultin_page --> handle_mm_fault (这个函数在关系图中!)
 ```
 
