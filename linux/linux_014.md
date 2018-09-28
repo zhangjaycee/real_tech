@@ -1,4 +1,6 @@
-# 从内核空间到用户空间（FUSE / VFIO / SPDK / DPDK ...)
+# 从内核空间到用户空间（FUSE / VFIO / SPDK / DPDK / userfaultfd ...)
+
+近年，一些本为内核处理的任务，分别出现用户态的实现，有的是为了提升开发灵活性(FUSE、userfaultfd)，有的则是为了提高与外设通信的性能(SPDK、DPDK)。
 
 ## 1. FUSE (Filesystem in Userspace)
 
@@ -75,6 +77,13 @@ NVMe内核驱动这种实现虽然比以前的单queue少了很多锁竞争开�
 sudo [HUGEMEM=4096] scripts/setup.sh # kernel nvme driver ---> spdk
 sudo scripts/setup.sh reset # spdk ---> kernel driver
 ```
+
+## 4. DPDK
+
+## 5. userfaultfd
+
+userfaultfd是用户态的缺页处理机制。详见本wiki([userfaultfd](https://github.com/zhangjaycee/real_tech/wiki/linux_031))。
+
 ---
 
 [1] Storage Performance Development Kit, http://www.spdk.io/doc/userspace.html
@@ -85,4 +94,4 @@ sudo scripts/setup.sh reset # spdk ---> kernel driver
 
 [4] H. Kim, Y.-S. Lee, and J.-S. Kim, “NVMeDirect: A User-space I/O Framework for Application-specific Optimization on NVMe SSDs,” Hotstorage, 2016.
 
-## 4. DPDK
+
