@@ -16,6 +16,10 @@
 
 2. 状态(3)会引起**major page fault**，需要磁盘IO来恢复页。
 
+
+
+
+
 ---
 [1] https://frogatto.com/2009/10/30/what-every-programmer-should-know-about-memory-management/
 
@@ -40,3 +44,29 @@
 [3] Caldwell, Blake, et al. "FluidMem: Memory as a Service for the Datacenter." arXiv preprint arXiv:1707.07780 (2017). (https://arxiv.org/pdf/1707.07780.pdf)
 
 [4] The next steps for userfaultfd(), https://lwn.net/Articles/718198/
+
+# 4. 关系图
+
+下面是以`handle_mm_fault`为中心的，上面三方面之间的内核调用关系图：
+下面为
+
+
+```
+(mm/memory.c)       (mm/hugetlb.c)                           (fs/userfaultfd.c)
+handle_mm_fault -+-> hugetlb_fault --> hugetlb_no_page -----> handle_userfault <---------+
+                 |  (mm/memory.c)        (mm/huge_memory.c)                              |
+                 +-> create_huge_pmd --> do_huge_pmd_anonymous_page----------------------+
+                 |  (mm/memory.c)                                                        |
+                 +-> __handle_mm_fault --> handle_pte_fault -+-> do_anonymous_page ------+
+                                                             |                           |
+                +--------------- do_fault <------------------+--+--> do_swap_page (MAJOR)|    
+                |                                 (mm/shmem.c)  +--> do_numa_page        |   
+                +---> do_read_fault          +--> shmem_fault --> shmem_getpage_gfp -----+
+                |                            |         
+                +---> do_cow_fault           +-----+--> ext4_dax_fault (fs/ext4/file.c)
+                |                            |     +--> ... (FS&driver page faulthandlers)
+                +---> do_shared_fault -+--> __do_fault    --> vma->vm_ops->fault
+                |                      +--> do_page_mkwrite --> vma->vm_ops->page_mkwrite
+                +---> VM_FAULT_SIGBUS
+```
+
