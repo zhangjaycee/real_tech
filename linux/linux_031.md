@@ -117,9 +117,40 @@ static void * fault_handler_thread(void *arg)
 
 ```
 
+在userfaultfd man page[1]及内核源码中的测试文件`KERNEL_SRC/linux-4.18.8/tools/testing/selftests/vm/userfaultfd.c`中，分别关于userfaultfd系统调用有两个例程。上述最一般的“缺页-用户态拷贝数据”例子源自前者中的例程；后者中的例程则涵盖了目前内核中user-fault机制的所有选项和功能。
 
+### 3.2 其他的ioctl选项
 
-关于userfaultfd系统调用有两个例程，分别见userfaultfd man page[1]及内核源码中的测试文件`KERNEL_SRC/linux-4.18.8/tools/testing/selftests/vm/userfaultfd.c`。
+目前为止，user-fault机制支持UFFDIO_REGISTER、UFFDIO_UNREGISTER、UFFDIO_COPY、UFFDIO_ZEROPAGE、UFFDIO_WAKE、UFFDIO_API等五种选项，分别用于注册、配置或处理用户态缺页功能如下。
+```
+# 2 个用于注册、注销的ioctl选项：
+UFFDIO_REGISTER                 注册将触发user-fault的内存地址
+UFFDIO_UNREGISTER               注销将触发user-fault的内存地址
+# 3 个用于处理user-fault事件的ioctl选项：
+UFFDIO_COPY                     用已知数据填充user-fault页
+UFFDIO_ZEROPAGE                 将user-fault页填零
+UFFDIO_WAKE                     用于配合上面两项中 UFFDIO_COPY_MODE_DONTWAKE 和
+                                UFFDIO_ZEROPAGE_MODE_DONTWAKE模式实现批量填充  
+# 1 个用于配置uffd特殊用途的ioctl选项：
+UFFDIO_API                      它又包括如下feature可以配置：
+                                UFFD_FEATURE_EVENT_FORK         (since Linux 4.11)
+                                UFFD_FEATURE_EVENT_REMAP        (since Linux 4.11)
+                                UFFD_FEATURE_EVENT_REMOVE       (since Linux 4.11)
+                                UFFD_FEATURE_EVENT_UNMAP        (since Linux 4.11)
+                                UFFD_FEATURE_MISSING_HUGETLBFS  (since Linux 4.11)
+                                UFFD_FEATURE_MISSING_SHMEM      (since Linux 4.11)
+                                UFFD_FEATURE_SIGBUS             (since Linux 4.14)
+
+(详见 ioctl_userfaultfd man page [2])
+```
+
+### 3.2.1 ioctl-UFFDIO_API选项的最新特性
+
+值得注意的是，4.11后的UFFDIO_API选项。UFFDIO_API提供的features，让匿名(anonymous)页之外的hugetlbfs、shared-memory(shmem)页也得到了支持；也提供了对"non-cooperative events"的支持，包括mapping、unmapping、fork()、remove等操作[4]。我理解，这里的non-cooperative events指user-fault handler(处理程序)对产生fork/madvise/mremap等事件的进程是透明的，user-fault handler读取到这些事件后，产生事件的进程就会继续进行[5]，而不会被阻塞。
+
+`UFFD_FEATURE_SIGBUS`是最新被加入的。加入它最初的目的是，很多数据库系统采用hugetlbfs中的大页文件，并且这些文件时(带洞的)稀疏文件，当数据库程序有bug时，可能错误地将洞进行mmap，这会导致内核尝试自动地填洞最终导致文件非预期地扩大，为了让bug“误触”到文件洞时直接返回`SIGBUS`信号，`UFFD_FEATURE_SIGBUS`被提出。这个feature不需要对应的user-fault handler处理线程。
+
+总之，要正确理解这些较新的features，还是推荐看一下`KERNEL_SRC/linux-4.18.8/tools/testing/selftests/vm/userfaultfd.c`代码及最新的用户文档。
 
 此特性目前只对匿名页、shmem以及hugetlb等页支持，内核中对应的`handle_userfault`函数可能被这几部分的page fault handler所调用，普通文件映射的mmap暂时不支持userfault。
 
@@ -131,6 +162,10 @@ static void * fault_handler_thread(void *arg)
 [3] Caldwell, Blake, et al. "FluidMem: Memory as a Service for the Datacenter." arXiv preprint arXiv:1707.07780 (2017). (https://arxiv.org/pdf/1707.07780.pdf)
 
 [4] The next steps for userfaultfd(), https://lwn.net/Articles/718198/
+
+[5] https://lkml.org/lkml/2018/2/27/78
+
+[6] https://marc.info/?l=linux-mm&m=149857975906880&w=2
 
 # 4. 关系图
 
