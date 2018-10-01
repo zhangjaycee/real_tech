@@ -12,13 +12,9 @@
 
 访问一个页时，若非状态(2)，会引起page fault，page fault一般又可以分为两种：
 
-1. 状态(1)会引起**minor page fault**，这时虽然被分配了，但是进程还没有读写过对应的线性区(memory region)，所以读写时会产生一次minor page fault。
+1. 状态(1)会引起**minor page fault**，这时虽然被分配了，但是进程还没有读写过对应的线性区(memory region)，所以读写时会产生一次minor page fault。内核中的`handle_mm_fault`会返回`VM_FAULT_MINOR`(注意，最新内核中已经返回0表示minor fault，并删除了`VM_FAULT_MINOR`这个宏定义)。
 
-2. 状态(3)会引起**major page fault**，需要磁盘IO来恢复页。
-
-
-
-
+2. 状态(3)会引起**major page fault**，需要磁盘IO来恢复页。核中的`handle_mm_fault`会返回`VM_FAULT_MAJOR`。
 
 ---
 [1] https://frogatto.com/2009/10/30/what-every-programmer-should-know-about-memory-management/
