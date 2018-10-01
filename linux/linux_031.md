@@ -34,7 +34,92 @@ KVM辅助的虚拟机内存虚拟化也有缺页的问题，主要有两个方�
 
 即用户空间的page fault handler，它为用户处理缺页提供了可能，增加了灵活性。(？但可能由于类似FUSE之于内核FS的问题影响性能)
 
-要使用此功能，首先应该用userfaultfd调用来创建一个fd，然后用ioctl来配置这个fd，比如可能需要用ioctl-userfaultfd支持的UFFDIO_API、UFFDIO_REGISTER等进行设置。关于userfaultfd系统调用及例子见[1]，关于ioctl设置选项ioctl_userfaultfd见[2]。
+### 3.1 基本使用步骤
+
+以最基本的用户空间进行匿名页缺页处理为例，(例子代码基本来自userfaultfd的man page[1]，)步骤大致如下：
+
+**STEP 1. 创建一个描述符uffd**
+
+要使用此功能，首先应该用userfaultfd调用[1]来创建一个fd，例如:
+```cpp
+// userfaultfd系统调用创建并返回一个uffd，类似一个文件的fd
+uffd = syscall(__NR_userfaultfd, O_CLOEXEC | O_NONBLOCK);
+```
+然后，所有的注册内存区间、配置和最终的缺页处理等就都需要用ioctl来对这个uffd操作。ioctl-userfaultfd[2]支持UFFDIO_API、UFFDIO_REGISTER、UFFDIO_UNREGISTER、UFFDIO_COPY、UFFDIO_ZEROPAGE、UFFDIO_WAKE等选项。比如UFFDIO_REGISTER用来向userfaultfd机制注册一个监视区域，这个区域发生缺页时，需要用UFFDIO_COPY来向缺页的地址拷贝自定义数据。
+
+**STEP 2. 用ioctl的UFFDIO_REGISTER选项注册监视区域**
+
+比如，UFFDIO_REGISTER对应的注册操作如下：
+```cpp
+// 注册时要用一个struct uffdio_register结构传递注册信息:
+// struct uffdio_range {
+// __u64 start;    /* Start of range */
+// __u64 len;      /* Length of range (bytes) */
+// };
+//
+// struct uffdio_register {
+// struct uffdio_range range;
+// __u64 mode;     /* Desired mode of operation (input) */
+// __u64 ioctls;   /* Available ioctl() operations (output) */
+// };
+
+addr = mmap(NULL, page_size, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0)
+// addr 和 len 分别是我匿名映射返回的地址和长度，赋值到uffdio_register
+uffdio_register.range.start = (unsigned long) addr;
+uffdio_register.range.len = len;
+// mode 只支持 UFFDIO_REGISTER_MODE_MISSING
+uffdio_register.mode = UFFDIO_REGISTER_MODE_MISSING;
+// 用ioctl的UFFDIO_REGISTER注册
+ioctl(uffd, UFFDIO_REGISTER, &uffdio_register);
+```
+
+**STEP 3. 创建一个处理专用的线程轮询和处理"user-fault"事件**
+
+要使用userfaultfd，需要创建一个处理专用的线程轮询和处理"user-fault"事件。主进程中就要调用`pthread_create`创建这个自定义的handler线程：
+
+```cpp
+// 主进程中调用pthread_create创建一个fault handler线程
+pthread_create(&thr, NULL, fault_handler_thread, (void *) uffd);
+```
+
+一个自定义的线程函数举例如下，这里处理的是一个普通的匿名页用户态缺页，我们要做的是把我们一个已有的一个page大小的buffer内容拷贝到缺页的内存地址处。用到了`poll`函数轮询`uffd`，并对轮询到的`UFFD_EVENT_PAGEFAULT`事件(event)用拷贝(ioctl的`UFFDIO_COPY`选项)进行处理。
+
+```cpp
+static void * fault_handler_thread(void *arg)
+{    
+    // 轮询uffd读到的信息需要存在一个struct uffd_msg对象中
+    static struct uffd_msg msg;
+    // ioctl的UFFDIO_COPY选项需要我们构造一个struct uffdio_copy对象
+    struct uffdio_copy uffdio_copy;
+    uffd = (long) arg;
+      ......
+    for (;;) { // 此线程不断进行polling，所以是死循环
+        // poll需要我们构造一个struct pollfd对象
+        struct pollfd pollfd;
+        pollfd.fd = uffd;
+        pollfd.events = POLLIN;
+        poll(&pollfd, 1, -1);
+        // 读出user-fault相关信息
+        read(uffd, &msg, sizeof(msg));
+        // 对于我们所注册的一般user-fault功能，都应是UFFD_EVENT_PAGEFAULT这个事件
+        assert(msg.event == UFFD_EVENT_PAGEFAULT);
+        // 构造uffdio_copy进而调用ioctl-UFFDIO_COPY处理这个user-fault
+        uffdio_copy.src = (unsigned long) page;
+        uffdio_copy.dst = (unsigned long) msg.arg.pagefault.address & ~(page_size - 1);
+        uffdio_copy.len = page_size;
+        uffdio_copy.mode = 0;
+        uffdio_copy.copy = 0;
+        // page(我们已有的一个页大小的数据)中page_size大小的内容将被拷贝到新分配的msg.arg.pagefault.address内存页中
+        ioctl(uffd, UFFDIO_COPY, &uffdio_copy);
+          ......
+    }
+}
+
+```
+
+
+
+关于userfaultfd系统调用有两个例程，分别见userfaultfd man page[1]及内核源码中的测试文件`KERNEL_SRC/linux-4.18.8/tools/testing/selftests/vm/userfaultfd.c`。
 
 此特性目前只对匿名页、shmem以及hugetlb等页支持，内核中对应的`handle_userfault`函数可能被这几部分的page fault handler所调用，普通文件映射的mmap暂时不支持userfault。
 
