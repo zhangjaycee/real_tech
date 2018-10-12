@@ -1,38 +1,18 @@
-# Linux中的性能调试、函数追踪工具(perf / ftrace / strace / pstack ...)
+# Linux中的性能调试、函数追踪工具(perf / strace / ftrace / 
+ ...)
 
-我们可以将pstack看做应用级、strace看做系统调用级、ftrace看做内核级，详细如下：
+我们可以将perf看做应用级、strace看做系统调用级、ftrace看做内核级，详细如下：
 
+## perf
 
-## pstack(gstack) -- 打印当前应用程序的调用栈
+---
+[1] http://www.brendangregg.com/perf.html
 
-其实pstack就是gstack工具的一个软连接。。。 gstack是应用GDB工具`thread apply all bt`这个backtrace功能的一个脚本。。。
+[2] Perf -- Linux下的系统性能调优工具，第 1 部分, https://www.ibm.com/developerworks/cn/linux/l-cn-perf1/index.html
 
-例如对于程序`hello.c`：
-```cpp
-//hello.c
-int myhello(int time)
-{
-    sleep(time);
-    printf("hello,\n");
-    sleep(time);
-    printf("world!\n");
-    return 0;
-}
-int main()
-{
-    myhello(5);
-    return 0;
-}
-```
-运行程序后，进程号是108633，运行pstack的结果：
-```bash
-zjc@/SSD$ pstack 108633
-#0  0x00007f0c7f7b8650 in __nanosleep_nocancel () from /lib64/libc.so.6
-#1  0x00007f0c7f7b8504 in sleep () from /lib64/libc.so.6
-#2  0x00000000004005b3 in myhello ()
-#3  0x00000000004005d2 in main ()
-```
-可以看到程序正在libc.so.6的__nanosleep_nocancel ()处运行。
+[3] Perf -- Linux下的系统性能调优工具，第 2 部分, 
+https://www.ibm.com/developerworks/cn/linux/l-cn-perf2/index.html
+
 
 ## strace -- 应用程序的系统调用追踪
 
@@ -94,15 +74,6 @@ $> vim /sys/kernel/debug/tracing/trace
 
 [4] Secrets of the Ftrace function tracer, https://lwn.net/Articles/370423/
 
-## perf
-
----
-[1] http://www.brendangregg.com/perf.html
-
-[2] Perf -- Linux下的系统性能调优工具，第 1 部分, https://www.ibm.com/developerworks/cn/linux/l-cn-perf1/index.html
-
-[3] Perf -- Linux下的系统性能调优工具，第 2 部分, 
-https://www.ibm.com/developerworks/cn/linux/l-cn-perf2/index.html
 
 
 ## crash
