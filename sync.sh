@@ -2,7 +2,7 @@
 
 git pull
 ./detect.py
-./wordcloud.py
+./generate_wordcloud.py
 git add .
 git commit -m "touch empty files"
 git push
