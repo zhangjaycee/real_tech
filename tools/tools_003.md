@@ -110,8 +110,6 @@ yum install stress-ng
 taskset 0x0001 stress-ng --cpu 1 --cpu-load 90 --cpu-load-slice 10
 ~~~
 
-
-
 # B. 性能分析工具
 
 ## 1. 状态监测
@@ -120,9 +118,44 @@ taskset 0x0001 stress-ng --cpu 1 --cpu-load 90 --cpu-load-slice 10
 
 ### 1.2. 系统状态检查 (iostat / vmstat)
 
+基于blktrace实现的iostat在本wiki其他页有介绍：[[磁盘IO监控工具(blktrace(btrace) / iostat)|linux_018]]
+
 ### 1.3. 应用运行状态 (pstack / gdb)
 
-## 2. 追踪测量
+* pstack(gstack) -- 打印当前应用程序的调用栈
+
+其实pstack就是gstack工具的一个软连接。。。 gstack是应用GDB工具`thread apply all bt`这个backtrace功能的一个脚本。。。
+
+例如对于程序`hello.c`：
+```cpp
+//hello.c
+int myhello(int time)
+{
+    sleep(time);
+    printf("hello,\n");
+    sleep(time);
+    printf("world!\n");
+    return 0;
+}
+int main()
+{
+    myhello(5);
+    return 0;
+}
+```
+运行程序后，进程号是108633，运行pstack的结果：
+```bash
+zjc@/SSD$ pstack 108633
+#0  0x00007f0c7f7b8650 in __nanosleep_nocancel () from /lib64/libc.so.6
+#1  0x00007f0c7f7b8504 in sleep () from /lib64/libc.so.6
+#2  0x00000000004005b3 in myhello ()
+#3  0x00000000004005d2 in main ()
+```
+可以看到程序正在libc.so.6的__nanosleep_nocancel ()处运行。
+
+## 2. 追踪和测量统计
+
+在本wiki的其他页有比较详细的介绍：[[Linux中的性能调试、函数追踪工具(perf / strace / ftrace / ...)|linux_017]]
 
 ### 2.1. 内核级 ftrace
 
