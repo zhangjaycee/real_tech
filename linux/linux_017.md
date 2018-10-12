@@ -1,5 +1,4 @@
-# Linux中的性能调试、函数追踪工具(perf / strace / ftrace / 
- ...)
+# Linux中的性能调试、函数追踪工具(perf / strace / ftrace ...)
 
 我们可以将perf看做应用级、strace看做系统调用级、ftrace看做内核级，详细如下：
 
