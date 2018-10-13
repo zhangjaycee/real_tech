@@ -4,7 +4,51 @@
 
 ## perf -- 对应用的全面性能分析
 
-perf 可以利用内核中的tracepoint和引荐的performance counter unit(PMU)进行统计。
+虽然perf用于分析用户应用，但是其实现涉及内核hook和处理器性能计数器，所以可以对某个程序进行深入的分析。
+
+具体的，perf 利用了内核中的tracepoint和Intel处理器的performance counter unit(PMU)，tracepoint即内核中的hook，触发时会通知perf，perf生成report以便perf用户分析所运行的应用，PMU是一些处理器中的计数器，可以记录cache miss次数、内存访问大小等。
+
+* perf list - 列出事件
+
+用`perf list`可以列出perf可以进行记录的所有事件：
+```
+$ perf list
+
+branch-instructions OR branches                    [Hardware event]
+branch-misses                                      [Hardware event]
+...
+alignment-faults                                   [Software event]
+...
+L1-dcache-load-misses                              [Hardware cache event]
+...
+branch-instructions OR cpu/branch-instructions/    [Kernel PMU event]
+```
+
+* perf record 和 perf report
+
+一般可以先用`perf record`记录perf分析所需的数据到`perf.data`，例如：
+```bash
+#加-g可以记录函数调用关系，-e后接时间名称，用逗号分隔，这里记录了a.out程序
+sudo perf record -g -e cpu-clock,topdown-slots-retired ./a.out
+```
+
+然后可以用`perf report`进行分析，比如：
+```bash
+sudo perf report #用perf的控制器查看
+sudo perf report --stdio #结果打印到终端
+...
+```
+
+* perf probe
+
+除了内核、硬件已定好的“静态”事件，还可以创建“动态”事件，比如我们可以为由debuginfo(vmlinux?)的当前内核的某个函数或者某行作为一个“perf event”，之后可以在`perf record`的`-e`选项后用`probe:XXX`来表示，例如：
+```bash
+# 加入”统计vfs_write这个内核函数的调用次数“的事件
+sudo perf probe -v vfs_write
+# 统计并分析这个新加入的vfs_write调用事件
+sudo perf record -g -e probe:vfs_write ./a.out
+sudo perf report --call-graph
+``` 
 
 ---
 [1] http://www.brendangregg.com/perf.html
@@ -77,7 +121,7 @@ $> vim /sys/kernel/debug/tracing/trace
 
 ## PCM -- 通过处理器性能计数器进行分析
 
-processor counter monitor[1] 继承了 Intel Performance Counter Monitor[2] 进行继续开源开发。与perf相比，PCM不只可以使用core的计数器，还可以使用uncore的计数器[2]，这两种counter分别如下:
+processor counter monitor[1] 继承了 Intel Performance Counter Monitor[2] 进行继续开源开发。与perf相比，PCM不只可以使用core的计数器，还可以使用uncore的计数器[2]，这两种counter分别如下。但是现在perf也支持一些uncore计数器了，所以我还不知道PCM相对perf的优势。
 
 >**core**: instructions retired, elapsed core clock ticks, core frequency including Intel® Turbo boost technology, L2 cache hits and misses, L3 cache misses and hits (including or excluding snoops).
 >
