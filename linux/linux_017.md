@@ -1,8 +1,10 @@
 # Linux中的性能调试、函数追踪工具(perf / strace / ftrace ...)
 
-我们可以将perf看做应用级、strace看做系统调用级、ftrace看做内核级，详细如下：
+我们可以将perf看做应用级、strace看做系统调用级、ftrace看做内核级，PCM则是硬件微架构级的，详细如下：
 
-## perf
+## perf -- 对应用的全面性能分析
+
+perf 可以利用内核中的tracepoint和引荐的performance counter unit(PMU)进行统计。
 
 ---
 [1] http://www.brendangregg.com/perf.html
@@ -73,7 +75,19 @@ $> vim /sys/kernel/debug/tracing/trace
 
 [4] Secrets of the Ftrace function tracer, https://lwn.net/Articles/370423/
 
+## PCM -- 通过处理器性能计数器进行分析
 
+processor counter monitor[1] 继承了 Intel Performance Counter Monitor[2] 进行继续开源开发。与perf相比，PCM不只可以使用core的计数器，还可以使用uncore的计数器[2]，这两种counter分别如下:
+
+>**core**: instructions retired, elapsed core clock ticks, core frequency including Intel® Turbo boost technology, L2 cache hits and misses, L3 cache misses and hits (including or excluding snoops).
+>
+>**uncore**: read bytes from memory controller(s), bytes written to memory controller(s), data traffic transferred by the Intel® QuickPath Interconnect links.
+
+
+---
+[1] https://github.com/opcm/pcm
+
+[2] https://software.intel.com/en-us/articles/intel-performance-counter-monitor
 
 ## crash
 
