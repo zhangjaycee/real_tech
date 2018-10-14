@@ -1,6 +1,14 @@
 # Linux中的性能调试、函数追踪工具(perf / strace / ftrace ...)
 
-我们可以将perf看做应用级、strace看做系统调用级、ftrace看做内核级，PCM则是硬件微架构级的，详细如下：
+
+## 引言
+
+我们可以将perf看做应用级、strace看做系统调用级、ftrace看做内核级，PCM则是硬件微架构级的，详细如下。
+
+Linux还有很多tracer或profilter可以选择。[1]
+
+---
+[1] Choosing a Linux Tracer (2015) http://www.brendangregg.com/blog/2015-07-08/choosing-a-linux-tracer.html
 
 ## perf -- 对应用的全面性能分析
 
@@ -50,6 +58,10 @@ sudo perf record -g -e probe:vfs_write ./a.out
 sudo perf report --call-graph
 ``` 
 
+* perf_event_open 系统调用
+
+perf_event_open 是一个perf对应的系统调用，可以在程序代码中调用来查看硬件计数器。 [4]
+
 ---
 [1] http://www.brendangregg.com/perf.html
 
@@ -58,6 +70,7 @@ sudo perf report --call-graph
 [3] Perf -- Linux下的系统性能调优工具，第 2 部分, 
 https://www.ibm.com/developerworks/cn/linux/l-cn-perf2/index.html
 
+[4] http://man7.org/linux/man-pages/man2/perf_event_open.2.html
 
 ## strace -- 应用程序的系统调用追踪
 
@@ -119,7 +132,9 @@ $> vim /sys/kernel/debug/tracing/trace
 
 [4] Secrets of the Ftrace function tracer, https://lwn.net/Articles/370423/
 
-## PCM -- 通过处理器性能计数器进行分析
+## 通过处理器性能计数器进行分析 -- PCM, PAPI, SystemTap ... 
+
+* PCM
 
 processor counter monitor[1] 继承了 Intel Performance Counter Monitor[2] 进行继续开源开发。与perf相比，PCM不只可以使用core的计数器，还可以使用uncore的计数器[2]，这两种counter分别如下。但是现在perf也支持一些uncore计数器了，所以我还不知道PCM相对perf的优势。
 
@@ -128,10 +143,22 @@ processor counter monitor[1] 继承了 Intel Performance Counter Monitor[2] 进�
 >**uncore**: read bytes from memory controller(s), bytes written to memory controller(s), data traffic transferred by the Intel® QuickPath Interconnect links.
 
 
+* PAPI
+
+PAPI[3]的目的是提供一个读取各种硬件计数器的统一API，支持很多计数器，列表在[4]。
+
+* SystemTap
+
+
+
 ---
 [1] https://github.com/opcm/pcm
 
 [2] https://software.intel.com/en-us/articles/intel-performance-counter-monitor
+
+[3] http://icl.cs.utk.edu/projects/papi/wiki/Main_Page
+
+[4] http://icl.cs.utk.edu/projects/papi/wiki/PAPIC:PAPI_presets.3
 
 ## crash
 
