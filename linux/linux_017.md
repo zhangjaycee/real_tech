@@ -72,6 +72,21 @@ https://www.ibm.com/developerworks/cn/linux/l-cn-perf2/index.html
 
 [4] http://man7.org/linux/man-pages/man2/perf_event_open.2.html
 
+## 用bcc作off-cpu负载分析
+
+按照官方说明[2]编译安装bcc，centos7可以参考[3]。
+
+---
+[1] http://www.brendangregg.com/offcpuanalysis.html
+
+[2] https://github.com/iovisor/bcc/blob/master/INSTALL.md
+
+[3] https://blog.csdn.net/orangleliu/article/details/54099528
+
+## flame  graph火焰图
+
+http://www.brendangregg.com/flamegraphs.html
+
 ## strace -- 应用程序的系统调用追踪
 
 strace可以追踪一个用户程序调用系统调用的情况，包括调用栈、调用时间等，默认会打印调用栈，例如还是对于程序`hello.c`，运行程序后，运行strace的结果：
