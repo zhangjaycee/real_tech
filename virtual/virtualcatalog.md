@@ -1,6 +1,6 @@
 ### Virtualization Section Catalog
 
-1. [[KVM(利用virsh)在Ubuntu上的安装和基本使用|virtual_001]] 
+1. [[KVM虚拟机在Ubuntu上的安装和基本使用(利用virsh)|virtual_001]] 
 
 1. [[👍Qemu的存储栈|virtual_002]]
 
@@ -43,6 +43,8 @@
 1. [[硬件辅助的虚拟化|virtual_021]]
 
 1. [[qemu-img|virtual_022]]
+
+1. [[KVM接口|virtual_023]]
 
 #### [博客推荐]
 
