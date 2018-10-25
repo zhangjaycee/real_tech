@@ -14,9 +14,25 @@ mmap简单的应用是把一个普通文件映射到一段内存buffer，这样�
 
 重点关注 [mremap](http://man7.org/linux/man-pages/man2/mremap.2.html) 系统调用。
 
+```cpp
+       void *mremap(void *old_address, size_t old_size,
+                    size_t new_size, int flags, ... /* void *new_address */);
+```
+
+可以扩大或者缩小原来的映射区，区域整体的addr地址也可能随之改变。
+
 ### 1.2 非线性映射
 
 重点关注 [remap_file_pages](http://man7.org/linux/man-pages/man2/remap_file_pages.2.html) 系统调用。
+
+```cpp
+       int remap_file_pages(void *addr, size_t size, int prot,
+                            size_t pgoff, int flags);
+```
+
+可以改变已映射文件各个page区域和addr地址的对应关系，使之不是线性映射。[3]中有个例子是将已经映射的文件段按page为粒度前后颠倒。
+
+但是这个接口处于弃用状态，可以用多次的mmap调用代替！
 
 ---
 
@@ -24,6 +40,7 @@ mmap简单的应用是把一个普通文件映射到一段内存buffer，这样�
 
 [2] http://imagewzh.blogspot.com/2010/03/page-fault-and-mmap_21.html
 
+[3] https://www.technovelty.org/linux/remap_file_pages-example.html
 
 ## 2. 设备映射 (MMIO)
 
