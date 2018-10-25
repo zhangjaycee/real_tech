@@ -25,12 +25,16 @@ mmap简单的应用是把一个普通文件映射到一段内存buffer，这样�
 
 重点关注 [remap_file_pages](http://man7.org/linux/man-pages/man2/remap_file_pages.2.html) 系统调用。
 
+可以改变已映射文件各个page区域和addr地址的对应关系，使之不是线性映射。[3]中有个例子是将已经映射的文件段按page为粒度前后颠倒。
+
 ```cpp
        int remap_file_pages(void *addr, size_t size, int prot,
                             size_t pgoff, int flags);
 ```
 
-可以改变已映射文件各个page区域和addr地址的对应关系，使之不是线性映射。[3]中有个例子是将已经映射的文件段按page为粒度前后颠倒。
+addr 是要改变位置的目的地址，应该在之前的mmap调用所映射的范围内；pgoff是要改变的位置的源地址，只不过是以mmap所映射的addr开始的page粒度的偏移量；size则是要重新映射位置的区域的大小。详细可以看[3]中例子。
+
+size和addr都要是page size的整数倍，而源地址pgoff直接用page粒度的offset表示所以其地址肯定也是page size的整数倍。
 
 但是这个接口处于弃用状态，可以用多次的mmap调用代替！
 
