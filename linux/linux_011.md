@@ -3,8 +3,8 @@
 ### 查看当前分区信息
 
 ```bash
-# 查看磁盘分区（树状较直观）名称、大小、挂载点：
-(bash)$ lsblk
+# 查看磁盘分区（树状较直观）名称、大小、挂载点、文件系统：
+(bash)$ lsblk -f
 # 查看磁盘分区名称、大小、挂载点、使用情况、文件系统格式：
 (bash)$ df -hT
 ```
@@ -50,4 +50,5 @@ umount [分区]
 ### 开机自动挂载
 编辑`/etc/fstab`
 
-> http://blog.csdn.net/nahancy/article/details/52201121
+---
+[1] http://blog.csdn.net/nahancy/article/details/52201121
