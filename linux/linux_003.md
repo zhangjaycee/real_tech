@@ -1,6 +1,6 @@
 # Linux内核&内核模块的升级/更换/编译
 
-## 更换centos的内核
+## 1. 更换centos的内核
 
 可以从elrepo[1]安装较新内核，也可以自己编译内核。下边主要是自己编译内核的步骤：
 
@@ -42,7 +42,18 @@ reboot
 
 [1] How to Install or Upgrade to Latest Kernel Version in CentOS 7, https://www.tecmint.com/install-upgrade-kernel-version-in-centos-7/
 
-## 编译内核模块
+## 2. 编译内核模块
+
+### 2.1. 一些问题
+
+**EXPORT_SYMBOL**
+
+一个模块的函数若想让另一个模块使用，必须用EXPORT_SYMBOL导出，而且两者貌似必须都是模块(编译选项为m)，后者都在内核(编译选项为y)，不然很可能出现未定义函数的错误。[1]
+
+---
+[1] https://stackoverflow.com/questions/26597537/linux-kernel-gives-undefined-reference-for-vmlinux-but-compiles-the-o-files
+
+### 2.2. 一个例子
 
 （以centos7的virtio_blk模块为例）
 
