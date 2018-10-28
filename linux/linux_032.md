@@ -34,3 +34,6 @@ mount -size=64M -o remount /dev/shm
 [1] 浅析Linux的共享内存与tmpfs文件系统， http://blog.chinaunix.net/uid-28541347-id-5763124.html
 
 [2] 用mmap接口访问文件时边界问题会导致的两个错误, http://blog.jcix.top/2018-10-26/mmap_tests/
+
+[3] 
+linux内核tmpfs/shmem浅析, https://blog.csdn.net/ctthuangcheng/article/details/8916065
