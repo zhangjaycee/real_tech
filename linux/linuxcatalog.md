@@ -44,7 +44,7 @@
 
 1. [[Linux中的存储“虚拟化” loopback / dm(Device Mapper)/ 裸设备Raw Device等|linux_021]]
 
-1. [[DRAM内存作存储(ramdisk/ramfs/tmpfs/memcached/radis)|linux_022]]
+1. [[内存文件系统(ramdisk/ramfs/tmpfs...)|linux_022]]
 
 1. [[查看系统软硬件配置|linux_023]]
 
