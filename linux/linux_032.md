@@ -3,10 +3,10 @@
 
 System V shared memory (shmget / shmat / shmdt) 和 POSIX shared memory (shm_open / shm_unlink)是Linux支持的两套共享内存IPC的接口。
 
-这两套接口内核底层都是用tmpfs实现的，与tmpfs有关的内核选项`CONFIG_TMPFS`开启与否只影响用户空间部分的tmpfs特性，并不会改变两套共享内存IPC的内核实现。
+这两套接口内核底层都是用tmpfs/shmem实现的，与tmpfs有关的内核选项`CONFIG_TMPFS`开启与否只影响用户空间部分的tmpfs特性，并不会改变两套共享内存IPC的内核实现(tmpfs/shmem)。
 
 
-* 关于tmpfs在两套实现中的用途: 
+* 关于tmpfs/shmem在两套实现中的用途: 
 
 > [1]
 >(1) 用于SYSV共享内存，还有匿名内存映射；这部分由内核管理，用户不可见；
