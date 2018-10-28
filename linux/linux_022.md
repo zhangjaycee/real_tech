@@ -16,7 +16,7 @@ mount -t tmpfs -o size=2G tmpfs /TMPFS
 
 #### tmpfs和shmem[4]
 
-
+以上是用户使用tmpfs的方法，其实共享内存IPC (shmget接口或者shm_open接口)在内核底层都是用tmpfs实现的，详见本wiki中： [[共享内存(shm...)进行进程间通信(IPC)|linux_032]]
 
 ### 2. ramdisk
 
