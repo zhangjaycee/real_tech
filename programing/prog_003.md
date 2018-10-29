@@ -6,7 +6,12 @@
 (→[leetcode 155. Min Stack](https://leetcode.com/problems/min-stack/))
 
 
-# Python 交互式终端中运行.py文件
+### Python 交互式终端中运行.py文件
 ```python
 >>> execfile('xxx.py')
 ```
+
+
+### 参数传递问题
+
+Python程序员无法决定参数以什么形式传递给被调用函数，若参数为变量等不可改变的类型，将拷贝给子函数；若为list类型等，将以类似C++引用的形式传递给子函数，这时可以直接更改list内的元素，原函数中list中的对应元素也会改变。
