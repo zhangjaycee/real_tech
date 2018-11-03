@@ -1,5 +1,48 @@
 # 阅读源码
 
+
+## 查找某个系统调用的定义
+
+系统调用在内核中的定义并不直观，其通过`SYSCALL_DEFINE`系列宏进行定义，在`KERNEL_SRC/include/linux/syscalls.h`中可以看到：
+```cpp
+#define SYSCALL_DEFINE1(name, ...) SYSCALL_DEFINEx(1, _##name, __VA_ARGS__)
+#define SYSCALL_DEFINE2(name, ...) SYSCALL_DEFINEx(2, _##name, __VA_ARGS__)
+#define SYSCALL_DEFINE3(name, ...) SYSCALL_DEFINEx(3, _##name, __VA_ARGS__)
+#define SYSCALL_DEFINE4(name, ...) SYSCALL_DEFINEx(4, _##name, __VA_ARGS__)
+#define SYSCALL_DEFINE5(name, ...) SYSCALL_DEFINEx(5, _##name, __VA_ARGS__)
+#define SYSCALL_DEFINE6(name, ...) SYSCALL_DEFINEx(6, _##name, __VA_ARGS__)
+```
+
+数字1~6是某个系统调用的参数个数。比如我现在要找mmap这个系统调用在kernel中的定义，由于mmap有6个参数，所以它是这么定义的：
+```cpp
+YSCALL_DEFINE6(mmap, unsigned long, addr, unsigned long, len,
+        unsigned long, prot, unsigned long, flags,
+        unsigned long, fd, unsigned long, off)
+{
+    long error;
+    error = -EINVAL;
+    if (off & ~PAGE_MASK)
+        goto out;
+
+    error = ksys_mmap_pgoff(addr, len, prot, flags, fd, off >> PAGE_SHIFT);
+out:
+    return error;
+}
+```
+又比如`read`这个系统调用有3个参数，其是这样定义的：
+```cpp
+SYSCALL_DEFINE3(read, unsigned int, fd, char __user *, buf, size_t, count)
+{
+    return ksys_read(fd, buf, count);
+}
+```
+
+可以观察到，定义之内又多调用`ksys_XXX`的函数实现，继续往里看即可。
+
+---
+[1] Linux系统调用之SYSCALL_DEFINE, https://blog.csdn.net/hxmhyp/article/details/22699669
+
+
 ## 追踪git仓库某个文件的历史
 
 git blame [filename]
