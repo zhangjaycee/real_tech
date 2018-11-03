@@ -45,24 +45,35 @@ SYSCALL_DEFINE3(read, unsigned int, fd, char __user *, buf, size_t, count)
 
 ## 追踪git仓库某个文件的历史
 
+clone内核的git仓库，可以利用git的各种功能来看源码的演化历史。这些方法同样适合于其他开源项目。
+
+```
 git blame [filename]
-
+```
+可以看到这个文件每一行代码对应的commit时间。 
+```
 git log -p [filename]
-
+```
+可以看到包含这个文件修改的所有commit的详细信息。
+```
 gitk [filename]
+```
+通过`gitk`图形工具可以对提交信息、代码等进行全面的搜索。
 
-> https://stackoverflow.com/questions/278192/view-the-change-history-of-a-file-using-git-versioning
-> 
-> http://blog.csdn.net/caspiansea/article/details/25172615
->
-> https://stackoverflow.com/questions/17582685/install-gitk-on-mac
+---
 
-## 目录结构
+[1] View the change history of a file using Git versioning, https://stackoverflow.com/questions/278192/view-the-change-history-of-a-file-using-git-versioning
+
+[2] 使用 GIT 获得Linux Kernel的代码并查看，追踪历史记录, http://blog.csdn.net/caspiansea/article/details/25172615
+
+[3]Install gitk on Mac,  https://stackoverflow.com/questions/17582685/install-gitk-on-mac
+
+## kernel的目录结构
 
 ## 1. 整体结构
-> http://www.cnblogs.com/youngerchina/p/5624501.html
 
-以下为摘抄：
+
+以下为摘抄[1]：
 
 ```
 浏览内核代码之前，有必要知道内核源码的整体分布情况，按照惯例，内核代码安装在/usr/src/linux目录下，该目录下的每一个子目录都代表了一个特定的内核功能性子集，下面针对2.6.23版本进行简单描述。
@@ -162,13 +173,16 @@ block层的实现。最初block层的代码一部分位于drivers目录，一部
 实现了用于打包和压缩的的cpio等。
 ```
 
-## 2.include/uapi目录是干什么的
-
-> [The UAPI header file split](https://lwn.net/Articles/507794/) ([翻译](http://blog.jcix.top/2017-02-24/the_uapi_header_file_split/))
+## 2.include/uapi目录是干什么的[2]
 
 简单来说，把暴漏给用户的api接口都移到了uapi目录中的相应文件中。
 
-## 3.samples/ 和 tools/ 文件夹是干什么的
+## 3.samples/ 和 tools/ 文件夹是干什么的[3]
 
-> http://unix.stackexchange.com/questions/78714/what-are-some-of-these-directories-in-the-linux-kernel-src
+---
+[1] http://www.cnblogs.com/youngerchina/p/5624501.html
+
+[2] The UAPI header file split, https://lwn.net/Articles/507794/ ([翻译](http://blog.jcix.top/2017-02-24/the_uapi_header_file_split/))
+
+[3] http://unix.stackexchange.com/questions/78714/what-are-some-of-these-directories-in-the-linux-kernel-src
 
