@@ -71,9 +71,10 @@ Spin locks VS. semaphores
 • for interrupt context use  ---> spin lock
 • sleep while holding lock   ---> semaphore
 ```
----
 
-#### 参考
+* 检测内核死锁的工具： lockdep
+
+---
 
 [1] APUE
 
