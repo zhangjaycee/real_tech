@@ -60,7 +60,17 @@
 11. 顺序和屏障
 
 
+* 内核的自旋锁还是信号量如何选择？[3]
+```
+Spin locks VS. semaphores
+(recommended)
 
+• low overhead locking       ---> spinlock
+• short lock hold time       ---> spinlock
+• long lock hold time        ---> semaphore
+• for interrupt context use  ---> spin lock
+• sleep while holding lock   ---> semaphore
+```
 ---
 
 #### 参考
@@ -68,3 +78,5 @@
 [1] APUE
 
 [2] 《Linux内核设计与实现》读书笔记（十）- 内核同步方法, http://www.cnblogs.com/wang_yb/archive/2013/05/01/3052865.html
+
+[3] http://staff.ustc.edu.cn/~james/em2005/5.pdf
