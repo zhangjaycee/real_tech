@@ -53,7 +53,7 @@ final_text = " ".join(word_list)
 fontpath="PingFang.ttc"
 my_wordcloud = WordCloud(font_path=fontpath, width=1080, height=720, \
                          background_color='white', relative_scaling=1, \
-                         max_words=66, min_font_size=12, colormap="inferno" \
+                         max_words=66, min_font_size=12, colormap="inferno", \
                          collocations=False ).generate(final_text)
 
 # show
