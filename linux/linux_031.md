@@ -205,16 +205,18 @@ handle_mm_fault -+-> hugetlb_fault --> hugetlb_no_page -----> handle_userfault <
                  +-> create_huge_pmd --> do_huge_pmd_anonymous_page----------------------+
                  |  (mm/memory.c)                                                        |
                  +-> __handle_mm_fault --> handle_pte_fault -+-> do_anonymous_page ------+
-                                                             |                           |
+                                                             |  +--> do_wp_page          |
                 +--------------- do_fault <------------------+--+--> do_swap_page (MAJOR)|    
                 |                                 (mm/shmem.c)  +--> do_numa_page        |   
                 +---> do_read_fault          +--> shmem_fault --> shmem_getpage_gfp -----+
                 |                            |         
                 +---> do_cow_fault           +-----+--> ext4_dax_fault (fs/ext4/file.c)
                 |                            |     +--> ... (FS&driver page faulthandlers)
-                +---> do_shared_fault -+--> __do_fault    --> vma->vm_ops->fault
-                |                      +--> do_page_mkwrite --> vma->vm_ops->page_mkwrite
-                +---> VM_FAULT_SIGBUS
+                +---> do_shared_fault -+--> __do_fault(--> vma->vm_ops->fault)
+                |                      +--> do_page_mkwrite(--> vma->vm_ops->page_mkwrite)
+                +---> VM_FAULT_SIGBUS        |
+                                             +--> ext4_dax_pfn_mkwrite (fs/ext4/file.c)
+                                             +--> ... (FS&driver handlers)
 ```
 
 ### 4.2 userfaultfd
