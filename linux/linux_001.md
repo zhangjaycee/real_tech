@@ -1,7 +1,7 @@
 # Linux进程管理
 
 ## 查看进程状态：
-```
+```bash
 cat /proc/[PID]/status
 ```
 其中`VmPTE`可以看页表大小[1]。
@@ -34,14 +34,16 @@ cat /proc/[PID]/status
 
 ## Linux下如何杀掉一个进程
 
-> 参考《linux下杀死进程的10种方法》：
+参考[1], 常用的两种：
 
-> http://mrcelite.blog.51cto.com/2977858/1350392
+```bash
+# 方法1
+killall -9 [prog_name]
+# 方法2
+ps -ef|grep [prog_name] ;
+kill -9 [pid]
+```
 
-### 常用的两种：
-1. 
-killall -9 *prog_name*
+---
 
-1. 
-ps -ef|grep *prog_name* ;
-kill -9 *pid*
+[1] 《linux下杀死进程的10种方法》, http://mrcelite.blog.51cto.com/2977858/1350392
