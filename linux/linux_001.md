@@ -1,5 +1,14 @@
 # Linux进程管理
 
+## 查看进程状态：
+```
+cat /proc/[PID]/status
+```
+其中`VmPTE`可以看页表大小[1]。
+
+---
+[1] https://ewx.livejournal.com/579283.html
+
 ## 前台/后台执行进程
 
 > 参考
