@@ -84,7 +84,7 @@ sudo scripts/setup.sh reset # spdk ---> kernel driver
 
 userfaultfd是用户态的缺页处理机制。详见本wiki([userfaultfd](https://github.com/zhangjaycee/real_tech/wiki/linux_031))。
 
-在Userfaultfd之前，用户态缺页处理使用 "mprotect + SIGSEGV信号处理" 来实现的，libsigsegv[5]就是专门用来干这个的一个GNU库。这种方法比较triky，效率不如新出的userfaultfd？[6]
+在Userfaultfd之前，用户态缺页处理使用 "mprotect + SIGSEGV信号处理" 来实现的，libsigsegv[5]就是专门用来干这个的一个GNU库。[7] 这种方法比较triky，效率不如新出的userfaultfd？[6]
 
 ---
 
@@ -99,3 +99,5 @@ userfaultfd是用户态的缺页处理机制。详见本wiki([userfaultfd](https
 [5] https://www.gnu.org/software/libsigsegv/
 
 [6] https://lists.gnu.org/archive/html/bug-libsigsegv/2015-03/msg00000.html
+
+[7] https://stackoverflow.com/questions/49583685/older-alternatives-for-userfaultfd-syscall-in-linux
