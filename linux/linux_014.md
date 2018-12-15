@@ -52,13 +52,17 @@ fuse： https://github.com/libfuse/libfuse
 一个golang版的fuse：https://github.com/bazil/fuse
 
 
-## 2. VFIO
-[1]是内核文档，[2]是一个VFIO和QEMU相关的论文。
+## 2. 用户态IO: UIO/VFIO(mdev)/
+[1]是内核文档，[2]是一个VFIO(mdev)和QEMU相关的论文。[3][4]是两个不错的说明博客。
 
 ---
 [1] https://www.kernel.org/doc/Documentation/vfio-mediated-device.txt
 
 [2] B. Peng, “MDev-NVMe : A NVMe Storage Virtualization Solution with Mediated,” 2018.
+
+[3] https://zhuanlan.zhihu.com/p/28111201
+
+[4] https://blog.csdn.net/zgy666/article/details/78649777
 
 ## 3. SPDK
 
