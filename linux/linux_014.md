@@ -7,7 +7,7 @@
 fuse是内核中已经有的模块，要写自己的fuse文件系统，要安装libfuse。
 
 
-### 安装和编译libfuse
+### 1.1 安装和编译libfuse
 
 step 1. 安装meson
 ```
@@ -40,7 +40,7 @@ ninja install
 [2] libfuse, https://github.com/libfuse/libfuse
 
 
-### 开发fuse文件系统
+### 1.2 开发fuse文件系统
 
 
 ---
@@ -52,8 +52,9 @@ fuse： https://github.com/libfuse/libfuse
 一个golang版的fuse：https://github.com/bazil/fuse
 
 
-## 2. 用户态IO: UIO/VFIO(mdev)/
-[1]是内核文档，[2]是一个VFIO(mdev)和QEMU相关的论文。[3][4]是两个不错的说明博客。
+## 2. 用户态IO: UIO/VFIO/mdev/DPDK/SPDK
+
+[1]是内核文档，[2]是一个VFIO、mdev和QEMU相关的论文。[3][4]是两个不错的说明博客。
 
 ---
 [1] https://www.kernel.org/doc/Documentation/vfio-mediated-device.txt
@@ -64,16 +65,23 @@ fuse： https://github.com/libfuse/libfuse
 
 [4] https://blog.csdn.net/zgy666/article/details/78649777
 
-## 3. SPDK
+### 2.1 UIO和VFIO
+UIO和VFIO都是用户态IO框架。VFIO较UIO更新，性能更好，更安全，这是因为VFIO利用了内核较新的IOMMU特性，从而安全地(隔离地)支持了UIO所不支持的DMA设备。
 
-SPDK是给高性能NVMe SSD设计的用户态驱动框架。主要利用了1）基于polling的设备完成状态检测来降低延迟和2）每个应用线程一个专用的共享自内核的硬件NVMe submission queue来减少锁的竞争。[1]
+#### 2.1.1 mediated devices
+mediated dev(MDev)基于VFIO。分为父节点pdev和子节点mdev。
+
+### 2.2 DPDK
+DPDK基于UIO或者VFIO，是用户层的IO设备驱动，主要用于降低网络延迟，提升网络IO性能；也被SPDK用于存储IO中。
+
+### 2.3 SPDK
+SPDK基于DPDK为高性能NVMe SSD开发，其核心是一个给高性能NVMe SSD设计的用户态驱动。主要利用了1）基于polling的设备完成状态检测来降低延迟和2）每个应用线程一个专用的共享自内核的硬件NVMe submission queue来减少锁的竞争。[1]
 
 其中第2）点是针对原本的驱动设计而做出的优化： 在原本的内核NVMe驱动中，会创建和CPU核数相等数量的SQ/CQ对，这些SQ/CQ对与各个物理核对应的，由于应用的线程/进程运行在哪个物理核上是不一定的，所以多个应用同时运行在一个核上同时访问一个SQ是有可能的，这时需要对这个SQ加锁，这就引起的不必要的性能开销。
 
 NVMe内核驱动这种实现虽然比以前的单queue少了很多锁竞争开销，但还是无法避免这种多个线程抢占同一个queue的情况。因此SPDK，作为一个用户态的程序，为调用它接口的应用提供了统一的管理，由SPDK来向内核申请某个应用专用的SQ绑定到特定的应用上，这样就实现了无锁的SQ。具体的，SPDK申请的SQ数目不一定局限于和core数相等，而是可能更多，这样就能满足应用较多的情况，同时又让各个queue没有锁的开销。
 
 类似SPDK的还有NVMeDirect这个东西，其也是用户态的提升NVMe性能的框架。[4]
-
 
 （下面是安装完SPDK开启它的命令的一个例子）
 
@@ -82,9 +90,7 @@ sudo [HUGEMEM=4096] scripts/setup.sh # kernel nvme driver ---> spdk
 sudo scripts/setup.sh reset # spdk ---> kernel driver
 ```
 
-## 4. DPDK
-
-## 5. userfaultfd
+## 3. 用户态缺页处理userfaultfd
 
 userfaultfd是用户态的缺页处理机制。详见本wiki([userfaultfd](https://github.com/zhangjaycee/real_tech/wiki/linux_031))。
 
