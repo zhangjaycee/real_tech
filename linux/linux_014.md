@@ -56,15 +56,6 @@ fuse： https://github.com/libfuse/libfuse
 
 [1]是内核文档，[2]是一个VFIO、mdev和QEMU相关的论文。[3][4]是两个不错的说明博客。
 
----
-[1] https://www.kernel.org/doc/Documentation/vfio-mediated-device.txt
-
-[2] B. Peng, “MDev-NVMe : A NVMe Storage Virtualization Solution with Mediated,” 2018.
-
-[3] https://zhuanlan.zhihu.com/p/28111201
-
-[4] https://blog.csdn.net/zgy666/article/details/78649777
-
 ### 2.1 UIO和VFIO
 UIO和VFIO都是用户态IO框架。VFIO较UIO更新，性能更好，更安全，这是因为VFIO利用了内核较新的IOMMU特性，从而安全地(隔离地)支持了UIO所不支持的DMA设备。
 
@@ -89,6 +80,15 @@ NVMe内核驱动这种实现虽然比以前的单queue少了很多锁竞争开�
 sudo [HUGEMEM=4096] scripts/setup.sh # kernel nvme driver ---> spdk
 sudo scripts/setup.sh reset # spdk ---> kernel driver
 ```
+
+---
+[1] https://www.kernel.org/doc/Documentation/vfio-mediated-device.txt
+
+[2] B. Peng, “MDev-NVMe : A NVMe Storage Virtualization Solution with Mediated,” 2018.
+
+[3] https://zhuanlan.zhihu.com/p/28111201
+
+[4] https://blog.csdn.net/zgy666/article/details/78649777
 
 ## 3. 用户态缺页处理userfaultfd
 
