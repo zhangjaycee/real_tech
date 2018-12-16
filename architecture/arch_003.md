@@ -10,13 +10,20 @@
 
 * 第三方DMA
 
-DMA 开始被发明时是一种独立于CPU与IO设备的DMA控制器，比如Intel 8237，它是1981年发明的，这种DMA被称为"第三方DMA"。这种第三方DMA在外围扩展IO设备和内存、CPU公用一条总线的时代，和Industrial Standard Architecture (ISA) Bus以ISA bridge与CPU bus分离的时代都存在。
+DMA 开始被发明时是一种独立于CPU与IO设备的DMA控制器，比如Intel 8237，它是1981年发明的，这种DMA被称为"第三方DMA"。这种第三方DMA在外围扩展IO设备和内存、CPU公用一条总线的时代，和Industrial Standard Architecture (ISA) Bus以ISA bridge与CPU bus分离的时代都存在。下图是ISA：
+
+[[arch_003_p1.png]]
 
 * 第一方DMA
 
-后来1992年开始的PCI Bus支持bus mastering，某个时刻只有成为bus master的外设可以与内存通信。与之前不同，没有一个专门的DMA控制器了，支持DMA的设备要有自己的DMA engine。
+后来1992年开始的PCI Bus支持bus mastering，某个时刻只有成为bus master的外设可以与内存通信。与之前不同，没有一个专门的DMA控制器了，支持DMA的设备要有自己的DMA engine。下图是PCI：
 
-2004年PCIe接口出现，同时支持多个设备全双工DMA。
+[[arch_003_p2.png]]
+
+2004年PCIe接口出现，同时支持多个设备全双工DMA。下图是PCIe：
+
+[[arch_003_p3.png]]
+
 
 ### 1.2 DMA流程
 
