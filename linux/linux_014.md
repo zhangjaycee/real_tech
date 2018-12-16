@@ -81,6 +81,14 @@ sudo [HUGEMEM=4096] scripts/setup.sh # kernel nvme driver ---> spdk
 sudo scripts/setup.sh reset # spdk ---> kernel driver
 ```
 
+#### 2.3.1 SPDK + PMDK
+
+[5]中的SPDK & PMDK: Two Open Source Development Kits for The Evolving NVM Landscape 这个talk 提到了三种集成SPDK和PMDK的思路：
+
+1. 在app中同时用SPDK和PMDK，而不是在SPDK中集成PMDK。
+2. libpmemblk用bdev模块访问PM，把libpmemblk加到SPDK中可以统一两种。
+3. libpmem直接集成到SPDK中。
+
 ---
 [1] https://www.kernel.org/doc/Documentation/vfio-mediated-device.txt
 
@@ -89,6 +97,8 @@ sudo scripts/setup.sh reset # spdk ---> kernel driver
 [3] https://zhuanlan.zhihu.com/p/28111201
 
 [4] https://blog.csdn.net/zgy666/article/details/78649777
+
+[5] https://spdk.io/summit/us/2018/ 
 
 ## 3. 用户态缺页处理userfaultfd
 
