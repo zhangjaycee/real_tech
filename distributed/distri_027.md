@@ -1,4 +1,4 @@
-# 机器(深度)学习系统的存储和IO性能
+# 机器(深度)学习系统的存储IO性能
 
 [1]和[2]两篇论文分别讲到了tensorflow和caffe的IO性能分析和优化。
 
@@ -12,9 +12,13 @@ TensorFlow的I/O主要涉及训练样本数据的读取，还有checkpoint数据
 
 具体来说，CPU的线程负责I/O、decoding和pre-processing。比如一个磁盘上的jpeg要先读取到内存、解压为tensor和resizing等处理。这条流程整个被称为input pipeline[1]。
 
-### Caffe
+### Caffe和LMDB
 
+[2]中主要讨论了caffe的IO接口LMDB。
 
+LMDB (lightning memory-mapped database)，它是以B+树的形式存储的，并且使用时用mmap映射到内存，也不只用于caffe，TensorFlow等也会用它。[2]中主要提出了一种基于MPI-shared memory的共享映射区，减少IO完成中断在多进程IO情况下导致的不必要进程切换开销。
+
+在[2]的相关工作中，还提到了很多其他的IO框架。比如，MPI-IO是比较低层次，为非结构化数据提供了并行IO接口；HDF5和NetCDF是比较高层次的，它们吧数据抽象为文件格式，并提供了丰富功能的IO接口。一些工作结合高层次的HDF5、NetCDF和低层次的MPI-IO，因此同时提供了并行IO和丰富的编程接口。作者提到这些IO框架逗比mmap高效，但是用起来不如mmap方便。长期来看用这些IO框架代替mmap是值得的，但是很多数据集就要从LMDB文件格式迁移到其他格式。
 
 
 ---
