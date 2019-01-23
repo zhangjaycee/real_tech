@@ -4,7 +4,7 @@
 
 广义上的中断信号(interrupt signal)是指一个可以改变处理器原本指令执行顺序的事件。分为同步和异步中断，Intel把同步中断称为中断(interrupt)，异步中断称为异常(exception)。
 
-**中断**(interrupt)是由定时器或者IO设备(都是硬件)产生的。
+**中断**(interrupt)是与硬件相关的，可以由定时器、I/O设备或者处理期间中断(inter-processor interrupt, IPI)产生。
 
 **异常**(exception)一般是用户程序的错误产生的，当一个异常发生时，内核向引起一次样的进程发送一个**信号**(signal)，然后被注册的或者默认的信号处理程序会处理这个信号。
 
