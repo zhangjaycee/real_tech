@@ -1,12 +1,14 @@
 # 中断(IRQ)、软中断和信号
 
-### 中断和异常
+### 中断、异常和信号
 
 广义上的中断信号(interrupt signal)是指一个可以改变处理器原本指令执行顺序的事件。分为同步和异步中断，Intel把同步中断称为中断(interrupt)，异步中断称为异常(exception)。
 
-异常(exception)一般是用户程序的错误产生的。一种例外的异常是缺页(page fault)，缺页异常是由内核处理的。中断(interrupt)是由定时器或者IO设备(都是硬件)产生的。
+**中断**(interrupt)是由定时器或者IO设备(都是硬件)产生的。
 
+**异常**(exception)一般是用户程序的错误产生的，当一个异常发生时，内核向引起一次样的进程发送一个**信号**(signal)，然后被注册的或者默认的信号处理程序会处理这个信号。
 
+有一种例外的异常是缺页(page fault)，缺页异常是由内核处理的，内核是利用了这种异常更有效的管理硬件资源。"Device not available"也用于将新值装入浮点寄存器。[4]
 
 ### 硬中断和软中断
 
@@ -38,3 +40,5 @@
 [2] Moving interrupts to threads, https://lwn.net/Articles/302043/
 
 [3] 信号和中断的比较 + 中断和异常的比较, https://www.cnblogs.com/charlesblc/p/6277810.html
+
+[4] UTLK Chap. 4
