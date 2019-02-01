@@ -1,10 +1,8 @@
-## FPGA及其架构
+## FPGA架构
 
 FPGA(field programmable gate arrays)相对ASIC(application-specific integrated circuit)来说更灵活。ASIC相对来说量产后会更廉价、节能，性能也更好。
 
-### 组成
-
-* 逻辑门
+### 逻辑门
 
 按逻辑门的实现原理，FPGA分为三类：**基于SRAM的FPGA**、**基于flash的FPGA**和**基于反熔丝(antifuse)的FPGA**[1]。
 
@@ -12,12 +10,11 @@ FPGA(field programmable gate arrays)相对ASIC(application-specific integrated c
 
 **基于flash的FPGA**的逻辑门本身就是非易失的。**antifuse FPGA**只能编程一次，不可逆。
 
-* IP核
+### IP核
 
-FPGA的IP核(core)可以看做是软件中的各种库，避免了编程或设计人员重复造轮子。
+FPGA的IP核(core)可以看做是软件中的各种库，避免了编程或设计人员重复造轮子。现代FPGA的可编程门阵列只占50%，其他大部分被硬IP核占据。
 
 硬IP核是系统设计中一些常用的模块，直接以模块形式集成到FPGA的，比如memory block、calculating circuits，transceiver和protocol controller等，有些甚至加入了CPU、DSP等[2]。
-
 
 
 ---
