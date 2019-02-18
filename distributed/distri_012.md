@@ -1,8 +1,48 @@
 # Persistent Memory
 
-称为NVM容易有歧义，因为有人说NVM的时候可能指的是NVMe，有人指的是Persistent Memory。
+## 什么是PM，和NVM什么关系
 
-在我理解PM应该除了掉电不丢数据，应该更接近DRAM而不是传统的块设备，即应该是DIMM接口，可字节寻址的。
+近几年，不论在学术界还是工业界，NVM都是比较前沿的技术。其实NVM一词并不新，是因为PM(或称SCM)这个与NVM有关的概念的出现，使得NVM这词又“火”了一把。在近年的相关文献中，NVM也经常被和PM(SCM)混用，让人搞不清。本文捋一捋它们之间的关系。
+
+
+
+
+* NVM
+
+准确来说，NVM (non-volatile memory)指的是非易失的物理存储介质，比如NAND flash、PCM、3D XPoint等都算是NVM，这些NVM可以做成SSD形式，也可以做成PM (或称SCM)。
+```
+           NAND Flash   ---+
+                           |
+    +--     PCM         ---+--> SSD
+ +--+                      |
+ |  +--    3D XPoint    ---+
+ V
+ PM 
+(SCM)
+```
+
+* SSD
+
+我们常见的SSD，不管是SATA接口还是PCIe接口，基本都是基于NAND Flash的；当然也有例外，Intel两年前推出的Optane SSD就基于3D XPoint而非NAND Flash。不管底层介质是Flash还是3D XPoint，这些介质广义上都是属于NVM的。它们都是存储设备，是块设备，是IO设备，除了性能，用户软件都可以将它们无差别地看成SSD。我们也可以
+
+* PM (SCM)
+
+现在，PCM、3D XPoint等新型的NVM也被用于制作DIMM接口的内存条。
+
+
+这些新型的NVM相对NAND Flash更容易做到细粒度读写，因此更适合做成可字节寻址(byte-addressable)的内存形式。
+
+
+
+而新型NVM不同于NAND Flash，可以更容易的
+
+
+其实PM (persistent memory) 或者 SCM (storage class memory)基本为同义词，指的是内存DIMM接口的NVM设备。
+
+因此，很多人称基于NVM的非易失内存设备为NVM。其实这容易有歧义，因为
+
+
+PM应该除了掉电不丢数据，应该更接近DRAM而不是传统的块设备，即应该是DIMM接口，可字节寻址的。
 
 
 ### 1. DAX
