@@ -29,17 +29,11 @@
 
 现在，PCM、3D XPoint等新型的NVM也被用于制作DIMM接口的内存条。
 
+其实很久之前就有基于NAND Flash的非易失型内存条(一般被称为NVDIMM)，不过这种NVDIMM通常被做成“电池+Flash+DRAM”的形式，通电时，依然是依靠DRAM工作，断电时才用电池电量将DRAM数据刷回Flash，这是因为Flash的读写粒度不一致，且存在写前擦除、拷贝等要求，不利于直接进行细粒度存取。这种设计就导致NVDIMM只可能比一般DRAM内存条更贵，且不可能做的比DRAM内存有更大容量密度。
 
-这些新型的NVM相对NAND Flash更容易做到细粒度读写，因此更适合做成可字节寻址(byte-addressable)的内存形式。
+这些新型的NVM相对NAND Flash更容易做到细粒度读写，更适合做成可字节寻址(byte-addressable)的内存形式，且因为密度更大。因此新型NVM可以做到DRAM内存条容量几倍的内存条形式，即PM或者SCM。
 
-
-
-而新型NVM不同于NAND Flash，可以更容易的
-
-
-其实PM (persistent memory) 或者 SCM (storage class memory)基本为同义词，指的是内存DIMM接口的NVM设备。
-
-因此，很多人称基于NVM的非易失内存设备为NVM。其实这容易有歧义，因为
+其实PM (persistent memory) 或者 SCM (storage class memory)基本为同义词，指的是内存DIMM接口的、可字节寻址的NVM设备。虽然容易有歧义，但近年很多文献称基于PM或SCM为NVM。我们可以说，NVM可以指Flash、PCM等存储介质，也可以指PCM、PM等存储设备，早年间，也有以
 
 
 PM应该除了掉电不丢数据，应该更接近DRAM而不是传统的块设备，即应该是DIMM接口，可字节寻址的。
