@@ -34,7 +34,7 @@
 
 #### 总结
 
-虽然容易有歧义，但近年很多文献称基于PM或SCM为NVM。我们可以说，狭义上，NVM可以指Flash、PCM等存储介质。广义上，NVM也可以指PCM、PM等存储设备，其实早年间，也有称SSD为NVM的。
+虽然容易有歧义，但近年很多文献称基于PM或SCM为NVM。我们可以说，狭义上，NVM可以指Flash、PCM、3D XPoint等存储介质。广义上，NVM也可以指SCM、PM等存储设备，其实早年间，也有称SSD为NVM的。
 
 ### 1. DAX
 
