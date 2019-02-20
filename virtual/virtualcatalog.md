@@ -46,6 +46,8 @@
 
 1. [[KVM接口|virtual_023]]
 
+1. [[docker的存储系统|virtual_024]]
+
 #### [博客推荐]
 
 * ->[笑便世界] http://smilejay.com/ (关于KVM/Qemu)
