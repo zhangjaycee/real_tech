@@ -36,8 +36,7 @@
 
 虽然容易有歧义，但近年很多文献称基于PM或SCM为NVM。我们可以说，狭义上，NVM可以指Flash、PCM、3D XPoint等存储介质。广义上，NVM也可以指SCM、PM等存储设备，其实早年间，也有称SSD为NVM的。
 
-### 1. DAX
-
+## 1. DAX
 
 #### 1.1 device-dax和filesytem-dax
 
@@ -52,9 +51,6 @@ it, and utilize userspace flushes to make stores persistent
 
 > [9] The align option specifies the base address alignment when QEMU mmap(2) mem-path, and accepts common suffixes, eg 2M. Some backend store specified by mem-path requires an alignment different than the default one used by QEMU, eg the device DAX /dev/dax0.0 requires 2M alignment rather than 4K. In such cases, users can specify the required alignment via this option.
 
-
-
-
 #### 1.2 consistency
 
 首先文件系统间的DAX是不一致的，ext4只能整个文件系统DAX或者不DAX，而XFS是基于inode的DAX，粒度更细。 [3]
@@ -62,6 +58,8 @@ it, and utilize userspace flushes to make stores persistent
 ext4-dax和xfs-dax目前还只支持metadata-consistency,data-consistency不支持。[4]
 
 有一个叫BTT的东西试图把64 B粒度转为512 B。[5]
+
+---
 
 [1] "Device DAX" for persistent memory, https://lwn.net/Articles/687489/, https://lists.gt.net/linux/kernel/2434768
 
@@ -83,7 +81,7 @@ ext4-dax和xfs-dax目前还只支持metadata-consistency,data-consistency不支�
 
 [10] http://pmem.io/ndctl/
 
-### 2. PMDK
+## 2. PMDK
 
 #### 2.1 PMDK同时支持device-dax和filesytem-dax
 
@@ -104,14 +102,10 @@ ext4-dax和xfs-dax目前还只支持metadata-consistency,data-consistency不支�
 
 [2] https://pmem.io/2016/02/22/pm-emulation.html
 
-### 3. BTT - Block Translation Table
+## 3. PM模拟器
 
-可以看做是一层间接(a level of indirection)，将PM的IO粒度由cache line(64 Bytes)转换为扇区(512 Bytes)。
+#### 3.1. 通过配置grub用DRAM模拟PM设备[8]
 
-https://www.kernel.org/doc/Documentation/nvdimm/btt.txt
-
-
-### 2.4 通过配置grub创建PM设备[8]
 CentOS 7 为例：
 ```
 vim /etc/default/grub
@@ -119,7 +113,15 @@ grub2-mkconfig -o /boot/grub2/grub.cfg
 #最后 reboot
 ```
 
-### A. 其他资料
+#### 3.2 Quartz
+
+https://github.com/HewlettPackard/quartz
+
+#### 3.3 gem5 + NVMain
+
+
+
+## 4. 其他资料
 
 Persistent Memory Programming这个项目[1]，专注于PM编程，做了工具叫PMDK，专门用于PM编程。PMDK开发基于DAX[4][5]。
 
