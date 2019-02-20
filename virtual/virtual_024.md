@@ -21,4 +21,6 @@ Ubuntu发行版支持AUFS，所有发行版(内核)支持overlay2，它们都是
 
 [2] DOCKER基础技术：DEVICEMAPPER, https://coolshell.cn/articles/17200.html
 
+[3] https://www.centos.bz/2016/12/docker-device-mapper-in-practice/
+
 ## 2. 卷的存储
