@@ -77,5 +77,63 @@ vector<int> postorderTraversal(TreeNode* root) {
 }
 ```
 
+## 2. 递归
 
-## 2. 二叉树 --> 双向链表
+* 前序
+
+```cpp
+vector<int> preorderTraversal(TreeNode* root) {
+    vector<int> res;
+    if (!root) 
+        return res;
+    traverse(root, res);
+    return res;    
+}
+void traverse(TreeNode *p, vector<int> &res) {
+    if (p == NULL)
+        return;
+    res.push_back(p->val);
+    traverse(p->left, res);
+    traverse(p->right, res);
+    return;
+}
+```
+
+* 中序
+```cpp
+vector<int> inorderTraversal(TreeNode* root) {
+    vector<int> res;
+    if (!root)
+        return res;
+    traverse(root, res);
+    return res;
+}
+void traverse(TreeNode *root, vector<int> &res) {
+    if (!root)
+        return;
+    traverse(root->left, res);
+    res.push_back(root->val);
+    traverse(root->right, res);
+}
+```
+
+* 后序
+```cpp
+vector<int> postorderTraversal(TreeNode* root) {
+    vector<int> res;
+    if (!root)
+        return res;
+    traverse(root, res);
+    return res;
+}
+void traverse(TreeNode *root, vector<int> &res) {
+    if (!root)
+        return;
+    traverse(root->left, res);
+    traverse(root->right, res);
+    res.push_back(root->val);
+}
+```
+
+
+## 3. 二叉树 --> 双向链表
