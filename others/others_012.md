@@ -3,7 +3,7 @@
 ## 1. 非递归：
 
 #### 前序
-
+https://leetcode.com/problems/binary-tree-preorder-traversal/
 ```cpp
 vector<int> preorderTraversal(TreeNode* root) {
     vector<int> res;
@@ -28,7 +28,7 @@ vector<int> preorderTraversal(TreeNode* root) {
 ```
 
 #### 中序
-
+https://leetcode.com/problems/binary-tree-inorder-traversal/
 ```cpp
 vector<int> inorderTraversal(TreeNode* root) {
     vector<int> res;
@@ -52,10 +52,29 @@ vector<int> inorderTraversal(TreeNode* root) {
 ```
 
 #### 后序
-
+https://leetcode.com/problems/binary-tree-postorder-traversal/
 ```cpp
-
-
+vector<int> postorderTraversal(TreeNode* root) {
+    vector<int> res;
+    if (!root)
+        return res;
+    TreeNode *cur = root;
+    stack<TreeNode *> st;
+    while (!st.empty() || cur != NULL) {
+        while (cur != NULL) {
+            res.push_back(cur->val);
+            st.push(cur);
+            cur = cur->right;
+        }
+        if (!st.empty()) {
+            cur = st.top();
+            st.pop();
+            cur = cur->left;
+        }
+    }
+    reverse(res.begin(), res.end());
+    return res;
+}
 ```
 
 
