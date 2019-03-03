@@ -135,5 +135,35 @@ void traverse(TreeNode *root, vector<int> &res) {
 }
 ```
 
-
 ## 3. 二叉树 --> 双向链表
+
+
+> 输入一棵二叉搜索树，将该二叉搜索树转换成一个排序的双向链表。要求不能创建任何新的结点，只能调整树中结点指针的指向。
+
+```cpp
+class Solution {
+public:
+    TreeNode* Convert(TreeNode* root)
+    {
+        if (!root)
+            return NULL;
+        TreeNode *l = Convert(root->left);
+        TreeNode *head = l;
+        if (l != NULL) {
+            while (l->right) {
+                l = l->right;
+            }
+            l->right = root;
+            root->left = l;
+        } else {
+            head = root;
+        }
+        TreeNode *r = Convert(root->right);
+        root->right = r;
+        if (r)
+            r->left = root;
+        return head;
+    }
+};
+```
+
