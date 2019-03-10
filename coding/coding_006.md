@@ -39,9 +39,9 @@ Variable-Byte (VByte) 是常用的字节对齐码。每个字节中，前7位是
 
 Google 的Group-Varint 把VByte的控制位聚集起来。比如，若我们需要4个Bytes，控制位只要2位即可表示4，而不用4位。VByte-G8UI, Masked-VByte and Stream-VByte等也是使用SIMD的变种。
 
-## 定长块存储压缩 (如Simple9, Simple16)
+## 块粒度存储压缩 (如Simple9, Simple16)
 
-以块为单位，每块独立压缩。对于一个块中的所有整数，都可以用一个b=max-min和一个k=log(max-min)+1 位表示。是一个典型的Binary packing 问题，Simple-9和Simple-16都属于这种块编码。
+以定长或变长块为单位，每块独立压缩。对于一个块中的所有整数，都可以用一个b=max-min和一个k=log(max-min)+1 位表示。是一个典型的Binary packing 问题，Simple-9和Simple-16都属于这种块编码。
 
 ## PForDelta
 
