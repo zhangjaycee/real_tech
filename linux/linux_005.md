@@ -12,7 +12,7 @@ submit_bh (生成bio结构) -> submit_bio(提交bio结构到通用块层)
 ```
 
 
-## 一次存储I/O会有多少次内存拷贝
+## 一次存储I/O会有多少次内存拷贝 [3]
 
 对于 read/write 调用，一般有 `存储外设--page cache--用户缓冲区`两次拷贝；
 
@@ -27,3 +27,5 @@ submit_bh (生成bio结构) -> submit_bio(提交bio结构到通用块层)
 [1] High Performance Storage Devices in the Linux Kernel, https://www.slideshare.net/kerneltlv/high-performance-storage-devices-in-the-linux-kernel
 
 [2] Linux Storage Stack Diagram, https://www.thomas-krenn.com/en/wiki/Linux_Storage_Stack_Diagram
+
+[3] Does mmap directly access the page cache, or a copy of the page cache? https://www.quora.com/Does-mmap-directly-access-the-page-cache-or-a-copy-of-the-page-cache
