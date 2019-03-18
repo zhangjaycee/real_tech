@@ -48,6 +48,8 @@ modprobe -r brd
 
 ### 3. DAX FS
 
+用于persistent memory (NVM / SCM)， 详见本wiki另一页: [Persistent Memory](distri_012)
+
 ---
 ### 参考：
 [1] The Difference Between a tmpfs and ramfs RAM Disk, https://www.jamescoyle.net/knowledge/951-the-difference-between-a-tmpfs-and-ramfs-ram-disk
