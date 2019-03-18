@@ -8,7 +8,7 @@
 
 1. [[👍Linux内核&内核模块的升级/更换/编译|linux_003]]
 
-1. [[👍Memory-mapped IO(MMIO)和mmap()|linux_004]]
+1. [[👍Linux中的mmap |linux_004]]
 
 1. [[Linux Storage Stack 存储栈|linux_005]]
 
