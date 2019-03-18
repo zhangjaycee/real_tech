@@ -1,6 +1,6 @@
-# Memory-mapped IO(MMIO)和mmap()函数
+# Linux中的mmap系统调用
 
-MMIO就是把文件对象映射到内存。MMIO主要用mmap()于msync()函数，msync之于mmap，类似于fsync之于write，用于将内容马上刷到磁盘上。
+msync之于mmap，类似于fsync之于write，用于将内容马上刷到磁盘上。
 
 ## 1. 普通文件映射 (file-backed mmapping)
 
@@ -38,7 +38,25 @@ size和addr都要是page size的整数倍，而源地址pgoff直接用page粒度
 
 但是这个接口处于弃用状态，可以用多次的mmap调用代替！
 
+### 1.3 用mmap接口访问文件时边界问题会导致的两个错误 [4]
+
+以下为结论，详细的实验代码见我的博客文章 [4]。
+
+**”文件范围内, mmap范围外” 会产生SIGSEGV段错误。** 当我们mmap映射的范围小于文件的实际大小，那么当我们访问在文件范围内但不是映射区范围内的地址时，会产生”segmentation fault”(SIGSEGV)错误！这很好理解，因为我们访问了非法的内存地址。
+
+
+**”文件范围外,mmap范围内” 会产生SIGBUS总线错误。** 但我们仍可以在程序最开始用mmap映射远大于文件的addr，然后在程序需要访问大于文件大小的地址前，保证文件被增长到相应位置即可保证不发生错误。
+
+
+## 2. 匿名映射和进程内存共享&通信 (anonymous mapping)
+
+传入某些参数后， mmap 函数也可以从OS申请内存，OS会在你的程序中创建匿名(anonymous)内存区域（一个和swap space相关的区域，而不是某个文件），这个区域可以像Heap一样进行管理。
+
+具有亲缘关系的进程之间可以利用mmap进行通信，这时，fd参数应该设置为-1。
+
+
 ---
+
 
 [1] J. Choi and J. Kim, “Efficient Memory Mapped File I / O for In-Memory File Systems.” (Slides:https://www.usenix.org/sites/default/files/conference/protected-files/hotstorage17_slides_choi.pdf)
 
@@ -46,22 +64,12 @@ size和addr都要是page size的整数倍，而源地址pgoff直接用page粒度
 
 [3] https://www.technovelty.org/linux/remap_file_pages-example.html
 
-## 2. 设备映射 (MMIO)
+[4] http://blog.jcix.top/2018-10-26/mmap_tests/
 
-若设备驱动支持mmap的情况下，使用mmap可能会将设备文件的内存或者寄存器映射到用户进程的内存空间中。
+[5] mmap与read/write的区别, http://www.cnblogs.com/beifei/archive/2011/06/12/2078840.html)
 
-## 3. 匿名映射和进程内存共享&通信 (anonymous mapping)
+[6] APUE p422
 
-传入某些参数后， mmap 函数也可以从OS申请内存，OS会在你的程序中创建匿名(anonymous)内存区域（一个和swap space相关的区域，而不是某个文件），这个区域可以像Heap一样进行管理。
+[7] LDD Chapter 15
 
-具有亲缘关系的进程之间可以利用mmap进行通信，这时，fd参数应该设置为-1。
-
----
-
-[1] mmap与read/write的区别, http://www.cnblogs.com/beifei/archive/2011/06/12/2078840.html)
-
-[2] APUE p422
-
-[3] LDD Chapter 15
-
-[4] mmap File-backed mapping vs Anonymous mapping in Linux, https://stackoverflow.com/questions/41529420/mmap-file-backed-mapping-vs-anonymous-mapping-in-linux
+[8] mmap File-backed mapping vs Anonymous mapping in Linux, https://stackoverflow.com/questions/41529420/mmap-file-backed-mapping-vs-anonymous-mapping-in-linux
