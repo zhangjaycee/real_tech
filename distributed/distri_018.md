@@ -1,4 +1,4 @@
-# 设备I/O模型 (驱动层(polling/interrupt-based IO, DMA, MMIO, PMIO ...)、块层和应用层)
+# 设备I/O模型 (驱动层(polling/interrupt-based PIO, DMA, MMIO, PMIO ...)、块层和应用层)
 
 ### 1. 驱动层的IO通信
 
