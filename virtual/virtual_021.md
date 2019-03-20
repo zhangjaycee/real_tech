@@ -28,7 +28,7 @@ Guest Virtual Address(GVA)
 
 ### IO虚拟化VT-d
 
-VT-d 即Virtualization Technology for Direct I/O)
+VT-d 即Virtualization Technology for Direct I/O。是IOMMU的Intel实现。
 
 VT-d的核心是DMA remap技术，可以将设备对主机内存的访问限制在一定的内存区域（如guest分配的内存）。
 
