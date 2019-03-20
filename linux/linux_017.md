@@ -1,20 +1,23 @@
 # Linux中的性能调试、函数追踪工具(perf / strace / ftrace ...)
 
-
 ## 引言
+
+关于Linux的tracer或profilter，有很多选择[1]，也有很多概念，我们可以将这些概念看成三个层次：用户态前端(frontend)、内核态框架(tracing frameworks)和内核态实现(tracing implementations)，下图将常见概念归类：[2]
+
+[[linux_017_001.png]]
 
 我们可以将perf看做应用级、strace看做系统调用级、ftrace看做内核级，PCM则是硬件微架构级的，详细如下。
 
-Linux还有很多tracer或profilter可以选择。[1]
-
 ---
 [1] Choosing a Linux Tracer (2015) http://www.brendangregg.com/blog/2015-07-08/choosing-a-linux-tracer.html
+
+[2] https://www.slideshare.net/vh21/linux-kernel-tracing
 
 ## perf -- 对应用的全面性能分析
 
 虽然perf用于分析用户应用，但是其实现涉及内核hook和处理器性能计数器，所以可以对某个程序进行深入的分析。
 
-具体的，perf 利用了内核中的tracepoint和Intel处理器的performance counter unit(PMU)，tracepoint即内核中的hook，触发时会通知perf，perf生成report以便perf用户分析所运行的应用，PMU是一些处理器中的计数器，可以记录cache miss次数、内存访问大小等。
+具体的，perf 利用了内核中的**tracepoint**和Intel处理器的performance counter unit(**PMU**)，tracepoint即内核中的hook，触发时会通知perf，perf生成report以便perf用户分析所运行的应用，PMU是一些处理器中的计数器，可以记录cache miss次数、内存访问大小等。
 
 * perf list - 列出事件
 
@@ -74,7 +77,7 @@ https://www.ibm.com/developerworks/cn/linux/l-cn-perf2/index.html
 
 ## 用bcc作off-cpu负载分析
 
-按照官方说明[2]编译安装bcc，centos7可以参考[3]。
+bcc即BPF compiler collection，按照官方说明[2]编译安装bcc，centos7可以参考[3]。
 
 ---
 [1] http://www.brendangregg.com/offcpuanalysis.html
@@ -83,7 +86,7 @@ https://www.ibm.com/developerworks/cn/linux/l-cn-perf2/index.html
 
 [3] https://blog.csdn.net/orangleliu/article/details/54099528
 
-## flame  graph火焰图
+## flame graph火焰图
 
 http://www.brendangregg.com/flamegraphs.html
 
@@ -126,7 +129,7 @@ mount -t debugfs nodev /debug
 - 2, 进入`/debug/tracing`，可以看到很多文件，其中`available_tracers`是可以选择的ftrace tracers，`current_tracer`是当前的tracer，默认是nop，就是没有。可以把一个想用的tracer写到`current_tracer`文件，然后将`1`写入`tracing_on`文件(默认其实就是1，只不过用了nop所以相当于没开)开启追踪。
 ```
 # 检查可用tracers和当前使用的tracer
-$> cat available_tracers                                                                                           
+$> cat available_tracers
 blk function_graph wakeup_dl wakeup_rt wakeup function nop
 $> cat current_tracer
 nop
@@ -147,7 +150,7 @@ $> vim /sys/kernel/debug/tracing/trace
 
 [4] Secrets of the Ftrace function tracer, https://lwn.net/Articles/370423/
 
-## 通过处理器性能计数器进行分析 -- PCM, PAPI, SystemTap ... 
+## 通过处理器性能计数器进行分析 -- PCM, PAPI ... 
 
 * PCM
 
@@ -161,10 +164,6 @@ processor counter monitor[1] 继承了 Intel Performance Counter Monitor[2] 进�
 * PAPI
 
 PAPI[3]的目的是提供一个读取各种硬件计数器的统一API，支持很多计数器，列表在[4]。
-
-* SystemTap
-
-
 
 ---
 [1] https://github.com/opcm/pcm
