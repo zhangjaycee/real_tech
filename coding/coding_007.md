@@ -1,6 +1,10 @@
 # 无损压缩能否突破信息熵的限制
 
-无损压缩就是数据在压缩后的还能原样恢复到压缩前的样子。信息熵则被定义来衡量信源所生成信息的信息量。信息熵确实是熵编码的上限，但并非损压缩算法的上限，所以“信息压缩极限为信息熵”是一种误解。
+(对应博客地址：http://blog.jcix.top/2019-04-01/entropy-compression/)
+
+无损压缩就是数据在压缩后的还能原样恢复到压缩前的样子。信息熵则被定义来衡量信源所生成信息的信息量。说“压缩极限是信息熵”是一种存在一种歧义，实际上，我们进行熵估计需要基于某种或某几种模型，无损压缩会被一种的模型下所估计出的熵所限制。由于信息的生成模型本身并不容易准确地被估计，找出能反映数据本质的模型是非常困难的，如果能找到特定场景下更合适的熵估计模型，那么无损压缩算法总有提升空间。本文记录下相关知识，主要参考自两本书[1][2]。希望对大家有所启发，若有问题欢迎讨论和指正。
+
+(本文公式采用google API生成的图片[4]，国内可能看不到)
 
 
 ### 1. 信息熵
@@ -98,10 +102,17 @@ Kologorov复杂度的一个分支为MDL原则(minimum desciption length)。假�
 
 上式中，Dmj是描述模型j需要的bit数，Rmj(x)是用模型j描述序列x所需要的bit数。这个式子可以说明，有些模型虽然可以拟合序列x特别好(即Rmj(x)很小)，但是可能模型太复杂，描述模型本身需要的空间(Dmj)太大，两者加和反而不是最优，用一些非最优的简单模型可能会达到更优的压缩效果。
 
+### 5. 结论
+
+应该注意到，我们计算一段数据的熵时，熵的大小取决于我对这段数据结构的建模(比如多少个字母划为一个符号、相邻字符间有无关联)；并且我们最后根据这个模型进行熵编码无损压缩时，不仅涉及到每个符号的平均信息熵，还涉及到对模型的描述(比如我们码字的存储或者马尔可夫模型的描述)。所以，算数编码等熵编码的确无法突破模型所估计熵上限，但是怎么对这段数据建模来估计出信息的真实信息熵并尽量让模型简单易描述
+
 ---
 [1] 《数据压缩导论(第4版)》第二章
 
 [2] Understanding
 Compression - DATA COMPRESSION FOR MODERN DEVELOPERS, https://books.google.com/books?id=Ii6rDAAAQBAJ&pg=PT46&lpg=PT46&dq=information+entropy+delta+encoding&source=bl&ots=GvI9ggE2jr&sig=ACfU3U0ptV_F8TgS0acePTDKak_QaEtApw&hl=en&sa=X&ved=2ahUKEwjTu8Pr_vbgAhUPKawKHeucACUQ6AEwD3oECAQQAQ#v=onepage&q=information%20entropy%20delta%20encoding&f=true
 
-[3] 如何利用google API插入公式：https://developers.google.com/chart/infographics/docs/formulas?hl=en
+[3] 《通信的数学理论》，香农
+
+[4] 如何利用google API插入公式：https://developers.google.com/chart/infographics/docs/formulas?hl=en
+
