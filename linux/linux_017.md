@@ -92,7 +92,7 @@ http://www.brendangregg.com/flamegraphs.html
 
 ## strace -- 应用程序的系统调用追踪
 
-strace可以追踪一个用户程序调用系统调用的情况，包括调用栈、调用时间等，默认会打印调用栈，例如还是对于程序`hello.c`，运行程序后，运行strace的结果：
+strace可以追踪一个用户程序调用系统调用的情况，它基于内核的ptrace。例如还是对于程序`hello.c`，运行程序后，运行strace会包括调用栈、调用时间等，默认会打印调用栈：
 
 ```bash
 $ strace -p 107917
