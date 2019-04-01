@@ -104,4 +104,4 @@ Kologorov复杂度的一个分支为MDL原则(minimum desciption length)。假�
 [2] Understanding
 Compression - DATA COMPRESSION FOR MODERN DEVELOPERS, https://books.google.com/books?id=Ii6rDAAAQBAJ&pg=PT46&lpg=PT46&dq=information+entropy+delta+encoding&source=bl&ots=GvI9ggE2jr&sig=ACfU3U0ptV_F8TgS0acePTDKak_QaEtApw&hl=en&sa=X&ved=2ahUKEwjTu8Pr_vbgAhUPKawKHeucACUQ6AEwD3oECAQQAQ#v=onepage&q=information%20entropy%20delta%20encoding&f=true
 
-[3] 如何插入公式：https://developers.google.com/chart/infographics/docs/formulas?hl=en
+[3] 如何利用google API插入公式：https://developers.google.com/chart/infographics/docs/formulas?hl=en
