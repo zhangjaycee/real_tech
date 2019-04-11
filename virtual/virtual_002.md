@@ -124,3 +124,5 @@ Backend Drivers  +-+            |
 
 [5] 有關Cache的read/write through/back/allocate的意義, http://dannynote.blogspot.com/2007/04/cachereadwrite-throughbackallocate.html
 
+[6] Disk Cache Modes, https://doc.opensuse.org/documentation/leap/virtualization/html/book.virt/cha.cachemodes.html
+
