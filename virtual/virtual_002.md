@@ -3,32 +3,32 @@
 
 ## 1. QEMU在虚拟化存储栈扮演的角色
 
-[[virtual_002_p3.png|height = 512px]]
-
 对于基于全虚拟化的、以文件块存储设备，Guest OS的块设备驱动像在物理机上一样运行着；而Guest的物理块设备磁盘，很可能只是Host上的一个(镜像)文件，QEMU会“委托”Host OS的文件系统管理这个镜像文件。
 
 怎么让Guest上的系统把一个文件看成一个物理磁盘呢？QEMU就起一个中间处理人的作用，对上层Guest模拟一个物理设备，将上层的请求转换为对下层Host文件系统的文件级操作。
 
 ## 2. 分层
 
+存储IO栈的层次本来就很多，QEMU这一层本来就是虚拟化中存储栈的一小层，但是光它自己最少又可以分成三层：分别被称为设备模拟层(Device Emulation)、格式驱动层(Format Driver)和协议驱动层(Protocol Driver)。大概的层次关系见下图：
+
 ```
-                        +---------------+    e.g. virtio-blk / nvme / ide
-Frontend Devices  +-->  | Guest Devices |
-                        +-------+-------+    srcs in: QEMU_SRC/hw/block/*
+                      +------------------+    e.g. virtio-blk / nvme / ide
+Frontend Devices +--> | Device Emulation |
+                      +---------+--------+    srcs in: QEMU_SRC/hw/block/*
                                 |                     QEMU_SRC/hw/ide/*
                                 |
                                 |
                    +-   +-------+-------+    e.g. qcow2 / raw
                    |    | Format Driver |
-                   |    +---------------+    srcs in: QEMU_SRC/block/*
-                   |
+                   |    +-------+-------+    srcs in: QEMU_SRC/block/*                   
+                   |            |
 Backend Drivers  +-+            |
                    |   +--------+--------+   e.g. file-posix / file-win32 / nbd
                    |   | Protocol Driver |
                    +-  +-----------------+   srcs in: QEMU_SRC/block/*
 
 ```
-存储IO栈的层次本来就很多，QEMU这一层本来就是虚拟化中存储栈的一小层，但是光它自己最少又可以分成三层：我把它们称为设备模拟层(Guest device)、格式驱动层(Format driver)和协议驱动层(Protocol driver)。大概的层次关系见上图。通俗来讲：
+通俗来讲：
 
 1. 设备模拟层主要决定你的镜像文件在GuestOS看起来是什么设备，比如QEMU可以把这个文件模拟成一个IDE硬盘、一个virtio-blk设备或者一个NVMe设备等；
 
