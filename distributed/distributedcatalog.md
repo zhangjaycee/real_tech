@@ -6,7 +6,7 @@
 
 1. [[关于Ceph、Swift、HDFS等几种常见分布式存储系统|distri_002]]
 
-1. [[局部性原理及Cache读写模式|distri_003]]
+1. [[局部性原理及存储系统Cache|distri_003]]
 
 1. [[👍 SSD的结构和特性|distri_004]]
 
