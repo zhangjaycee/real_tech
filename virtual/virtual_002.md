@@ -100,13 +100,17 @@ Backend Drivers  +-+            |
 
 ### 3.3. Qemu中cache mode的实现方式
 
-实际上，是在Qemu打开镜像文件的时候，改变open()的参数改变的。详见代码或者参考[1]。以下是三种常见cache mode的标志位。
+|| write_through | BDRV_O_NOCACHE | BDRV_O_NO_FLUSH |
+|--------|--------|--------|-------|
+|writeback|❌|❌|❌|
+|writethrough|✅|❌|❌|
+|none|❌|✅|❌|
+|directsync|✅|✅|❌|
+|unsafe|❌|❌|✅|
 
-| CacheMode | Open()Flag |特点|
-|--------|--------|--------|
-|Write through|O_DSYNC|QEMU默认/ 安全/ 但是IO性能差|
-|Write back||用了两层Cache/ 不安全/ IO性能最好|
-|None|O_DIRECT|绕过Host Cache层/ 安全/ 性能较好|
+实际上，`O_NOCACHE`的实现方式是在open()中加入`O_DIRECT`参数，...
+
+
 
 ---
 
