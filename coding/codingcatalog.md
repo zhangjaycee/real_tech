@@ -1,6 +1,6 @@
 ### Coding Section Catalog
 
-1. [[关于Zlib|coding_001]]
+1. [[压缩算法分类及对应的实现|coding_001]]
 
 1. [[密码哈希 Cryptographic hash function|coding_002]]
 
