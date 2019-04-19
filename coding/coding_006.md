@@ -4,6 +4,9 @@
 
 下面的算法中Unary, Binary, Elias Gamma, Elias Delta, Golomb-Rice编码等属于以单个整数位单位的“变长比特码”。而VByte, Simple系列算法则以变长字节或者定长块为单位进行存储。RLE, Elias-Fano等算法适用于整数序列的压缩。PForDelta, Partitioned Elias-Fano等算法更是考虑了倒排索引docID列表的特点。
 
+Golomb-Rice
+
+
 ## Unary (一元) 和 Bianry (二进制)编码
 
 搜索引擎索引中，docID等信息一般为整数，用一元码、二进制编码或者两者的混合表示。
@@ -22,7 +25,9 @@ Elias Delta 编码，把前缀0的部分改成γ(|B(x)|)，即x二进制位数�
 
 ## Golomb-Rice 编码
 
-R_k(x) 有两部分：
+Golomb-Rice这类编码的思想就是用较少的码字表示小数，可以理解成对信源这一种假设：信源中小数出现的概率更大。这也符合熵编码的思想，如果这种假设很接近实际分布，那么我们的压缩效果会比较好。最朴素的Golomb编码便是上面提到的一元码(Unary Code)。Rice编码是复杂一些的一种。
+
+对于Rice编码，R_k(x) 有两部分：
 ```
 1. 商quitient = (x-1)/2^k    (高位)
 2. 余数 r = x - q*2^k - 1    (低位)
@@ -50,9 +55,6 @@ Google 的Group-Varint 把VByte的控制位聚集起来。比如，若我们需�
 ## Elias-Fano
 
 ## Partitioned Elias-Fano
-
-
-
 
 
 
