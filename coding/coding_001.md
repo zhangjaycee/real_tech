@@ -26,11 +26,13 @@ LZ78为编解码器维护了固定的字典，解决了LZ77的这个弊端。但
 
 ## 2. 压缩实现
 
-#### Zlib
+#### deflate
 
-zlib的inflate和deflate是相对应的过程，inflate是解压的一个过程，deflate是压缩的一个过程
+deflate算法结合了LZ77字典压缩和huffman熵编码，大致流程是先字典压缩再熵编码。
 
-linux下使用zlib时，需要安装zlib-devel，编译时加`-lz`来链接。
+deflate算法中，inflate是解压的一个过程，deflate是压缩的一个过程。
+
+zlib就是基于deflate算法的。linux下使用zlib时，需要安装zlib-devel，编译时加`-lz`来链接。
 
 #### LZ4
 
