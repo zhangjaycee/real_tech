@@ -1,6 +1,6 @@
 ### Coding Section Catalog
 
-1. [[压缩算法分类及对应的实现|coding_001]]
+1. [[👍 压缩算法分类及对应的实现|coding_001]]
 
 1. [[密码哈希 Cryptographic hash function|coding_002]]
 
@@ -8,7 +8,7 @@
 
 1. [[LZ4|coding_004]]
 
-1. [[C中的整数编码和类型转换|coding_005]]
+1. [[👍 C中的整数编码和类型转换|coding_005]]
 
 1. [[👍 整数的压缩表示|coding_006]]
 
