@@ -9,3 +9,5 @@
 4. [[FPGA架构|arch_004]]
 
 5. [[一个hello, world到底是怎么运行的--从晶体管道应用程序|arch_005]]
+
+6. [[关于CPU占用率(Utilization)|arch_006]]
