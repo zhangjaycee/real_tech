@@ -84,7 +84,10 @@ hi(x) = hj(x) ^ hash(item_x)
 [6] L. Guanlin, B. Debnath, and D. H. C. Du, “A Forest-structured Bloom Filter with flash memory,” IEEE Symp. Mass Storage Syst. Technol., pp. 1–6, 2011.
 
 # 3. 一些相关源码下载：
-morton filter (include BF and CF): https://github.com/Roudovic/Filter-Tester/tree/master
+morton filter (offical) [1]
+https://github.com/AMDComputeLibraries/morton_filter
+
+morton filter [1]  (unofficial, include BF and CF): https://github.com/Roudovic/Filter-Tester/tree/master
 
 cuckoo filter (原版) https://github.com/efficient/cuckoofilter
 
@@ -99,5 +102,8 @@ path hashing https://github.com/Pfzuo/Path-Hashing
 C++ Bloom filter library: https://code.google.com/p/bloom/
 
 Counting Bloom filter source code in C++:   https://github.com/mavam/libbf
+
+---
+[1] Breslow, Alex D., and Nuwan S. Jayasena. "Morton filters: Faster, space-efficient cuckoo filters via biasing, compression, and decoupled logical sparsity." Proceedings of the VLDB Endowment 11.9 (2018): 1041-1055.
 
 
