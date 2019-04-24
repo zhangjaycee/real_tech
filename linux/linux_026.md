@@ -1,5 +1,27 @@
 # Linux NVMe Driver
 
+### NVMe IO command
+
+
+**PRP** (Physical Region Page) 的每个entry描述一个物理页，IO command中高端PRP1和PRP2描述要写数据或所需读数据内存在host中的位置。PRP1和PRP2可能直接指向目标page，也可能是目标page的指针。
+
+**SGL** (Scatter/Gather List) 在IO command (SQ entry)中的SGL Entry回事一个SGL Descriptor，多个descriptors会以链表的形式连起来。
+
+SGL和PRP区别是，PRP的每个entry只能映射一个物理页，SGL的一个entry可以是一个连续的不定长范围。
+
+---
+[1] http://www.ssdfans.com/blog/2017/08/03/%E8%9B%8B%E8%9B%8B%E8%AF%BBnvme%E4%B9%8B%E4%B8%89/
+
+### NVMe Queues
+
+[[linux_026_001.png]]
+
+如图[1]，逻辑上是环形缓冲区，实际上是线性实现。`Head == Tail`代表Queue为空；`Head == (Tail + 1) % QueueSize`时Queue为满。
+
+---
+[1] https://www.flashmemorysummit.com/English/Collaterals/Proceedings/2013/20130812_PreConfD_Marks.pdf
+
+
 ### NVMe driver的multi-queue和block layer的multi-queue
 
 NVMe协议支持多队列 (multiple queue)，这就需要NVMe块设备驱动对其进行实现。而Linux内核中，近年来的block layer中的blk-mq也有类似的思想。现在NVMe driver的实现正好与其是对接的。
