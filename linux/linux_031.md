@@ -270,7 +270,15 @@ handle_ept_violation {
 --> faultin_page 
 --> handle_mm_fault (这个函数在关系图中!)
 ```
-
-
 ---
 [1] https://www.binss.me/blog/qemu-note-of-memory/
+
+
+
+### 4.4 对page fault的一些改进
+
+#### Spective page fault: 
+
+[1] https://lwn.net/Articles/730531/
+
+[2] https://marc.info/?l=linux-mm&m=125747798627503&w=2
