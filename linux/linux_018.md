@@ -24,6 +24,7 @@ The btrace script provides a quick and easy way to do live tracing of block devi
 
 Simply running
 ```
+mount -t debugfs debugfs /sys/kernel/debug
 btrace /dev/sda
 ```
  will show a trace of the device /dev/sda.
