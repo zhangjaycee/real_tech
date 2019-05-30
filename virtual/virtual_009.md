@@ -30,7 +30,7 @@ extern BlockDriver bdrv_qcow2;
 2. raw-posix.c和raw-win32.c 中的`bdrv_file`中定义了`.format_name:"file"`和`.protocol_name:"file"`, 属于protocol block driver；而raw_bsd.c和qcow.c、qcow2.c等文件中的`bdrv_raw`、`bdrv_qcow2`等这些数据结构只定义了`.format_name:"raw"` / `.format_name:"qcow2"` 这些，属于format block driver。`bdrv_file`和`bdrv_raw`数据结构的定义如下：
 ```cpp
 // block/raw-posix.c
-
+bool aio_poll(AioContext *ctx, bool blocking)
 BlockDriver bdrv_file = {
     .format_name = "file",
     .protocol_name = "file",
@@ -219,6 +219,11 @@ BlockDriver bdrv_raw = {
 QEMU 的 iothread 会一直进行polling, 它polling的是aio完成事件，并且polling的时间是自适应的[1]。
 ```cpp
 // QEMU_PATH/util/aio-posix.c
+
+bool aio_poll(AioContext *ctx, bool blocking) 
+{
+    //.............
+
     /* Adjust polling time */
     if (ctx->poll_max_ns) {
         int64_t block_ns = qemu_clock_get_ns(QEMU_CLOCK_REALTIME) - start;
@@ -259,6 +264,9 @@ QEMU 的 iothread 会一直进行polling, 它polling的是aio完成事件，并�
             trace_poll_grow(ctx, old, ctx->poll_ns);
         }
     }
+
+    //.............
+}
 ```
 
 
