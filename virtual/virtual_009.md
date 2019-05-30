@@ -213,3 +213,59 @@ BlockDriver bdrv_raw = {
 > [KVM虚拟机IO处理过程(一) ----Guest VM I/O 处理过程](http://blog.csdn.net/dashulu/article/details/16820281)
 
 > [KVM虚拟机IO处理过程(二) ----QEMU/KVM I/O 处理过程](http://blog.csdn.net/dashulu/article/details/17090293)
+
+### Linux AIO和QEMU iothread
+
+QEMU 的 iothread 会一直进行polling, 它polling的是aio完成事件，并且polling的时间是自适应的[1]。
+```cpp
+// QEMU_PATH/util/aio-posix.c
+    /* Adjust polling time */
+    if (ctx->poll_max_ns) {
+        int64_t block_ns = qemu_clock_get_ns(QEMU_CLOCK_REALTIME) - start;
+
+        if (block_ns <= ctx->poll_ns) {
+            /* This is the sweet spot, no adjustment needed */
+        } else if (block_ns > ctx->poll_max_ns) {
+            /* We'd have to poll for too long, poll less */
+            int64_t old = ctx->poll_ns;
+
+            if (ctx->poll_shrink) {
+                ctx->poll_ns /= ctx->poll_shrink;
+            } else {
+                ctx->poll_ns = 0;
+            }
+
+            trace_poll_shrink(ctx, old, ctx->poll_ns);
+        } else if (ctx->poll_ns < ctx->poll_max_ns &&
+                   block_ns < ctx->poll_max_ns) {
+            /* There is room to grow, poll longer */
+            int64_t old = ctx->poll_ns;
+            int64_t grow = ctx->poll_grow;
+
+            if (grow == 0) {
+                grow = 2;
+            }
+
+            if (ctx->poll_ns) {
+                ctx->poll_ns *= grow;
+            } else {
+                ctx->poll_ns = 4000; /* start polling at 4 microseconds */
+            }
+
+            if (ctx->poll_ns > ctx->poll_max_ns) {
+                ctx->poll_ns = ctx->poll_max_ns;
+            }
+
+            trace_poll_grow(ctx, old, ctx->poll_ns);
+        }
+    }
+```
+
+
+---
+
+[1] S. Hajnoczi, “Applying Polling Techniques to QEMU,” KVM Forum 2017.
+
+
+
+
