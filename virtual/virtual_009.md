@@ -216,7 +216,55 @@ BlockDriver bdrv_raw = {
 
 ### Linux AIO和QEMU iothread
 
-QEMU 的 iothread 会一直进行polling, 它polling的是aio完成事件，并且polling的时间是自适应的[1]。
+QEMU 的 iothread 会一直进行polling。
+
+```cpp
+
+static void *iothread_run(void *opaque)
+{
+    //.............
+    while (iothread->running) {
+        aio_poll(iothread->ctx, true);
+        if (iothread->running && atomic_read(&iothread->run_gcontext)) {
+            g_main_loop_run(iothread->main_loop);
+        }
+    }
+    //..............
+}
+```
+
+iothread poll的是aio完成事件[2][3]，它首先会在用户态ppoll IO完成，这会占用更多CPU，若timeout时间内没有完成，转为epoll aio的完成时间，这里epoll并非在用户态占满CPU进行轮询，epoll的实现决定于内核，所以并非占用CPU进行低延迟轮询，其实还是内核事件机制。在aio_poll函数调用的aio_epoll函数中，会进行一定时间的qemu用户态高效polling，然后是基于linux AIO epoll的IO完成事件事件polling(如下代码)。其中qemu_poll_ns(ppoll)返回值大于零说明poll到事件。
+
+```cpp
+static int aio_epoll(AioContext *ctx, GPollFD *pfds,
+                     unsigned npfd, int64_t timeout)
+{
+    // ............
+    if (timeout > 0) {
+        ret = qemu_poll_ns(pfds, npfd, timeout);
+    }
+    if (timeout <= 0 || ret > 0) {
+        ret = epoll_wait(ctx->epollfd, events,
+                         ARRAY_SIZE(events),
+                         timeout);
+        if (ret <= 0) {
+            goto out;
+        }
+        for (i = 0; i < ret; i++) {
+            int ev = events[i].events;
+            node = events[i].data.ptr;
+            node->pfd.revents = (ev & EPOLLIN ? G_IO_IN : 0) |
+                (ev & EPOLLOUT ? G_IO_OUT : 0) |
+                (ev & EPOLLHUP ? G_IO_HUP : 0) |
+                (ev & EPOLLERR ? G_IO_ERR : 0);
+        }
+    }
+    // .............
+}
+```
+
+并且第一步的qemu用户态polling的时间是自适应的[1]，如下是aio_poll随后对polling时间的调整流程：
+
 ```cpp
 // QEMU_PATH/util/aio-posix.c
 
@@ -274,6 +322,9 @@ bool aio_poll(AioContext *ctx, bool blocking)
 
 [1] S. Hajnoczi, “Applying Polling Techniques to QEMU,” KVM Forum 2017.
 
+[2] QEMU下的eventfd机制及源代码分析, http://oenhan.com/qemu-eventfd-kvm
+
+[3] Linux native AIO与eventfd、epoll的结合使用, http://www.lenky.info/archives/2013/01/2183
 
 
 
