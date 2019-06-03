@@ -38,14 +38,15 @@
 ~~~
 set nu
 set expandtab
-set tabstop=4
-set softtabstop=4
+set tabstop=4 " 设定 tab 长度为 4
+set softtabstop=4 " 使得按退格键时可以一次删掉 4 个空格
 set autoindent
+set shiftwidth=4 " 设定 << 和 >> 命令移动时的宽度为 4
 set hlsearch
 set fileencodings=utf-8,ucs-bom,gb18030,gbk,gb2312,cp936
 set termencoding=utf-8
 set encoding=utf-8
-set mouse=a
+"set mouse=a
 syntax on
 set autochdir
 set tags=tags;
@@ -55,6 +56,10 @@ nnoremap <silent> <F3> :copen<CR>
 nnoremap <silent> <F4> :cclose<CR>
 nnoremap <silent> <C-y> :cclose<CR>
 nnoremap <silent> <C-t> <C-o>
+nnoremap <silent> <Down> :cclose<CR>
+nnoremap <silent> <Up> :copen<CR>
+nnoremap <silent> <Left> :NERDTreeToggle<CR>
+nnoremap <silent> <Right> :NERDTreeToggle<CR>
 inoremap <silent> <C-h> <Left>
 inoremap <silent> <C-j> <Down>
 inoremap <silent> <C-k> <Up>
