@@ -33,6 +33,9 @@
 ### 我使用的vim插件和工具
 * The NERD tree (http://www.vim.org/scripts/script.php?script_id=1658)
 * cscope
+* taglist: https://www.vim.org/scripts/script.php?script_id=273
+* Pathogen: https://github.com/tpope/vim-pathogen
+* Mark: https://www.vim.org/scripts/script.php?script_id=2666
 
 ### 我的配置文件
 ~~~
@@ -59,7 +62,7 @@ nnoremap <silent> <C-t> <C-o>
 nnoremap <silent> <Down> :cclose<CR>
 nnoremap <silent> <Up> :copen<CR>
 nnoremap <silent> <Left> :NERDTreeToggle<CR>
-nnoremap <silent> <Right> :NERDTreeToggle<CR>
+nnoremap <silent> <Right> :TlistToggle<CR>
 inoremap <silent> <C-h> <Left>
 inoremap <silent> <C-j> <Down>
 inoremap <silent> <C-k> <Up>
@@ -104,6 +107,12 @@ set cscopequickfix=s-,c-,d-,g-,i-,t-,e-
 "显示不可见的tab字符
 "set list
 "set listchars=tab:▸\
+" Pathogen
+execute pathogen#infect()
+call pathogen#helptags() " generate helptags for everything in 'runtimepath'
+syntax on
+filetype plugin indent on
+let Tlist_Use_Right_Window   = 1
 ~~~
 
 ## 在终端中启用vi模式
