@@ -54,5 +54,13 @@
 
 **git reset --soft HEAD[~n]** [*file_name*]回退到HEAD所指的提交(不修改暂存区和工作区)
 
+## bash提示符显示仓库状态
 
+```bash
+parse_git_branch() {
+    git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
+}
+
+export PS1="\[\033[01;35m\]\u@\h\[\033[01;35m\] \W\[\033[00m\]\[\033[33m\]\$(parse_git_branch)\[\033[00m\] \[\033[01;35m\]$\[\033[01;00m\] "
+```
 
