@@ -45,9 +45,9 @@ Backend Drivers  +-+            |
 
 ### 3.1.QEMU的5种cache mode参数及实现方式
       
-QEMU虚拟磁盘的的参数 "cache=XXX" 有5种：
+QEMU虚拟磁盘的的参数 "cache=XXX" 有5种，如下表，其实在实现时对应三个QEMU内部标志：
 
-|| BDRV_REQ_FUA(!cache.writeback) | BDRV_O_NOCACHE(!cache.direct) | BDRV_O_NO_FLUSH(cache.no-flush) |
+|| BDRV_REQ_FUA | BDRV_O_NOCACHE | BDRV_O_NO_FLUSH |
 |--------|--------|--------|-------|
 |writeback|❌|❌|❌|
 |writethrough|✅|❌|❌|
