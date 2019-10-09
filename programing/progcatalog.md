@@ -10,7 +10,7 @@
 
 1. [[glib & libc & glibc & uclibc & eglibc |prog_005]]
 
-1. [[hooking & callback|prog_006]]
+1. [[hooking & callback的定义和用LD_PRELOAD进行hooking|prog_006]]
 
 1. [[html初探。。|prog_007]]
 
