@@ -48,6 +48,8 @@
 
 1. [[docker的存储系统|virtual_024]]
 
+1. [[virtio-pmem|virtual_025]]
+
 #### [博客推荐]
 
 * ->[笑便世界] http://smilejay.com/ (关于KVM/Qemu)
