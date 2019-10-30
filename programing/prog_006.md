@@ -1,4 +1,4 @@
-# hooking & callback的定义和用LD_PRELOAD进行hooking
+# hooking & callback的定义和用LD_PRELOAD进行hooking / shimming
 
 
 
@@ -10,10 +10,14 @@
 
 1. 总的来说，callback没有改变底层，只是上层告诉了底层一个方法，底层会在适宜的时候进行调用运行；而hooking改变了底层，底层的函数以某种方式被程序员重新定义了，从根本上影响了上层调用相应底层函数的所有应用。
 
+1. 采用preload动态库的方式可以hooking(或者称为shimming[3])。
+
 ---
 [1] http://www.eluminary.org/en/QnA/Hook_vs_callback_methods__(C++)
 
 [2] https://www.zhihu.com/question/19801131
+
+[3] https://www.quora.com/Is-Shim-computing-a-kind-of-hooking
 
 ## 用LD_PRELOAD hook函数
 
