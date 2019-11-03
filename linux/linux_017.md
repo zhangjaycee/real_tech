@@ -164,10 +164,28 @@ PAPI[3]的目的是提供一个读取各种硬件计数器的统一API，支持�
 
 [4] http://icl.cs.utk.edu/projects/papi/wiki/PAPIC:PAPI_presets.3
 
+
+## eBPF/bcc和bpftrace
+
+
+* bpftrace在CentOS 7.6下可以借助snap安装[1]：
+
+```bash
+sudo yum install epel-release
+sudo yum install snapd
+sudo systemctl enable --now snapd.socket
+sudo ln -s /var/lib/snapd/snap /snap
+sudo snap install --devmode bpftrace
+sudo snap connect bpftrace:system-trace
+```
+
+---
+[1] https://snapcraft.io/install/bpftrace/centos
+
+
+
 ## crash
 
 内核分析工具
 http://people.redhat.com/anderson/
 
-## kprobe
-[使用 Kprobes 调试内核] https://www.ibm.com/developerworks/cn/linux/l-kprobes.html
