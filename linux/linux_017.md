@@ -164,11 +164,15 @@ PAPI[3]的目的是提供一个读取各种硬件计数器的统一API，支持�
 
 [4] http://icl.cs.utk.edu/projects/papi/wiki/PAPIC:PAPI_presets.3
 
+## eBPF/BCC
 
-## eBPF/bcc和bpftrace
+## bpftrace
 
+bpftrace可以理解为eBPF的高层次“封装”，利用LLVM将bpftrace的脚本或命令转为BPF字节码，并且利用了linux kernel 4.x 现有的kprobes/uprobes/tracepoint等机制。其设计参考了awk、c语言、awk和systemtap等。 
 
-* bpftrace在CentOS 7.6下可以借助snap安装[1]：
+**安装bpftrace**
+
+bpftrace在CentOS 7.6下可以借助snap安装[2]：
 
 ```bash
 sudo yum install epel-release
@@ -179,9 +183,14 @@ sudo snap install --devmode bpftrace
 sudo snap connect bpftrace:system-trace
 ```
 
+**使用bpftrace**
+
+[2]中有很多例子。
+
 ---
 [1] https://snapcraft.io/install/bpftrace/centos
 
+[2] https://github.com/iovisor/bpftrace/blob/master/docs/tutorial_one_liners.md
 
 
 ## crash
