@@ -75,20 +75,12 @@ https://www.ibm.com/developerworks/cn/linux/l-cn-perf2/index.html
 
 [4] http://man7.org/linux/man-pages/man2/perf_event_open.2.html
 
-## 用bcc作off-cpu负载分析
+## 火焰图[1] (flame graph)
 
-bcc即BPF compiler collection，按照官方说明[2]编译安装bcc，centos7可以参考[3]。
+火焰图可以分为on-cpu / off-cpu / CPI 等多种，由Gregg大神提出和推广。
 
 ---
-[1] http://www.brendangregg.com/offcpuanalysis.html
-
-[2] https://github.com/iovisor/bcc/blob/master/INSTALL.md
-
-[3] https://blog.csdn.net/orangleliu/article/details/54099528
-
-## flame graph火焰图
-
-http://www.brendangregg.com/flamegraphs.html
+[1] http://www.brendangregg.com/flamegraphs.html
 
 ## strace -- 应用程序的系统调用追踪
 
@@ -115,9 +107,7 @@ exit_group(0)                           = ?
 在Mac 中类似的工具叫做 **dtruss** 。
 
 ---
-
 [1] Linux操作系统的pstack工具, http://nanxiao.me/linux-pstack/
-
 
 ## ftrace -- 内核级函数的追踪
 (CentOS 7 下的简单用法)
