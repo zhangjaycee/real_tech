@@ -27,7 +27,8 @@ make menuconfig
 
 ```bash
 make -jX # X为你的核数，这样编译最快
-sudo make modules_install install  # 安装
+sudo make modules_install install # 安装
+sudo make headers_install INSTALL_HDR_PATH=/usr # 安装
 ```
 
 #### 5. 生成新的内核启动镜像，并调整GRUB配置，重启完成
