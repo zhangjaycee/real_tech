@@ -11,7 +11,7 @@ LZ4的压缩数据块或者压缩数据帧的组织(存储)格式是与压缩/�
 
 [2] http://fastcompression.blogspot.com/2013/04/lz4-streaming-format-final.html
 
-## LZ4的系统
+## 应用LZ4的系统
 
 **MySQL InnoDB transparent page compression:** https://dev.mysql.com/doc/refman/5.7/en/innodb-page-compression.html
 
