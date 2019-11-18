@@ -39,9 +39,11 @@ xfs_io -c "extsize 2m" /mnt/dax
 
 配置之后，[2]中还介绍了怎么trace内核`dax_pmd_fault_done `函数的返回值(`NOPAGE`还是`FALLBACK`)判断配置是否生效。
 
-## 3. 大页对内存虚拟化(EPT)的性能影响[4]
+## 3. 虚拟机的内存虚拟化和大页
 
-VEE '17 上一篇文章[4]深入讨论了这个问题。
+根据QEMU docs[5]，`memory-backend-memfd`类型的内存可以实现以大页作为VM内存后端。
+
+上一篇文章[4]讨论了大页对内存虚拟化(EPT)的性能影响。
 
 ---
 [1] https://www.kernel.org/doc/Documentation/vm/transhuge.txt
@@ -50,4 +52,6 @@ VEE '17 上一篇文章[4]深入讨论了这个问题。
 
 [3] https://lwn.net/Articles/375096/
 
-[4] Lu, Kai, et al. "Flexible Page-level Memory Access Monitoring Based on Virtualization Hardware." ACM SIGPLAN Notices. Vol. 52. No. 7. ACM, 2017.
+[4] Wang, Xiaolin, et al. "Evaluating the impacts of hugepage on virtual machines." Science China Information Sciences 60.1 (2017): 012103.
+
+[5] https://qemu.weilnetz.de/doc/qemu-doc.html
