@@ -1,6 +1,6 @@
-# Hugepage 和 hugeTLB
+# Hugepage 和 hugetlbfs 及 DAX文件系统所支持的大页
 
-### Transparent Hugepage [1]
+## 1. Transparent Hugepage [1]
 
 由 `/sys/kernel/mm/transparent_hugepage/enabled` 决定开启还是关闭：
 
@@ -9,5 +9,35 @@ $ cat /sys/kernel/mm/transparent_hugepage/enabled
 [always] madvise never
 ```
 
+## 2. Using Hugepage in DAX Filesystems [2]
+
+内核支持DAX的文件系统ext4和XFS现在支持2MB大小的hugepage了，但要使用这个特性，需要满足如下条件：
+
+1. mmap()调用必须最少映射 2 MiB；
+2. 文件系统块的最少以2 MiB被分配；
+3. 文件系统块必须和mmap()调用有相同的对齐量。
+
+其中，第1点(在用户态的调用)挺容易达到的，第2、3点得益于当年为了支持RAID所提出的特性，ext4和XFS也支持从底层分配一定大小和一定对齐量的块。
+
+### 2.1 如何配置：
+
+1. 确保所用的pmem namespace为 fsdax 模式。这里用`ndctl`工具进行设置。
+
+2. 确保pmem block device从 2 MiB对齐的地址开始，这是因为当我们请求2 MiB对齐的块分配时，对齐是相对block device的开始地址而言的。具体怎么判断(利用`cat /proc/iomem`)和设置(利用`fdisk`对齐分区)还是参考[2]。
+
+3. 格式化文件系统时注意加入适当参数，如：
+```bash
+# ext4:
+mkfs.ext4 -b 4096 -E stride=512 -F /dev/pmem0
+# XFS:
+mkfs.xfs -f -d su=2m,sw=1 -m reflink=0 /dev/pmem0
+mount /dev/pmem0 /mnt/dax
+xfs_io -c "extsize 2m" /mnt/dax
+```
+
+配置之后，[2]中还介绍了怎么trace内核`dax_pmd_fault_done `函数的返回值(`NOPAGE`还是`FALLBACK`)判断配置是否生效。
+
 ---
 [1] https://www.kernel.org/doc/Documentation/vm/transhuge.txt
+
+[2] https://nvdimm.wiki.kernel.org/2mib_fs_dax
