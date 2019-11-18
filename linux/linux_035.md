@@ -11,6 +11,8 @@ $ cat /sys/kernel/mm/transparent_hugepage/enabled
 [always] madvise never
 ```
 
+除了`/sys`目录的相关控制项，`hugeadm`工具也可进行管理。
+
 ## 2. DAX文件所支持的大页映射 [2]
 
 内核支持DAX的文件系统ext4和XFS现在支持2MB大小的hugepage了，但要使用这个特性，需要满足如下条件：
