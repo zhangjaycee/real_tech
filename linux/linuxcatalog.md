@@ -70,4 +70,4 @@
 
 1. [[Linux Kernel的NVDIMM子系统|linux_034]]
 
-1. [[Hugepage 和 hugeTLB|linux_035]]
+1. [[Hugepage (大页) |linux_035]]
