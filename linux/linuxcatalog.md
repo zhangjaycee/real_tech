@@ -69,3 +69,5 @@
 1. [[Linux 内核架构|linux_033]]
 
 1. [[Linux Kernel的NVDIMM子系统|linux_034]]
+
+1. [[Hugepage 和 hugeTLB|linux_035]]
