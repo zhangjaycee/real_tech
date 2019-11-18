@@ -1,6 +1,8 @@
-# Hugepage 和 hugetlbfs 及 DAX文件系统所支持的大页
+# Hugepage (大页)
 
-## 1. Transparent Hugepage [1]
+文章[3]系列文章，介绍了Linux内核对大页的支持。[3]讲了使用shmget、hugetlbfs裸接口、匿名mmap (MAP_HUGETLB标志)和在hugetlfs基础上封装的libhugetlbfs、hugectl等库和工具。除了[3]讲的，本文还介绍透明大页THP、DAX文件系统大页映射等大页相关的新技术/工具。
+
+## 1. Transparent Hugepages (THP) [1]
 
 由 `/sys/kernel/mm/transparent_hugepage/enabled` 决定开启还是关闭：
 
@@ -9,7 +11,7 @@ $ cat /sys/kernel/mm/transparent_hugepage/enabled
 [always] madvise never
 ```
 
-## 2. Using Hugepage in DAX Filesystems [2]
+## 2. DAX文件所支持的大页映射 [2]
 
 内核支持DAX的文件系统ext4和XFS现在支持2MB大小的hugepage了，但要使用这个特性，需要满足如下条件：
 
@@ -37,7 +39,15 @@ xfs_io -c "extsize 2m" /mnt/dax
 
 配置之后，[2]中还介绍了怎么trace内核`dax_pmd_fault_done `函数的返回值(`NOPAGE`还是`FALLBACK`)判断配置是否生效。
 
+## 3. 大页对内存虚拟化(EPT)的性能影响[4]
+
+VEE '17 上一篇文章[4]深入讨论了这个问题。
+
 ---
 [1] https://www.kernel.org/doc/Documentation/vm/transhuge.txt
 
 [2] https://nvdimm.wiki.kernel.org/2mib_fs_dax
+
+[3] https://lwn.net/Articles/375096/
+
+[4] Lu, Kai, et al. "Flexible Page-level Memory Access Monitoring Based on Virtualization Hardware." ACM SIGPLAN Notices. Vol. 52. No. 7. ACM, 2017.
