@@ -45,7 +45,7 @@ xfs_io -c "extsize 2m" /mnt/dax
 
 根据QEMU docs[5]，`memory-backend-memfd`类型的内存可以实现以大页作为VM内存后端。
 
-上一篇文章[4]讨论了大页对内存虚拟化(EPT)的性能影响。
+上一篇文章[4][6]讨论了大页对内存虚拟化(EPT)的性能影响。
 
 ---
 [1] https://www.kernel.org/doc/Documentation/vm/transhuge.txt
@@ -57,3 +57,5 @@ xfs_io -c "extsize 2m" /mnt/dax
 [4] Wang, Xiaolin, et al. "Evaluating the impacts of hugepage on virtual machines." Science China Information Sciences 60.1 (2017): 012103.
 
 [5] https://qemu.weilnetz.de/doc/qemu-doc.html
+
+[6] T. Merrifield and H. R. Taheri, “Performance Implications of Extended Page Tables on Virtualized x86 Processors,” Proc. the12th ACM SIGPLAN/SIGOPS Int. Conf. Virtual Exec. Environ. - VEE ’16, no. July, pp. 25–35, 2016.
