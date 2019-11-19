@@ -28,4 +28,5 @@
 1. [[web server的配置|tools_017]]
 1. [[读文本(cat, less, tail, od...)|tools_018]]
 1. [[eBPF/BCC|tools_019]]
+1. [[shell 增强工具 (fzf/...)|tools_020]]
 
