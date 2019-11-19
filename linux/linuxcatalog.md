@@ -71,3 +71,5 @@
 1. [[Linux Kernel的NVDIMM子系统|linux_034]]
 
 1. [[Hugepage (大页) |linux_035]]
+
+1. [[内核线程 kthread|linux_036]]
