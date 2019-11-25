@@ -66,6 +66,8 @@ mediated dev(MDev)基于VFIO。分为父节点pdev和子节点mdev。
 DPDK基于UIO或者VFIO，是用户层的IO设备驱动，主要用于降低网络延迟，提升网络IO性能；也被SPDK用于存储IO中。
 
 ### 2.3 SPDK
+
+
 SPDK基于DPDK为高性能NVMe SSD开发，其核心是一个给高性能NVMe SSD设计的用户态驱动。主要利用了1）基于polling的设备完成状态检测来降低延迟和2）每个应用线程一个专用的共享自内核的硬件NVMe submission queue来减少锁的竞争。[6]
 
 其中第2）点是针对原本的驱动设计而做出的优化： 在原本的内核NVMe驱动中，会创建和CPU核数相等数量的SQ/CQ对，这些SQ/CQ对与各个物理核对应的，由于应用的线程/进程运行在哪个物理核上是不一定的，所以多个应用同时运行在一个核上同时访问一个SQ是有可能的，这时需要对这个SQ加锁，这就引起的不必要的性能开销。
@@ -88,6 +90,12 @@ sudo scripts/setup.sh reset # spdk ---> kernel driver
 1. 在app中同时用SPDK和PMDK，而不是在SPDK中集成PMDK。
 2. libpmemblk用bdev模块访问PM，把libpmemblk加到SPDK中可以统一两种。
 3. libpmem直接集成到SPDK中。
+
+### 2.3.2 SPDK为什么要用特殊的malloc函数分配buffer[13]
+
+这是因为SPDK要用大页保证从用户态申请的内存时被pin住的。大页可以保证不被移动是Linux实现的问题，大页不支持被swap、被KSM合并或者被透明压缩。spdk_dma_malloc()申请完后虚拟地址所映射的物理地址就不会变。
+
+
 
 ## 3. 用户态缺页处理userfaultfd
 
@@ -119,3 +127,5 @@ userfaultfd是用户态的缺页处理机制。详见本wiki([userfaultfd](https
 [11] https://lists.gnu.org/archive/html/bug-libsigsegv/2015-03/msg00000.html
 
 [12] https://stackoverflow.com/questions/49583685/older-alternatives-for-userfaultfd-syscall-in-linux
+
+[13] https://spdk.io/doc/memory.html
