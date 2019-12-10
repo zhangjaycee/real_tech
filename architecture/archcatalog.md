@@ -11,3 +11,5 @@
 5. [[一个hello, world到底是怎么运行的--从晶体管道应用程序|arch_005]]
 
 6. [[关于CPU占用率(Utilization)|arch_006]]
+
+7. [[Flash相关 (NOR, NAND, Flash-based FPGA...)|arch_007]]
