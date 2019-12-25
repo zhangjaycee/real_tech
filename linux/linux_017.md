@@ -77,10 +77,16 @@ https://www.ibm.com/developerworks/cn/linux/l-cn-perf2/index.html
 
 ## 火焰图[1] (flame graph)
 
-火焰图可以分为on-cpu / off-cpu / CPI 等多种，由Gregg大神提出和推广。
+火焰图可以分为on-cpu / off-cpu / CPI [2-4] 等多种，由Gregg大神提出和推广。
 
 ---
 [1] http://www.brendangregg.com/flamegraphs.html
+
+[2] http://oliveryang.net/2018/03/linux-CPI-flamegraph/
+
+[3] https://mahmoudhatem.wordpress.com/2017/10/26/deeper-look-at-cpu-utilization-the-power-of-pmu-events/
+
+[4] http://www.brendangregg.com/blog/2014-10-31/cpi-flame-graphs.html
 
 ## strace -- 应用程序的系统调用追踪
 
@@ -145,6 +151,37 @@ $> vim /sys/kernel/debug/tracing/trace
 * PCM
 
 processor counter monitor[1] 继承了 Intel Performance Counter Monitor[2] 进行继续开源开发。与perf相比，PCM不只可以使用core的计数器，还可以使用uncore的计数器[2]，这两种counter分别如下。但是现在perf也支持一些uncore计数器了，所以我还不知道PCM相对perf的优势。
+
+pcm项目[1]中的pmu-query中可以很方便地查到所支持的pmu，可以进而用pcm-core.x进行监控。比如：
+
+```bash
+$ sudo ./pmu-query.py
+...
+Event to query (empty enter to quit):stall
+...
+RESOURCE_STALLS.ANY:Resource-related stall cycles
+cpu/umask=0x01,event=0xa2,name=RESOURCE_STALLS.ANY
+...
+Event to query (empty enter to quit):cycles
+...
+CPU_CLK_UNHALTED.THREAD_P:Thread cycles when thread is not in halt state
+cpu/umask=0x00,event=0x3C,name=CPU_CLK_UNHALTED.THREAD_P/
+...
+
+$ sudo ./pcm-core.x -e cpu/umask=0x01,event=0xa2,name=RESOURCE_STALLS.ANY -e cpu/umask=0x00,event=0x3C,name=CPU_CLK_UNHALTED.THREAD_P/
+
+Event0: RESOURCE_STALLS.ANY (raw 0x4301a2)
+Event1: CPU_CLK_UNHALTED.THREAD_P (raw 0x43003c)
+
+Core | IPC | Instructions  |  Cycles  | Event0  | Event1  | Event2  | Event3
+   0   0.62        1304 K     2102 K     340 K    2102 K       0         0
+   1   0.69         908 K     1310 K     144 K    1310 K       0         0
+   2   0.65        1085 K     1658 K     303 K    1658 K       0         0
+   3   0.52         336 K      645 K      54 K     645 K       0         0
+
+...
+
+```
 
 >**core**: instructions retired, elapsed core clock ticks, core frequency including Intel® Turbo boost technology, L2 cache hits and misses, L3 cache misses and hits (including or excluding snoops).
 >
