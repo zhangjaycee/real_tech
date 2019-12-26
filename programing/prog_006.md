@@ -76,5 +76,28 @@ in pre-loaded read
 10 chs
 ```
 
+## hook内存分配函数(malloc等)时的一些问题
+
+由于我们进行hook时用到的`dlsym`函数也需要调用`calloc`，所以hook `calloc`时需要想一些方法，中提出了一些可行的方法[2]，其中calloc部分如下，思路是在初始化hook函数用静态的栈内存代替比较早的calloc需求。
+
+```cpp
+void *calloc(size_t nmemb, size_t size)
+{
+    if (myfn_malloc == NULL)
+    {
+        void *ptr = malloc(nmemb*size);
+        if (ptr)
+            memset(ptr, 0, nmemb*size);
+        return ptr;
+    }
+
+    void *ptr = myfn_calloc(nmemb, size);
+    return ptr;
+}
+```
+ 
+
 ---
 [1] https://tbrindus.ca/correct-ld-preload-hooking-libc/
+
+[2] https://stackoverflow.com/questions/6083337/overriding-malloc-using-the-ld-preload-mechanism
