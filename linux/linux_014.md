@@ -59,6 +59,8 @@ fuse： https://github.com/libfuse/libfuse
 ### 2.1 UIO和VFIO
 UIO和VFIO都是用户态IO框架。VFIO较UIO更新，性能更好，更安全，这是因为VFIO利用了内核较新的IOMMU特性，从而安全地(隔离地)支持了UIO所不支持的DMA设备。
 
+**VFIO的基本用法**：[14]是我翻译的内核VFIO文档，[15]又介绍了怎么给QEMU绑定一个VFIO设备。
+
 #### 2.1.1 mediated devices
 mediated dev(MDev)基于VFIO。分为父节点pdev和子节点mdev。
 
@@ -129,3 +131,8 @@ userfaultfd是用户态的缺页处理机制。详见本wiki([userfaultfd](https
 [12] https://stackoverflow.com/questions/49583685/older-alternatives-for-userfaultfd-syscall-in-linux
 
 [13] https://spdk.io/doc/memory.html
+
+[14] http://blog.jcix.top/2019-04-25/vfio-doc/
+
+[15] https://terenceli.github.io/%E6%8A%80%E6%9C%AF/2019/08/16/vfio-usage
+
