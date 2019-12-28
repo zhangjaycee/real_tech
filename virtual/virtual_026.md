@@ -27,3 +27,5 @@ to be continued ...
 [4] https://lkml.org/lkml/2019/9/23/297
 
 [5] https://phoronix.com/scan.php?page=news_item&px=Intel-VT-d-Scalable-Mode
+
+[6] https://lwn.net/Articles/780522/
