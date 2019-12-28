@@ -12,7 +12,7 @@ VFIO这个词经常和IOMMU出现在一起是因为VFIO这个框架支持IOMMU�
 
 ## 什么是vIOMMU
 
-虽然利用VFIO，QEMU支持将设备绑定到一个VM。但是这还是不够安全，于是有了vIOMMU[2][3]和硬件加速的二级VT-d Scalable IO virtualization(类似于EPT之于普通页表)[4]。
+虽然利用VFIO，QEMU支持将设备绑定到一个VM。但是这还是不够安全，于是有了vIOMMU[2][3]和硬件加速的二级VT-d Scalable IO virtualization(类似于EPT之于普通页表)[4][5]。
 
 to be continued ...
 
@@ -25,3 +25,5 @@ to be continued ...
 [3] Amit, Nadav, Muli Ben-Yehuda, and Ben-Ami Yassour. "IOMMU: Strategies for mitigating the IOTLB bottleneck." In International Symposium on Computer Architecture, pp. 256-274. Springer, Berlin, Heidelberg, 2010.
 
 [4] https://lkml.org/lkml/2019/9/23/297
+
+[5] https://phoronix.com/scan.php?page=news_item&px=Intel-VT-d-Scalable-Mode
