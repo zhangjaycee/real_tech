@@ -50,10 +50,9 @@
 
 1. [[virtio-pmem|virtual_025]]
 
+1. [[IOMMU / vIOMMU / VT-d|virtual_026]]
+
 #### [博客推荐]
 
-* ->[笑便世界] http://smilejay.com/ (关于KVM/Qemu)
 * ->[Stefan Hajnoczi] http://blog.vmsplice.net/ (关于虚拟化)
-* ->[wanthelping的博客] http://blog.csdn.net/wanthelping/ (qemu kvm源码分析)
-
 
