@@ -39,9 +39,27 @@ sudo grub2-mkconfig -o /boot/grub2/grub.cfg
 reboot
 ```
 
+#### 6. 删除内核[2]
+
+检查一下目录，删除对应的文件
+```
+/boot/vmlinuz*KERNEL-VERSION*
+/boot/initrd*KERNEL-VERSION*
+/boot/System-map*KERNEL-VERSION*
+/boot/config-*KERNEL-VERSION*
+/lib/modules/*KERNEL-VERSION*/
+/var/lib/initramfs/*KERNEL-VERSION*/
+```
+然后再更新下grub：
+```bash
+sudo grub2-mkconfig -o /boot/grub2/grub.cfg
+```
+
 ---
 
 [1] How to Install or Upgrade to Latest Kernel Version in CentOS 7, https://www.tecmint.com/install-upgrade-kernel-version-in-centos-7/
+
+[2] https://askubuntu.com/questions/594443/how-can-i-remove-compiled-kernel
 
 ## 2. 编译内核模块
 
