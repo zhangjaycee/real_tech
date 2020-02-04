@@ -55,7 +55,7 @@ mkfs.ext2/3/4 属于 mke2fs 工具，在我使用中发现kernel 5.4可能和cen
 
 但是升级后会在编译内核使用dracut时因blkid版本太旧导致问题，可以通过以下命令重新安装util-linux解决：
 ```bash
-yum install -y util-linux
+yum reinstall util-linux
 ```
 
 
