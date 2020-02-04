@@ -50,5 +50,16 @@ umount [分区]
 ### 开机自动挂载
 编辑`/etc/fstab`
 
+#### 注
+mkfs.ext2/3/4 属于 mke2fs 工具，在我使用中发现kernel 5.4可能和centos 7自带mke2fs不兼容导致格式化ext文件系统挂载时出现superblock读取错误，所以可以编译安装新版mke2fs[2]。
+
+但是升级后会在编译内核使用dracut时因blkid版本太旧导致问题，可以通过以下命令重新安装util-linux解决：
+```bash
+yum install -y util-linux
+```
+
+
 ---
 [1] http://blog.csdn.net/nahancy/article/details/52201121
+
+[2] http://e2fsprogs.sourceforge.net/
