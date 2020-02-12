@@ -73,3 +73,5 @@
 1. [[Hugepage (大页) |linux_035]]
 
 1. [[内核线程 kthread|linux_036]]
+
+1. [[内核调试技巧|linux_037]]
