@@ -1,8 +1,223 @@
 # Qemu进行读/写的流程
-### 版本
+
+1. [流程分析](#流程分析)
+2. [杂项讨论](#杂项讨论)  (主要为19年前更新)
+
+## 流程分析
+以virtio-blk -- qcow2 -- file-posix 为例，qemu版本： 4.1
+
+### 1. guest --> host 通知
+
+对于virtio-blk有两种方式，一种是普通的由guest使用vcpu向设备配置空间的写操作，另一种是在使用了iothread的情况下可以选择使用ioeventfd从guest获得通知。
+
+#### 1.1. virtio的一般情况
+
+虽然virtio-blk支持AioContext(IOthread)，但大部分virtio后端都是以监测virtio配置空间的方式实现对guest到host通知的监视。具体流程如下：
+
+* 调用virtio-blk的realize函数时，`virtio_blk_handle_output`被注册
+
+```cpp
+virtio_blk_device_realize
+--> virtio_add_queue(vdev, conf->queue_size, virtio_blk_handle_output);
+```
+
+* pci 配置空间的特定内存被KVM监视，guest写它是会发生VM-exit，进而通知QEMU，QEMU最终调用`virtio_blk_handle_output`函数：
+
+```cpp
+virtio_pci_config_write  (hw/virtio/virtio-pci.c)
+  	--> virtio_ioport_write
+  		 --> //case VIRTIO_PCI_QUEUE_NOTIFY:
+			     virtio_queue_notify (hw/virtio/virtio.c)
+  				 -->  vq->handle_output    
+  							(这里即 virtio_blk_handle_output)
+
+// 参考结构：(hw/virtio/virtio-pci.c)
+static const MemoryRegionOps virtio_pci_config_ops = {
+    .read = virtio_pci_config_read,
+    .write = virtio_pci_config_write,
+    //.....
+};
+```
+
+#### 1.2. 使用ioeventfd
+
+virtio-blk的dataplane思路即用单独的iothread来处理异步文件IO的完成，而不去占用QEMU main-loop的资源[3]。目前来说，AioContext、iothread和virtio-blk-dataplane基本都是这一实现的相关描述。
+
+在使用iothread服务virtio-blk的情况下，QEMU还支持将guest到host的通知的监测纳入统一的epoll操作中，具体是将生成一个与guest对写配置空间关联的ioeventfd。这也意味着，iothread将同时负责两种事件的polling：(1)  QEMU对host文件aio的完成，以及 (2)guest对host的virtqueue的请求通知(notify)。在整条IO路径上，这两种事件都会出现，随意稍显混乱，本节主要关注后者，第4节将关注前者。[4]是一个描述QEMU如何优化polling时长的slide，其也说明两种polling在这里是统一起来的。
+
+下面是使用eventfd监测guest->host通知的初始化流程和poll过程：
+
+* 注册ioeventfd：
+
+需要注意的是，对ioeventfd的使用的发起也是由写配置空间实现的，最终调用`virtio_blk_data_plane_handle_output`被作为virtio请求处理的函数被注册。
+
+```cpp
+virtio_pci_config_write
+--> virtio_ioport_write
+  	--> virtio_pci_start_ioeventfd
+  			--> virtio_bus_start_ioeventfd
+  					--> vdc->start_ioeventfd
+								(virtio_blk_data_plane_start)
+  						--> virtio_queue_aio_set_host_notifier_handler(vq, s->ctx, virtio_blk_data_plane_handle_output);
+```
+
+* poll
+
+`aio_poll`会负责poll 对应的ioeventfd：
+
+```cpp
+aio_poll
+--> try_poll_mode
+	--> run_poll_handlers
+ 			--> run_poll_handlers_once
+  				--> (foreach aio_handlers) node->io_poll
+```
+
+### 2. virtio-blk层
+
+到了virtio-blk层，根据上节两种情况，`virtio_blk_data_plane_handle_output`或`virtio_blk_handle_output`会被调用，它们之后的代码路径相同，最后都会创建一个叫`blk_aio_read_entry`或`blk_aio_read_entry`的协程[1]，以下以读为例：
+
+```cpp
+virtio_blk_data_plane_handle_output
+(或) virtio_blk_handle_output --> virtio_blk_handle_output_do
+    --> virtio_blk_handle_vq 			(hw/block/virtio-blk.c)
+  		--> virtio_blk_handle_request 
+  				(同向相邻的请求进行一些合并)
+      +-> virtio_blk_submit_multireq  
+        --> submit_requests 
+          --> blk_aio_preadv      (block/block-backend.c)
+  						(这里传入完成回调函数为virtio_blk_rw_complete)
+  					--> blk_aio_prwv
+  						--> qemu_coroutine_create
+  							(这里创建的协程函数为blk_aio_read_entry)
+  						+-> bdrv_coroutine_enter
+```
+
+### 3. QEMU块层
+
+QEMU的块层被设计成一种可递归叠加的驱动形式，这里以qcow2 -- posix文件为例：
+
+```cpp
+# coroutine:
+[blk_aio_read_entry]           (block/block-backend.c)[co]
+--> blk_co_preadv																			[co]
+  -->bdrv_co_preadv(blk->root...            (io.c)  	[co]
+    --> qcow2_co_preadv 									(qcow2.c)		[co]
+      --> ret = bdrv_co_preadv(data_file... 					[co]
+        --> bdrv_aligned_preadv(data_file... 					[co]
+          --> bdrv_driver_preadv 											[co]
+            --> drv->bdrv_co_preadv 
+             (raw_co_preadv)      		(file-posix.c)	[co]
+              --> raw_co_prw 													[co]
+                --> 路径① laio_co_submit    (linux-aio.c)  [co]
+                    --> laio_do_submit
+                       --> io_prep_preadv
+                       +-> io_set_eventfd
+                       +-> ioq_submit
+                          --> io_submit
+                    +-> qemu_coroutine_yield
+                +-> 路径② (用了线程池模拟异步IO，这里先不讨论)
+                		--> raw_thread_pool_submit [co]
++-> blk_aio_complete
+```
+
+### 4. 文件aio的发起和完成
+
+linux aio 的发起需要用户态应用(这里指QEMU)处理请求的开始、监测完成等步骤，因此在提交IO后，需要epoll请求的完成，这里QEMU用了和第1节一样eventfd机制。
+
+首先可以看到，一个IOthread由一个`AioContext`结构所描述，其指针`aio_context`被保存在一个`struct LinuxAioState`中：
+
+```cpp
+// 参考结构 (ctx->linux_aio的类型LinuxAioState)
+struct LinuxAioState {
+    AioContext *aio_context;
+
+    io_context_t ctx;
+    EventNotifier e;
+
+    /* io queue for submit at batch.  Protected by AioContext lock. */
+    LaioQueue io_q;
+
+    /* I/O completion processing.  Only runs in I/O thread.  */
+    QEMUBH *completion_bh;
+    int event_idx;
+    int event_max;
+};
+```
+
+一个虚拟机镜像文件被打开时，AioContext的eventfd (`EventNotifier e`)会被初始化，并最终关联linux native aio对应的回调函数`qemu_laio_completion_cb`和`qemu_laio_poll_cb`：
+
+```cpp
+// open镜像时，初始化aio的eventfd，并关联bs的AioContext(iothread)：
+raw_open_common (block/file-posix.c)
+			--> aio_setup_linux_aio (util/async.c)
+          --> ctx->linux_aio =laio_init(..) (block/linux-aio.c)
+              --> event_notifier_init(&s->e..)  --> eventfd
+              +-> io_setup
+  				# 以下分别将io_read和io_poll回调设置成
+  				# qemu_laio_completion_cb和qemu_laio_poll_cb：
+          +-> laio_attach_aio_context(ctx->linux_aio...)
+							--> aio_set_event_notifier 
+  								--> aio_set_fd_handler
+```
+
+在实际运行过程中，同第1节一样，`aio_poll`或轮询已经提交的异步文件IO的完成情况，若检测到完成事件会调用`qemu_laio_completion_cb`：
+
+```cpp
+// 轮询检测完成事件
+aio_poll
+--> try_poll_mode
+	--> run_poll_handlers
+ 			--> run_poll_handlers_once
+  				--> (foreach aio_handlers) node->io_poll
+// 处理完成事件：
+--> qemu_laio_completion_cb  (linux-aio.c)
+--> qemu_laio_process_completions_and_submit
+  --> qemu_laio_process_completions
+    --> qemu_laio_process_completion
+      --> qemu_coroutine_entered
+```
+
+### 5. host--> guest通知
+
+第4节的`qemu_coroutine_entered`会返回到第3节中`qemu_coroutine_yield`处，接着调用aio完成函数`blk_aio_complete`，最终调用被传入的virtio完成函数`virtio_blk_rw_complete`。同样对guest的通知还是两种方式，(1)对应于ioeventfd，可以用irqfd对guest通知；也可以(2)通过中断注入的形式进行通知。
+
+```
+blk_aio_complete              (block/block-backend.c)
+	--> acb->common.cb (即virtio_blk_rw_complete)
+			--> virtio_blk_data_plane_notify
+					--> virtio_notify_irqfd
+							--> event_notifier_set
+			+-> (或) virtio_notify
+					--> virtio_irq
+							--> virtio_notify_vector
+									--> virtio_pci_notify
+```
+
+
+
+---
+
+### 参考资料
+
+[1] http://blog.vmsplice.net/2014/01/coroutines-in-qemu-basics.html
+
+[2] https://www.cnblogs.com/kvm-qemu/articles/7856661.html
+
+[3] https://github.com/qemu/qemu/blob/master/docs/devel/multiple-iothreads.txt
+
+[4] https://vmsplice.net/~stefan/stefanha-kvm-forum-2017.pdf
+
+[5] https://www.cnblogs.com/kvm-qemu/articles/7856661.html
+
+
+
+
+## 杂项讨论
+
 qemu版本： 2.7.0
 
-### 块设备驱动BlockDriver
+### file协议/raw格式的命名问题
 
 * 在`include/block/block_int.h`中默认声明了三种块设备驱动
 ```cpp
@@ -95,8 +310,9 @@ BlockDriver bdrv_raw = {
 };
 ```
 
-### io流走向
-#### 摘抄
+### 大致io流走向
+
+
 > 摘自：[qemu-kvm0.12.1.2原生态读写] http://blog.chinaunix.net/uid-26000137-id-4425615.html
 >vm-guset-os ---> hw(ide/virtio) ---> block.c --->raw-posix.c--->img镜像文件
 > * 具体流程
@@ -214,9 +430,9 @@ BlockDriver bdrv_raw = {
 
 > [KVM虚拟机IO处理过程(二) ----QEMU/KVM I/O 处理过程](http://blog.csdn.net/dashulu/article/details/17090293)
 
-### Linux AIO和QEMU iothread
+### IOthread的polling [1]
 
-QEMU 的 iothread 会一直进行polling。
+QEMU 的 iothread 会一直进行polling。但是polling并非用了一种机制，而是如[1]所述的一种动态调整的忙等/epoll机制。
 
 ```cpp
 
@@ -233,7 +449,7 @@ static void *iothread_run(void *opaque)
 }
 ```
 
-iothread poll的是aio完成事件[2][3]，它首先会在用户态ppoll IO完成，这会占用更多CPU，若timeout时间内没有完成，转为epoll aio的完成时间，这里epoll并非在用户态占满CPU进行轮询，epoll的实现决定于内核，所以并非占用CPU进行低延迟轮询，其实还是内核事件机制。在aio_poll函数调用的aio_epoll函数中，会进行一定时间的qemu用户态高效polling，然后是基于linux AIO epoll的IO完成事件事件polling(如下代码)。其中qemu_poll_ns(ppoll)返回值大于零说明poll到事件。
+一般iothread poll的是aio完成事件[2][3]以及virtqueue guest到host通知的ioeventfd请求事件。这种polling**首先**会在用户态ppoll，这会占用更多CPU，若timeout时间内没有完成，**转为**epoll，这里epoll并非在用户态CPU忙等轮询，epoll的实现决定于内核，所以并非占用CPU进行低延迟轮询，其实还是内核事件机制。在aio_poll函数调用的aio_epoll函数中，会进行一定时间的qemu用户态高效polling，然后是基于linux AIO epoll的IO完成事件事件polling(如下代码)。其中qemu_poll_ns(ppoll)返回值大于零说明poll到事件。
 
 ```cpp
 static int aio_epoll(AioContext *ctx, GPollFD *pfds,
