@@ -173,10 +173,10 @@ aio_poll
 
 // 处理完成事件：
 --> qemu_laio_completion_cb  (linux-aio.c)
---> qemu_laio_process_completions_and_submit
-  --> qemu_laio_process_completions
-    --> qemu_laio_process_completion
-      --> qemu_coroutine_entered
+    --> qemu_laio_process_completions_and_submit
+        --> qemu_laio_process_completions
+            --> qemu_laio_process_completion
+                --> qemu_coroutine_entered
 ```
 
 ### 5. host--> guest通知
