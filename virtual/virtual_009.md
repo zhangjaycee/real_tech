@@ -167,9 +167,10 @@ raw_open_common (block/file-posix.c)
 // 轮询检测完成事件
 aio_poll
 --> try_poll_mode
-	--> run_poll_handlers
- 			--> run_poll_handlers_once
-  				--> (foreach aio_handlers) node->io_poll
+    --> run_poll_handlers
+        --> run_poll_handlers_once
+            --> (foreach aio_handlers) node->io_poll
+
 // 处理完成事件：
 --> qemu_laio_completion_cb  (linux-aio.c)
 --> qemu_laio_process_completions_and_submit
