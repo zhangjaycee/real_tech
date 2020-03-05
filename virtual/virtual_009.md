@@ -209,6 +209,7 @@ blk_aio_complete              (block/block-backend.c)
 
 [5] https://www.cnblogs.com/kvm-qemu/articles/7856661.html
 
+[6] https://terenceli.github.io/%E6%8A%80%E6%9C%AF/2018/09/03/kvm-mmio
 
 
 
