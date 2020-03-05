@@ -25,10 +25,10 @@ virtio_blk_device_realize
 
 ```cpp
 virtio_pci_config_write  (hw/virtio/virtio-pci.c)
-  	--> virtio_ioport_write
-  		 --> //case VIRTIO_PCI_QUEUE_NOTIFY:
-			     virtio_queue_notify (hw/virtio/virtio.c)
-  				 -->  vq->handle_output    
+    --> virtio_ioport_write
+  	--> //case VIRTIO_PCI_QUEUE_NOTIFY:
+	    virtio_queue_notify (hw/virtio/virtio.c)
+  	    -->  vq->handle_output    
   							(这里即 virtio_blk_handle_output)
 
 // 参考结构：(hw/virtio/virtio-pci.c)
@@ -54,11 +54,11 @@ virtio-blk的dataplane思路即用单独的iothread来处理异步文件IO的完
 ```cpp
 virtio_pci_config_write
 --> virtio_ioport_write
-  	--> virtio_pci_start_ioeventfd
-  			--> virtio_bus_start_ioeventfd
-  					--> vdc->start_ioeventfd
-								(virtio_blk_data_plane_start)
-  						--> virtio_queue_aio_set_host_notifier_handler(vq, s->ctx, virtio_blk_data_plane_handle_output);
+    --> virtio_pci_start_ioeventfd
+        --> virtio_bus_start_ioeventfd
+            --> vdc->start_ioeventfd
+                (virtio_blk_data_plane_start)
+                --> virtio_queue_aio_set_host_notifier_handler(vq, s->ctx, virtio_blk_data_plane_handle_output);
 ```
 
 * poll
@@ -68,9 +68,9 @@ virtio_pci_config_write
 ```cpp
 aio_poll
 --> try_poll_mode
-	--> run_poll_handlers
- 			--> run_poll_handlers_once
-  				--> (foreach aio_handlers) node->io_poll
+    --> run_poll_handlers
+        --> run_poll_handlers_once
+            --> (foreach aio_handlers) node->io_poll
 ```
 
 ### 2. virtio-blk层
@@ -81,16 +81,16 @@ aio_poll
 virtio_blk_data_plane_handle_output
 (或) virtio_blk_handle_output --> virtio_blk_handle_output_do
     --> virtio_blk_handle_vq 			(hw/block/virtio-blk.c)
-  		--> virtio_blk_handle_request 
-  				(同向相邻的请求进行一些合并)
-      +-> virtio_blk_submit_multireq  
+        --> virtio_blk_handle_request 
+        (同向相邻的请求进行一些合并)
+    +-> virtio_blk_submit_multireq  
         --> submit_requests 
-          --> blk_aio_preadv      (block/block-backend.c)
-  						(这里传入完成回调函数为virtio_blk_rw_complete)
-  					--> blk_aio_prwv
-  						--> qemu_coroutine_create
-  							(这里创建的协程函数为blk_aio_read_entry)
-  						+-> bdrv_coroutine_enter
+            --> blk_aio_preadv      (block/block-backend.c)
+                (这里传入完成回调函数为virtio_blk_rw_complete)
+                --> blk_aio_prwv
+                    --> qemu_coroutine_create
+                        (这里创建的协程函数为blk_aio_read_entry)
+                    +-> bdrv_coroutine_enter
 ```
 
 ### 3. QEMU块层
@@ -184,17 +184,15 @@ aio_poll
 
 ```
 blk_aio_complete              (block/block-backend.c)
-	--> acb->common.cb (即virtio_blk_rw_complete)
-			--> virtio_blk_data_plane_notify
-					--> virtio_notify_irqfd
-							--> event_notifier_set
-			+-> (或) virtio_notify
-					--> virtio_irq
-							--> virtio_notify_vector
-									--> virtio_pci_notify
+    --> acb->common.cb (即virtio_blk_rw_complete)
+        --> virtio_blk_data_plane_notify
+            --> virtio_notify_irqfd
+                --> event_notifier_set
+        +-> (或) virtio_notify
+            --> virtio_irq
+                --> virtio_notify_vector
+                    --> virtio_pci_notify
 ```
-
-
 
 ---
 
