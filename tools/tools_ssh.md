@@ -63,4 +63,19 @@ server: vim ~/.ssh/authorized_keys #然后粘贴保存
 ### 注意
 对于非root用户，文件的权限可能导致出现问题：
 
-> [linux 非root用户 普通用户ssh 登录 解决](http://www.blogjava.net/hello-yun/archive/2012/05/16/378329.html)
+---
+
+[1]linux 非root用户 普通用户ssh 登录 解决, http://www.blogjava.net/hello-yun/archive/2012/05/16/378329.html
+
+
+## 利用ssh命令配置一台远程服务器作为git配置代理
+
+```bash
+# 监听本地1080端口为socks5代理，
+ssh -Nf -D 0.0.0.0:1080 USERNAME@REMOTE_IP
+# 配置git以刚刚简历的本地socks5代理来进行网络通信
+git config --global http.proxy "socks5://127.0.0.1:1080"
+```
+
+---
+[1] 搭建socks5代理的几种方法, https://www.cnblogs.com/dgjnszf/p/11752817.html
