@@ -77,5 +77,13 @@ ssh -Nf -D 0.0.0.0:1080 USERNAME@REMOTE_IP
 git config --global http.proxy "socks5://127.0.0.1:1080"
 ```
 
+## 利用ssh和curl配置以代理加速下载文件
+```bash
+#第一步配置本地socks5代理监听端口（这里是1080端口），同上：
+ssh -Nf -D 0.0.0.0:1080 USERNAME@REMOTE_IP
+#第二步用curl工具下载：
+curl --socks5-hostname localhost:1080 http://XXX.XXX/XXX --output FILENAME
+```
+
 ---
 [1] 搭建socks5代理的几种方法, https://www.cnblogs.com/dgjnszf/p/11752817.html
