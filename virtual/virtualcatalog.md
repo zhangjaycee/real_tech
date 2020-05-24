@@ -52,6 +52,8 @@
 
 1. [[IOMMU / vIOMMU / VT-d|virtual_026]]
 
+1. [[QEMU-KVM网络栈|virtual_027]]
+
 #### [博客推荐]
 
 * ->[Stefan Hajnoczi] http://blog.vmsplice.net/ (关于虚拟化)
