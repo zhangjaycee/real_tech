@@ -64,7 +64,7 @@ vma(struct vm_area_struct)同样有指向`struct mm_struct`的指针(vm_mm)，�
 
 内核地址空间的直接映射区的内核虚拟地址也被称为逻辑地址或线性地址，与内存zone_normal区的物理地址直接线性映射，只差了一个固定的偏移(PAGE_OFFSET)，这个偏移一般为3GB。
 
-[[linux_038_p7.png]]
+[[linux_038_p8.png]]
 
 
 
