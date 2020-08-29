@@ -54,6 +54,8 @@
 
 1. [[QEMU-KVM网络栈|virtual_027]]
 
+1. [[容器栈|virtual_028]]
+
 #### [博客推荐]
 
 * ->[Stefan Hajnoczi] http://blog.vmsplice.net/ (关于虚拟化)
