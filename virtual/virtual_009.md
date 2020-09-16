@@ -176,12 +176,12 @@ aio_poll
     --> qemu_laio_process_completions_and_submit
         --> qemu_laio_process_completions
             --> qemu_laio_process_completion
-                --> qemu_coroutine_entered
+                --> aio_co_wake
 ```
 
 ### 5. host--> guest通知
 
-第4节的`qemu_coroutine_entered`会返回到第3节中`qemu_coroutine_yield`处，接着调用aio完成函数`blk_aio_complete`，最终调用被传入的virtio完成函数`virtio_blk_rw_complete`。同样对guest的通知还是两种方式，(1)对应于ioeventfd，可以用irqfd对guest通知；也可以(2)通过中断注入的形式进行通知。
+第4节的`aio_co_wake`会返回到第3节中`qemu_coroutine_yield`处，接着调用aio完成函数`blk_aio_complete`，最终调用被传入的virtio完成函数`virtio_blk_rw_complete`。同样对guest的通知还是两种方式，(1)对应于ioeventfd，可以用irqfd对guest通知；也可以(2)通过中断注入的形式进行通知。
 
 ```
 blk_aio_complete              (block/block-backend.c)
