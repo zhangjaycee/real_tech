@@ -63,3 +63,5 @@
 1. [[redis|distri_030]]
 
 1. [[ext2/ext4文件系统|distri_031]]
+
+1. [[去中心化存储|distri_032]]
