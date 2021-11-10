@@ -50,14 +50,14 @@ QEMU虚拟磁盘的的参数 "cache=XXX" 有5种，如下表，其实在实现�
 || BDRV_REQ_FUA | BDRV_O_NOCACHE | BDRV_O_NO_FLUSH |
 |--------|--------|--------|-------|
 |writeback|❌|❌|❌|
-|writethrough|✅|❌|❌|
-|none|❌|✅|❌|
+|writethrough|❌|✅|❌|
+|none|✅|❌|❌|
 |directsync|✅|✅|❌|
 |unsafe|❌|❌|✅|
 
-**none** 对应的`O_NOCACHE`的实现方式是在open()中加入`O_DIRECT`参数。
+**writethrough** 对应的`O_NOCACHE`的实现方式是在open()中加入`O_DIRECT`参数。
 
-**writethrough** 对应的`BDRV_REQ_FUA`会调用bdrv注册的`bdrv_co_flush`函数，进而调用bdrv注册的`bdrv_co_flush_to_os`(刷qemu自身的元数据cache，如qcow2 lookup table)和`bdrv_co_flush_to_disk`函数(把数据真正刷到磁盘，如file-posix的fsync或fdatasync)。
+**none** 对应的`BDRV_REQ_FUA`会调用bdrv注册的`bdrv_co_flush`函数，进而调用bdrv注册的`bdrv_co_flush_to_os`(刷qemu自身的元数据cache，如qcow2 lookup table)和`bdrv_co_flush_to_disk`函数(把数据真正刷到磁盘，如file-posix的fsync或fdatasync)。
 
 **writeback** 是则是利用了host page cache，并且不会在每次写操作后进行sync操作。
 
